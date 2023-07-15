@@ -62,6 +62,11 @@
                                     <input type="text" required="" autocomplete="off" id="txtPostalCode" class="form-control input">
                                 </div>
                             </div>
+                               <div class="form-group">
+                                <div class="input">
+                                    <button type="button" class="btn btn-primary" id="btnSave" onclick="User_Update()">Save</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -82,13 +87,13 @@
             /* var userId = getQueryStringValue('userId');*/
 
             var items = {
-                UserId: userId
+                USER_ID: userId
             }
             // ...
 
             // Make an AJAX request to fetch the user details
             $.ajax({
-                url: 'Profile_Update.aspx/GetUserDetails',
+                url: 'Profile_Secondary.aspx/GetUserDetails',
                 type: "POST",
                 data: JSON.stringify({ query: "USP_GET_USER_ID", item: items }),
                 contentType: "application/json;charset=utf-8",
@@ -96,19 +101,17 @@
                 success: function (response) {
                     // Handle the success response
                     var userDetails = response.d;
-                    console.log(userDetails);
+          
                     // Populate the textboxes with the retrieved user details
                     var userDetails = JSON.parse(response.d);
 
                     // Populate the textboxes with the retrieved user details
-                    $('#txtFirstName').val(userDetails[0].FIRST_NAME);
-                    $('#txtLastName').val(userDetails[0].LAST_NAME);
-                    $('#txtInitial').val(userDetails[0].MIDDLE_NAME);
-                    $('#txtDOB').val(userDetails[0].DATE_OF_BIRTH);
-                    $('#txtEmail').val(userDetails[0].EMAIL_ADDRESS);
-                    $('#txtMobileNumber').val(userDetails[0].CONTACTNO);
-                    $('#txtSex').val(userDetails[0].SEX);
-                    $('#txtMaritalStatus').val(userDetails[0].MARITAL_STATUS);
+                    $('#txtStreetName').val(userDetails[0].STREET_NO);
+                    $('#txtBarangay').val(userDetails[0].BARANGAY);
+                    $('#txtCity').val(userDetails[0].CITY);
+                    $('#txtProvince').val(userDetails[0].PROVINCE);
+                    $('#txtRegion').val(userDetails[0].REGION);
+                    $('#txtPostalCode').val(userDetails[0].POSTAL_CODE);
                     // ... populate other textboxes similarly
                 },
                 error: function (error) {
@@ -119,38 +122,30 @@
         }
 
         function User_Update() {
-            // Fetch the updated user details from the textboxes
             var updatedUser = {
-                FIRST_NAME: $('#txtFirstName').val(),
-                LAST_NAME: $('#txtLastName').val(),
-                MIDDLE_NAME: $('#txtInitial').val(),
-                DATE_OF_BIRTH: $('#txtDOB').val(),
-                EMAIL_ADDRESS: $('#txtEmail').val(),
-                CONTACTNO: $('#txtMobileNumber').val(),
-                SEX: $('#txtSex').val(),
-                MARITAL_STATUS: $('#txtMaritalStatus').val(),
+                STREET_NO: $('#txtStreetName').val(),
+                BARANGAY: $('#txtBarangay').val(),
+                CITY: $('#txtCity').val(),
+                PROVINCE: $('#txtProvince').val(),
+                REGION: $('#txtRegion').val(),
+                ZIPCODE: $('#txtPostalCode').val()
             };
-
-            // Make an AJAX request to update the user details
+            console.log(updatedUser);
             $.ajax({
-                url: 'Profile_Update.aspx/User_Update',
+                url: 'Profile_Secondary.aspx/InsertOrUpdate',
                 type: "POST",
-                data: JSON.stringify({ query: "USP_UPDATE_USER", item: updatedUser }),
+                data: JSON.stringify({ query: "APP_PROFILE_UPDATE", item: updatedUser }),
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    // Handle the success response
                     var result = JSON.parse(response.d);
                     if (result === "Success") {
-                        // Show a success message
                         console.log("User details updated successfully.");
                     } else {
-                        // Show an error message
                         console.log("Failed to update user details.");
                     }
                 },
                 error: function (error) {
-                    // Handle the error response
                     console.log(error);
                 }
             });
