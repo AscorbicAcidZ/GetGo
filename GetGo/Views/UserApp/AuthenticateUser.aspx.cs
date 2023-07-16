@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 public partial class Views_User_AuthenticateUser : System.Web.UI.Page
 {
     public string UserName, Password;
+    UserAppController userapp = new UserAppController();    
     protected void Page_Load(object sender, EventArgs e)
     {
         if(!IsPostBack)
@@ -17,9 +18,9 @@ public partial class Views_User_AuthenticateUser : System.Web.UI.Page
             Password = Request.QueryString["Password"];
 
 
-            UserAppController userapp = new UserAppController();
+     
             DataTable dt = new DataTable();
-            dt = userapp.QueryGetOrPopulate("USP_Get_Users_Info", new { USERNAME = UserName, PASSWORD = Password});
+            dt = userapp.QueryGetOrPopulate("APP_USER_GET", new { USERNAME = UserName, PASSWORD = Password});
             if (dt.Rows.Count > 0 )
             {
                 var FullName = dt.Rows[0]["FULL_NAME"].ToString();

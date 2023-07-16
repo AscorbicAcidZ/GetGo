@@ -110,7 +110,7 @@
             $.ajax({
                 url: 'Profile_Primary.aspx/GetUserDetails',
                 type: "POST",
-                data: JSON.stringify({ query: "USP_GET_USER_ID", item: items }),
+                data: JSON.stringify({ query: "APP_USER_PROFILE_GET", item: items }),
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
                 success: function (response) {
