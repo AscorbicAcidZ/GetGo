@@ -1,0 +1,29 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Page.master.cs" Inherits="Views_UserApp_Page" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <title>GetGo</title>
+    <link href="../../../Resources/dist/css/adminlte.min.css" rel="stylesheet" />
+    <link href="../../../Resources/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link href="../../../Resources/font/nunito-font.css" rel="stylesheet" />
+    <link href="../../../Resources/custom-css/signup.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+
+        <asp:ContentPlaceHolder ID="body" runat="server">
+        </asp:ContentPlaceHolder>
+
+
+        <script src="../../../Resources/plugins/jquery/jquery.min.js"></script>
+        <script src="../../../Resources/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+        <asp:ContentPlaceHolder ID="footer" runat="server">
+        </asp:ContentPlaceHolder>
+    </form>
+</body>
+</html>
