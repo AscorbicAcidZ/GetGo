@@ -21,7 +21,8 @@
 
         <script src="../../../Resources/plugins/jquery/jquery.min.js"></script>
         <script src="../../../Resources/plugins/bootstrap/js/bootstrap.min.js"></script>
-
+        <script src="../../../Resources/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+        <script src="Scripts/Page.js"></script>
         <asp:ContentPlaceHolder ID="footer" runat="server">
         </asp:ContentPlaceHolder>
     </form>

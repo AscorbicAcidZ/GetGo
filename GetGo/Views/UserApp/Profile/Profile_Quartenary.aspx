@@ -50,7 +50,7 @@
                             </div>
                              <div class="form-group">
                                 <div class="input">
-                                    <button type="button" class="btn btn-primary" id="btnSave" onclick="User_Update()">Save</button>
+                                    <button type="button" class="btn btn-primary" id="btnSave"">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -67,5 +67,6 @@
     </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="footer" runat="Server">
+    <script src="Scripts/Profile_Quartenary.js"></script>
 </asp:Content>
 

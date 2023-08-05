@@ -1,0 +1,1 @@
+﻿bsCustomFileInput.init();
