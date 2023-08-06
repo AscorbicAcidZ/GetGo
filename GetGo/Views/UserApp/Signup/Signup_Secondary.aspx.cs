@@ -26,6 +26,6 @@ public partial class Views_UserApp_Signup_Signup_Secondary : System.Web.UI.Page
         EMAIL = email,
         PASSWORD = password
         };
-        return JsonConvert.SerializeObject(user.QueryInsertOrUpdate(query,parameters));
+         return JsonConvert.SerializeObject(user.QueryInsertOrUpdate(query, parameters));
     }
 }

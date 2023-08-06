@@ -61,9 +61,10 @@
                                    <br />
                                 </div>
                              <label id="agreementValidationMessage" class="label-alert text-danger"></label>
-                                <div class="input">
-                                <button type="button" class="btn btn-primary" id="btnSave" onclick="SaveClick()">Save</button>
-                            </div>
+                             <%--   <div class="input">
+                              
+                            </div>--%>
+                              <%--<button type="button" class="btn btn-primary" id="btnSave" onclick="SaveClick()">Save</button>--%>
                         </div>
                     </div>
 
@@ -241,42 +242,44 @@
                 const params = new Proxy(new URLSearchParams(window.location.search), {
                     get: (searchParams, prop) => searchParams.get(prop),
                 });
-                const userName = params.UserName;
-                const phoneNumber = params.PhoneNumber;
-                const Email = params.Email;
+                const userName = params.USERNAME;
+                const phoneNumber = params.PHONENUMBER;
+                const Email = params.EMAIL;
                 const Password = $('#confirmPass').val();
 
                 // Now you have the values in the respective variables
-                console.log(userName, phoneNumber, Email);
+             
                 $.ajax({
                     url: 'Signup_Secondary.aspx/UserSignUp',
                     type: "POST",
                     data: JSON.stringify({
-                        query: "APP_SIGNUP",
                         username: userName,
                         phonenumber: phoneNumber,
                         email: Email,
                         password:Password
 
+
                     }),
                     contentType: "application/json;charset=utf-8",
                     dataType: "json",
-                    success: function (response) {
-
-                        window.location = "Signup_Primary.aspx";
-
+                    success: function (e) {
+                       alert('success');
+                        window.location = "Signup_Primary.aspx?true";
+                  
                     }, error: function (error) {
                         // Handle the error response
-                        console.log(error);
+                        alert(error,'error');
+                  
                     }
                 });
 
             } else {
                 // Validation failed, do not proceed with the save action
-           /*     alert('erro');*/
+
                 console.log('Validation failed. Data not saved.');
             }
         }
+
     </script>
 </asp:Content>
 

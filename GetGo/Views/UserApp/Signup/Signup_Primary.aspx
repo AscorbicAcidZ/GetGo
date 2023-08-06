@@ -98,7 +98,7 @@
             var Username = $('#txtUserName').val();
             var PhoneNumber = $('#txtPhoneNumber').val();
             var Email = $('#txtEmail').val();
-            //console.log(Username, PhoneNumber, Email);
+         
             $.ajax({
                 url: 'Signup_Primary.aspx/CheckExist',
                 type: "POST",
@@ -147,15 +147,17 @@
                         $('#txtEmail').css('border', ''); // This clears the inline style
                         $('#lblEmail').hide();
                     }
-                    if (userDetails[0].USERNAME === '0' && userDetails[0].PHONENUMBER === '0' && userDetails[0].EMAIL === '0') {
-                        window.location = "Signup_Primary.aspx?UserName=" + Username + "&PhoneNumber=" + PhoneNumber + "&Email=" + Email;
-                    }
+                        if (userDetails[0].USERNAME === '0' && userDetails[0].PHONENUMBER === '0' && userDetails[0].EMAIL === '0') {
+                            window.location = "Signup_Primary.aspx?USERNAME=" + Username + "&PHONENUMBER=" + PhoneNumber + "&EMAIL=" + Email;
+                            alert('success');
+                        }
 
-                    console.log(userDetails);
+                    //console.log(userDetails);
                     // ... populate other textboxes similarly
                 },
                 error: function (error) {
                     // Handle the error response
+                    alert('No');
                     console.log(error);
                 }
             });
