@@ -15,7 +15,7 @@ public class UserAppController
 {
     string sqlconn = ConfigurationManager.AppSettings["GetGoConnectionString"];
     public DataTable QueryGetOrPopulate(string query, object parameters = null)
-        {
+    {
         {
             try
             {
@@ -27,10 +27,15 @@ public class UserAppController
                 }
                 return dataTable;
             }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
             catch (Exception ex)
             {
                 throw ex;
             }
+
 
         }
     }
@@ -49,12 +54,40 @@ public class UserAppController
         }
         catch (SqlException ex)
         {
+            LogErrorMessageToDatabase(ex.Message);
             return ex.Message;
         }
         catch (Exception ex)
         {
             return ex.Message;
+          
         }
-        
+
     }
+    private void LogErrorMessageToDatabase(string errorMessage)
+    {
+        try
+        {
+            // Create a new SqlConnection and SqlCommand to insert the error message into the database
+            using (SqlConnection conn = new SqlConnection(sqlconn))
+            using (SqlCommand cmd = new SqlCommand("INSERT INTO ErrorLog (ErrorMessage, Timestamp) VALUES (@ErrorMessage, @Timestamp)", conn))
+            {
+                conn.Open();
+
+                // Add parameters to the SqlCommand
+                cmd.Parameters.AddWithValue("@ErrorMessage", errorMessage);
+                cmd.Parameters.AddWithValue("@Timestamp", DateTime.Now);
+                cmd.ExecuteNonQuery();
+            }
+            // Execute the SqlCommand to insert the error message into the database
+          
+        }
+
+        catch (Exception ex)
+        {
+            // If logging the error to the database fails, you might want to log this error to a file or another location
+            // Alternatively, you could rethrow the exception to indicate the problem with logging itself
+        }
+    }
+
 }
