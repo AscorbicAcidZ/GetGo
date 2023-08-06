@@ -17,10 +17,28 @@ public partial class Views_UserApp_Profile_Profile_Primary : System.Web.UI.Page
         }
     }
     [WebMethod]
-    public static string GetUserDetails(string query, UserModel item)
+    public static string GetUserDetails(UserModel item)
     {
         var user = new UserAppController();
-        var parameters = new { USER_ID = item.USER_ID };
+        var query = "APP_PROFILE_GET";
+        object parameters ;
+        if (item.USER_ID == null || item.USER_ID == "")
+        {
+            parameters = new
+            {
+                USERNAME = item.USERNAME,
+                CONTACTNO = item.CONTACTNO
+            };
+
+        }
+        else
+        {
+            parameters = new
+            {
+              
+                USER_ID = item.USER_ID,
+            };
+        }
         return JsonConvert.SerializeObject(user.QueryGetOrPopulate(query, parameters));
     }
     [WebMethod]
@@ -29,7 +47,7 @@ public partial class Views_UserApp_Profile_Profile_Primary : System.Web.UI.Page
         var user = new UserAppController();
         var parameters = new
         {
-            ACTION ="PRIMARY",
+            ACTION = "PRIMARY",
             USER_ID = item.USER_ID,
             FIRST_NAME = item.FIRST_NAME,
             MIDDLE_NAME = item.MIDDLE_NAME,
