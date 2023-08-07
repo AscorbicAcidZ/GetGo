@@ -57,7 +57,22 @@ public class FileUpload : IHttpHandler
 
     public void SaveFiles(FileDetails fd)
     {
+        try
+        {
+            var maint = new UserAppController();
 
+            var parameters = new
+            {
+                USER_ID = fd.UserId,
+                DESCRIPTION = fd.FileName,
+                IMAGE_TYPE = fd.FileType
+            };
+            maint.QueryInsertOrUpdate("APP_PROFILE_ATTACHMENT_INSERT", parameters);
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
     }
 
     public bool IsReusable

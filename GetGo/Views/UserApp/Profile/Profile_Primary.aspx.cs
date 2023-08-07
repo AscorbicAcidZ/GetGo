@@ -21,24 +21,8 @@ public partial class Views_UserApp_Profile_Profile_Primary : System.Web.UI.Page
     {
         var user = new UserAppController();
         var query = "APP_PROFILE_GET";
-        object parameters ;
-        if (item.USER_ID == null || item.USER_ID == "")
-        {
-            parameters = new
-            {
-                USERNAME = item.USERNAME,
-                CONTACTNO = item.CONTACTNO
-            };
-
-        }
-        else
-        {
-            parameters = new
-            {
-              
-                USER_ID = item.USER_ID,
-            };
-        }
+        var parameters = new {INPUT = item.INPUT };
+        
         return JsonConvert.SerializeObject(user.QueryGetOrPopulate(query, parameters));
     }
     [WebMethod]

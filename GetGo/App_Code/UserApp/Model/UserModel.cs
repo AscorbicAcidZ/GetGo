@@ -8,6 +8,7 @@ using System.Web;
 /// </summary>
 public class UserModel
 {
+    public string INPUT { get; set; }
     public int ID { get; set; }
     public string USER_ID { get; set; }
     public string FIRST_NAME { get; set; }

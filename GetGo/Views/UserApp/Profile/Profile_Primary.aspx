@@ -27,7 +27,7 @@
                                 <label for="inputFile" style="cursor: pointer;">
                                     <img src="../../../Resources/dist/img/default-150x150.png" id="image_upload_preview" class="img-circle" width="70" height="70" />
                                 </label>
-                                <input type='file' id="inputFile" style="display: none;" onchange="readURL(this);" />
+                                <input type='file' id="inputFile" style="display: none;" class="custom-file-input" onchange="readURL(this);" />
                                 <%--<img src="../../../Resources/dist/img/default-150x150.png" id="image_upload_preview" class="img-circle" width="70" height="70" />
                                 <input type='file' id="inputFile" />--%>
                             </div>
@@ -102,29 +102,32 @@
         const userId = params.USERID;
         const userName = params.USERNAME;
         const phoneNumber = params.PHONENUMBER;
+        const imagesBaseUrl = "../../../UploadedFiles/";
+        const allowedExtension = ['image/jpeg', 'image/jpg', 'image/png'];
 
         $(document).ready(function () {
 
             fetchUserDetails();
-        
+
         });
         function fetchUserDetails() {
-            // Fetch the query string parameter values
-    /*        var userId = '001';*/
-            /* var userId = getQueryStringValue('userId');*/
+            var input;
+            if (userId == null || userId == "") {
+                input = userName;
+            }
+            else {
+                input = userId;
+            }
 
             var items = {
-                USER_ID: userId,
-                USERNAME: userName,
-                CONTACTNO: phoneNumber
+                INPUT: input
             }
-            // ...
-
+        
             // Make an AJAX request to fetch the user details
             $.ajax({
                 url: 'Profile_Primary.aspx/GetUserDetails',
                 type: "POST",
-                data: JSON.stringify({item: items }),
+                data: JSON.stringify({ item: items }),
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
                 success: function (response) {
@@ -133,27 +136,25 @@
                     var userDetails = JSON.parse(response.d);
                     // Format the date of birth
                     console.log(response);
-                    //if (!userDetails[0].DATE_OF_BIRTH) {
-                    //    // If empty, set it to the current date
-                    //    var currentDate = new Date().toISOString().split('T')[0];
-                    //    $('#txtDOB').val(currentDate);
-                    //} else {
-                    //    // If not empty, format the date of birth
-                    //    var dateOfBirth = new Date(userDetails[0].DATE_OF_BIRTH).toISOString().split('T')[0];
-                    //    $('#txtDOB').val(dateOfBirth);
-                    //}
-                   
-                    // Populate the textboxes with the retrieved user details
-                    //$('#txtFirstName').val(userDetails[0].FIRST_NAME);
-                    //$('#txtLastName').val(userDetails[0].LAST_NAME);
-                    //$('#txtMiddleName').val(userDetails[0].MIDDLE_NAME);
-               
-                    //$('#txtEmail').val(userDetails[0].EMAIL_ADDRESS);
-                    //$('#txtMobileNumber').val(userDetails[0].CONTACTNO);
-                    //$('#txtSex').val(userDetails[0].SEX);
-                    //$('#txtMaritalStatus').val(userDetails[0].MARITAL_STATUS);
+                    if (!userDetails[0].DATE_OF_BIRTH) {
+                        // If empty, set it to the current date
+                        var currentDate = new Date().toISOString().split('T')[0];
+                        $('#txtDOB').val(currentDate);
+                    } else {
+                        // If not empty, format the date of birth
+                        var dateOfBirth = new Date(userDetails[0].DATE_OF_BIRTH).toISOString().split('T')[0];
+                        $('#txtDOB').val(dateOfBirth);
+                    }
+                    $('#image_upload_preview').attr('src', imagesBaseUrl + userDetails[0].PROFILE_IMAGE);
+                    //Populate the textboxes with the retrieved user details
+                    $('#txtFirstName').val(userDetails[0].FIRST_NAME);
+                    $('#txtLastName').val(userDetails[0].LAST_NAME);
+                    $('#txtMiddleName').val(userDetails[0].MIDDLE_NAME);
 
-              
+                    $('#txtEmail').val(userDetails[0].EMAIL_ADDRESS);
+                    $('#txtMobileNumber').val(userDetails[0].CONTACTNO);
+                    $('#txtSex').val(userDetails[0].SEX);
+                    $('#txtMaritalStatus').val(userDetails[0].MARITAL_STATUS);
                     // ... populate other textboxes similarly
                 },
                 error: function (error) {
@@ -161,13 +162,19 @@
                     // Handle the error response
                     alert('ERROR');
                     console.log(error);
-                  
+
                 }
             });
         }
 
         function User_Update() {
-            // Fetch the updated user details from the textboxes
+            var files = $('.custom-file-input');
+            var formData = new FormData();
+            formData.append("file", files[0].files[0]);
+            upload(formData);
+             //Fetch the updated user details from the textboxes
+
+
             var updatedUser = {
                 USER_ID: userId,
                 FIRST_NAME: $('#txtFirstName').val(),
@@ -193,6 +200,7 @@
                     if (result === "Success") {
                         // Show a success message
                         fetchUserDetails();
+
                         console.log("User details updated successfully.");
                     } else {
                         // Show an error message
@@ -224,6 +232,31 @@
 
         $("#inputFile").change(function () {
             readURL(this);
+            if (!allowedExtension.includes(this.files[0]['type'])) {
+                alert('Only (jpeg, jpg, png) file extensions can be uploaded!')
+                $(this).val('');
+            }
+
         });
+        function upload(files) {
+            console.log(files);
+            $.ajax({
+                type: 'post',
+                url: '../Profile/Handlers/FileUpload.ashx?USERID='+ userId,
+                data: files,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function (e) {
+                    console.log(e);
+     /*               alert('success');*/
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        }
+
+
     </script>
 </asp:Content>
