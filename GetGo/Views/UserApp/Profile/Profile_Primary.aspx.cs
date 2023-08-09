@@ -1,11 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Services;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 public partial class Views_UserApp_Profile_Profile_Primary : System.Web.UI.Page
 {
@@ -43,5 +38,14 @@ public partial class Views_UserApp_Profile_Profile_Primary : System.Web.UI.Page
             MARITAL_STATUS = item.MARITAL_STATUS
         };
         return JsonConvert.SerializeObject(user.QueryInsertOrUpdate(query, parameters));
+    }
+    [WebMethod]
+    public static string GetUserID(string query, string username)
+    {
+        var user = new UserAppController();
+        var parameters = 
+            new { INPUT = username };
+        return JsonConvert.SerializeObject(user.QueryGetOrPopulate(query, parameters));
+
     }
 }

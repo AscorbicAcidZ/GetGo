@@ -27,10 +27,11 @@
                                 <label for="inputFile" style="cursor: pointer;">
                                     <img src="../../../Resources/dist/img/default-150x150.png" id="image_upload_preview" class="img-circle" width="70" height="70" />
                                 </label>
-                                <input type='file' id="inputFile" style="display: none;" class="custom-file-input" onchange="readURL(this);" />
+                                <input type='file' id="inputFile" style="display: none;" class="custom-file-input" data-classification="PROFILE" onchange="readURL(this);" />
                                 <%--<img src="../../../Resources/dist/img/default-150x150.png" id="image_upload_preview" class="img-circle" width="70" height="70" />
                                 <input type='file' id="inputFile" />--%>
                             </div>
+                            <input type="text" required="" autocomplete="off" id="txtUserID" class="form-control input" style="display:none">
                             <div class="form-group">
                                 <div class="input">
                                     <label for="name">First Name</label>
@@ -106,23 +107,12 @@
         const allowedExtension = ['image/jpeg', 'image/jpg', 'image/png'];
 
         $(document).ready(function () {
-
-            fetchUserDetails();
-
+            GetUserID();
         });
-        function fetchUserDetails() {
-            var input;
-            if (userId == null || userId == "") {
-                input = userName;
-            }
-            else {
-                input = userId;
-            }
-
+        function fetchUserDetails(input) {
             var items = {
                 INPUT: input
             }
-        
             // Make an AJAX request to fetch the user details
             $.ajax({
                 url: 'Profile_Primary.aspx/GetUserDetails',
@@ -135,7 +125,7 @@
                     // Populate the textboxes with the retrieved user details
                     var userDetails = JSON.parse(response.d);
                     // Format the date of birth
-                    console.log(response);
+                    //console.log(response);
                     if (!userDetails[0].DATE_OF_BIRTH) {
                         // If empty, set it to the current date
                         var currentDate = new Date().toISOString().split('T')[0];
@@ -145,8 +135,20 @@
                         var dateOfBirth = new Date(userDetails[0].DATE_OF_BIRTH).toISOString().split('T')[0];
                         $('#txtDOB').val(dateOfBirth);
                     }
-                    $('#image_upload_preview').attr('src', imagesBaseUrl + userDetails[0].PROFILE_IMAGE);
+                    $('#txtDOB').val(new Date(userDetails[0].DATE_OF_BIRTH).toISOString().split('T')[0]);
+                    console.log(userDetails[0].DATE_OF_BIRTH)
+
+                    if (!userDetails[0].PROFILE_IMAGE) {
+                        // If empty, set it to the current date
+                        $('#image_upload_preview').attr('src', '../../../Resources/dist/img/default-150x150.png');
+
+                    } else {
+
+                        $('#image_upload_preview').attr('src', imagesBaseUrl + userDetails[0].PROFILE_IMAGE);
+                    }
+
                     //Populate the textboxes with the retrieved user details
+                    $('#txtUserID').val(userDetails[0].USER_ID);
                     $('#txtFirstName').val(userDetails[0].FIRST_NAME);
                     $('#txtLastName').val(userDetails[0].LAST_NAME);
                     $('#txtMiddleName').val(userDetails[0].MIDDLE_NAME);
@@ -167,16 +169,54 @@
             });
         }
 
+        function GetUserID() {
+
+
+            $.ajax({
+                url: 'Profile_Primary.aspx/GetUserID',
+                type: "POST",
+                data: JSON.stringify({ query: "APP_PROFILE_GET_USER_ID", username: userName }),
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    // Handle the success response
+                    var result = JSON.parse(response.d)
+                    if (result !== null) {
+
+                        var input = result[0].USER_ID;
+
+                        fetchUserDetails(input);
+                    } else {
+                        // Show an error message
+                        console.log("Failed to update user details.");
+                    }
+                },
+                error: function (error) {
+                    // Handle the error response
+                    console.log(error);
+                }
+            });
+        }
         function User_Update() {
-            var files = $('.custom-file-input');
-            var formData = new FormData();
-            formData.append("file", files[0].files[0]);
-            upload(formData);
-             //Fetch the updated user details from the textboxes
+
+            if (userId == null || userId == "") {
+
+                //GetUserID();
+                InsertOrUpdate();
+            }
+            else {
+                InsertOrUpdate();
+
+            }
+
+        }
+        function InsertOrUpdate() {
+
+            //Fetch the updated user details from the textboxes
 
 
             var updatedUser = {
-                USER_ID: userId,
+                USER_ID: $('#txtUserID').val(),
                 FIRST_NAME: $('#txtFirstName').val(),
                 LAST_NAME: $('#txtLastName').val(),
                 MIDDLE_NAME: $('#txtMiddleName').val(),
@@ -186,7 +226,7 @@
                 SEX: $('#txtSex').val(),
                 MARITAL_STATUS: $('#txtMaritalStatus').val(),
             };
-            console.log(updatedUser);
+            //console.log(updatedUser);
             // Make an AJAX request to update the user details
             $.ajax({
                 url: 'Profile_Primary.aspx/InsertOrUpdate',
@@ -198,8 +238,18 @@
                     // Handle the success response
                     var result = JSON.parse(response.d);
                     if (result === "Success") {
+                        var input = $('#txtUserID').val();
                         // Show a success message
-                        fetchUserDetails();
+
+
+                        var files = $('.custom-file-input');
+                        files.each(function (index, fileInput) {
+                            var formData = new FormData();
+                            formData.append("file", fileInput.files[0]);
+                            formData.append("classification", fileInput.getAttribute("data-classification"));
+                            upload(formData);
+                          
+                        });
 
                         console.log("User details updated successfully.");
                     } else {
@@ -213,11 +263,6 @@
                 }
             });
         }
-        function getQueryStringValue(key) {
-            // Fetch the value of a query string parameter by key
-            var urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(key);
-        }
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
@@ -230,6 +275,9 @@
             }
         }
 
+
+
+
         $("#inputFile").change(function () {
             readURL(this);
             if (!allowedExtension.includes(this.files[0]['type'])) {
@@ -239,17 +287,19 @@
 
         });
         function upload(files) {
-            console.log(files);
+            var USER_ID = $('#txtUserID').val();
+            console.log(userId);
             $.ajax({
                 type: 'post',
-                url: '../Profile/Handlers/FileUpload.ashx?USERID='+ userId,
+                url: '../Profile/Handlers/FileUpload.ashx?USERID=' + USER_ID,
                 data: files,
                 cache: false,
                 processData: false,
                 contentType: false,
                 success: function (e) {
+                    fetchUserDetails(input);
                     console.log(e);
-     /*               alert('success');*/
+                    /*               alert('success');*/
                 },
                 error: function (err) {
                     console.log(err);

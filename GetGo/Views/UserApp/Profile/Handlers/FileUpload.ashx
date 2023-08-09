@@ -12,7 +12,7 @@ public class FileUpload : IHttpHandler
         if (context.Request.Files.Count > 0)
         {
             string userId = System.Convert.ToString(context.Request.QueryString["USERID"]);
-
+            string classification = context.Request.Form["classification"];
             try
             {
                 string file = "";
@@ -44,6 +44,7 @@ public class FileUpload : IHttpHandler
                 fd.FileName = fileName;
                 fd.FileType = fileExtension;
                 fd.FilePath = filePath;
+                fd.Classification = classification;
                 SaveFiles(fd);
 
                 context.Response.Write(file);
@@ -65,7 +66,8 @@ public class FileUpload : IHttpHandler
             {
                 USER_ID = fd.UserId,
                 DESCRIPTION = fd.FileName,
-                IMAGE_TYPE = fd.FileType
+                IMAGE_TYPE = fd.Classification
+
             };
             maint.QueryInsertOrUpdate("APP_PROFILE_ATTACHMENT_INSERT", parameters);
         }
