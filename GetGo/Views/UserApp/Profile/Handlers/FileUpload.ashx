@@ -69,7 +69,7 @@ public class FileUpload : IHttpHandler
                 IMAGE_TYPE = fd.Classification
 
             };
-            maint.QueryInsertOrUpdate("APP_PROFILE_ATTACHMENT_INSERT", parameters);
+            maint.QueryInsertOrUpdate("APP_ATTACHMENT_POST", parameters);
         }
         catch (Exception ex)
         {

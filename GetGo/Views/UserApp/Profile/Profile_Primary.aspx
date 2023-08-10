@@ -27,7 +27,7 @@
                                 <label for="inputFile" style="cursor: pointer;">
                                     <img src="../../../Resources/dist/img/default-150x150.png" id="image_upload_preview" class="img-circle" width="70" height="70" />
                                 </label>
-                                <input type='file' id="inputFile" style="display: none;" class="custom-file-input" data-classification="PROFILE" onchange="readURL(this);" />
+                                <input type="file" id="inputFile" style="display: none;" class="custom-file-input" data-classification="PROFILE" onchange="readURL(this);" />
                                 <%--<img src="../../../Resources/dist/img/default-150x150.png" id="image_upload_preview" class="img-circle" width="70" height="70" />
                                 <input type='file' id="inputFile" />--%>
                             </div>
@@ -297,7 +297,7 @@
                 processData: false,
                 contentType: false,
                 success: function (e) {
-                    fetchUserDetails(input);
+                    fetchUserDetails(USER_ID);
                     console.log(e);
                     /*               alert('success');*/
                 },
