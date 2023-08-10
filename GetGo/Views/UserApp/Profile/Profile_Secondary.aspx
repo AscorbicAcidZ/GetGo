@@ -24,10 +24,8 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <img src="../../../Resources/dist/img/prod-1.jpg" class="img-circle" width="70" />
-                            </div>
-                            <div class="form-group">
                                 <div class="input">
+                                       <input type="text" required="" autocomplete="off" id="txtUserID" class="form-control input">
                                     <label for="name">Street Name, Building, House No.</label>
                                     <input type="text" required="" autocomplete="off" id="txtStreetName" class="form-control input">
                                 </div>
@@ -78,24 +76,25 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="footer" runat="Server">
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            fetchUserDetails();
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop),
         });
-        function fetchUserDetails() {
+        const userId = params.USERID;
+        $(document).ready(function () {
+            fetchUserDetails(userId);
+        });
+        function fetchUserDetails(input) {
             // Fetch the query string parameter values
-            var userId = '001';
-            /* var userId = getQueryStringValue('userId');*/
-
             var items = {
-                USER_ID: userId
+                INPUT: input
             }
             // ...
 
             // Make an AJAX request to fetch the user details
             $.ajax({
-                url: 'Profile_Secondary.aspx/GetUserDetails',
+                url: 'Profile_Primary.aspx/GetUserDetails',
                 type: "POST",
-                data: JSON.stringify({ query: "USP_GET_USER_ID", item: items }),
+                data: JSON.stringify({ item: items }),
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
                 success: function (response) {
@@ -104,8 +103,9 @@
           
                     // Populate the textboxes with the retrieved user details
                     var userDetails = JSON.parse(response.d);
-
+              
                     // Populate the textboxes with the retrieved user details
+                    $('#txtUserID').val(userDetails[0].USER_ID);
                     $('#txtStreetName').val(userDetails[0].STREET_NO);
                     $('#txtBarangay').val(userDetails[0].BARANGAY);
                     $('#txtCity').val(userDetails[0].CITY);
@@ -113,6 +113,7 @@
                     $('#txtRegion').val(userDetails[0].REGION);
                     $('#txtPostalCode').val(userDetails[0].POSTAL_CODE);
                     // ... populate other textboxes similarly
+                    //console.log(userDetails[0].USER_ID);
                 },
                 error: function (error) {
                     // Handle the error response
@@ -123,14 +124,19 @@
 
         function User_Update() {
             var updatedUser = {
+                USER_ID: $('#txtUserID').val(),
                 STREET_NO: $('#txtStreetName').val(),
                 BARANGAY: $('#txtBarangay').val(),
                 CITY: $('#txtCity').val(),
                 PROVINCE: $('#txtProvince').val(),
                 REGION: $('#txtRegion').val(),
-                ZIPCODE: $('#txtPostalCode').val()
+                ZIPCODE: $('#txtPostalCode').val(),
+               
+           
             };
-            console.log(updatedUser);
+            console.log('updateuser update',
+            updatedUser);
+            console.log($('#txtUserID').val())
             $.ajax({
                 url: 'Profile_Secondary.aspx/InsertOrUpdate',
                 type: "POST",
@@ -139,21 +145,13 @@
                 dataType: "json",
                 success: function (response) {
                     var result = JSON.parse(response.d);
-                    if (result === "Success") {
-                        console.log("User details updated successfully.");
-                    } else {
-                        console.log("Failed to update user details.");
-                    }
+                    console.log(result);
                 },
                 error: function (error) {
                     console.log(error);
                 }
             });
         }
-        function getQueryStringValue(key) {
-            // Fetch the value of a query string parameter by key
-            var urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(key);
-        }
+    
     </script>
 </asp:Content>

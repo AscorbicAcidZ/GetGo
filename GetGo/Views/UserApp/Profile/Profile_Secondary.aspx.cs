@@ -32,7 +32,8 @@ public partial class Views_UserApp_Profile_Profile_Secondary : System.Web.UI.Pag
             CITY = item.CITY,
             PROVINCE = item.PROVINCE,
             REGION = item.REGION,
-            ZIPCODE = item.ZIPCODE
+            ZIPCODE = item.ZIPCODE,
+            USER_ID = item.USER_ID
         };
         return JsonConvert.SerializeObject(user.QueryInsertOrUpdate(query, parameters));
     }

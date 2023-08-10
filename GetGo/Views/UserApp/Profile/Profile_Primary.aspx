@@ -125,7 +125,7 @@
                     // Populate the textboxes with the retrieved user details
                     var userDetails = JSON.parse(response.d);
                     // Format the date of birth
-                    //console.log(response);
+  
                     if (!userDetails[0].DATE_OF_BIRTH) {
                         // If empty, set it to the current date
                         var currentDate = new Date().toISOString().split('T')[0];
@@ -136,8 +136,7 @@
                         $('#txtDOB').val(dateOfBirth);
                     }
                     $('#txtDOB').val(new Date(userDetails[0].DATE_OF_BIRTH).toISOString().split('T')[0]);
-                    console.log(userDetails[0].DATE_OF_BIRTH)
-
+              
                     if (!userDetails[0].PROFILE_IMAGE) {
                         // If empty, set it to the current date
                         $('#image_upload_preview').attr('src', '../../../Resources/dist/img/default-150x150.png');
@@ -248,6 +247,7 @@
                             formData.append("file", fileInput.files[0]);
                             formData.append("classification", fileInput.getAttribute("data-classification"));
                             upload(formData);
+                            window.location = "Profile_Primary.aspx?USERID=" + userId;
                           
                         });
 
@@ -288,7 +288,7 @@
         });
         function upload(files) {
             var USER_ID = $('#txtUserID').val();
-            console.log(userId);
+         
             $.ajax({
                 type: 'post',
                 url: '../Profile/Handlers/FileUpload.ashx?USERID=' + USER_ID,
@@ -298,8 +298,8 @@
                 contentType: false,
                 success: function (e) {
                     fetchUserDetails(USER_ID);
-                    console.log(e);
-                    /*               alert('success');*/
+
+                    /*alert('success');*/
                 },
                 error: function (err) {
                     console.log(err);
