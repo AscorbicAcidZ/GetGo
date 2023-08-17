@@ -111,7 +111,7 @@
                     $('#txtCity').val(userDetails[0].CITY);
                     $('#txtProvince').val(userDetails[0].PROVINCE);
                     $('#txtRegion').val(userDetails[0].REGION);
-                    $('#txtPostalCode').val(userDetails[0].POSTAL_CODE);
+                    $('#txtPostalCode').val(userDetails[0].ZIPCODE);
                     // ... populate other textboxes similarly
                     //console.log(userDetails[0].USER_ID);
                 },

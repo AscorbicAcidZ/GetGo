@@ -72,7 +72,8 @@ $('#btnSave').click(function () {
         formData.append("file", fileInput.files[0]);
         formData.append("classification", fileInput.getAttribute("data-classification"));
         upload(formData);
-        console.log(formData.append("classification", fileInput.getAttribute("data-classification")));
+        window.location = "Profile_Quarternary.aspx?USERID=" + userId;
+        //console.log(formData.append("classification", fileInput.getAttribute("data-classification")));
 
     });
 });
