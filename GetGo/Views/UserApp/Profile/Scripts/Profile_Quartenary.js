@@ -7,7 +7,7 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
 });
 const userId = params.USERID;
-console.log(userId)
+/*console.log(userId)*/
 $(document).ready(function () {
     fetchUserDetails(userId);
 });
@@ -25,8 +25,10 @@ function fetchUserDetails(input) {
         dataType: "json",
         success: function (response) {
             var userDetails = response.d;
+
             // Populate the textboxes with the retrieved user details
             var userDetails = JSON.parse(response.d);
+            $('#txtUserID').val(userDetails[0].USER_ID);
             var frontfaceImg = userDetails[0].FRONTFACE; // Assuming the property name in the response is "FRONTFACE"
             if (frontfaceImg) {
                 var filename = frontfaceImg.split('/').pop();
@@ -44,7 +46,7 @@ function fetchUserDetails(input) {
                 var filename = signatureImg.split('/').pop();
                 $('#signature').siblings('.custom-file-label').text(filename);
             }
-            console.log(userDetails);
+            //alert(userDetails);
         },
         error: function (error) {
             //alert(error,userId,userName,phoneNumber);
@@ -65,18 +67,20 @@ $('.custom-file-input').change(function () {
     }
 });
 
-$('#btnSave').click(function () {
+function SaveClick () {
     var files = $('.custom-file-input');
     files.each(function (index, fileInput) {
         var formData = new FormData();
         formData.append("file", fileInput.files[0]);
         formData.append("classification", fileInput.getAttribute("data-classification"));
         upload(formData);
-        window.location = "Profile_Quarternary.aspx?USERID=" + userId;
-        //console.log(formData.append("classification", fileInput.getAttribute("data-classification")));
 
+        //console.log(formData.append("classification", fileInput.getAttribute("data-classification")));
+/*        alert(formData);*/
     });
-});
+  alert('success')
+    window.location = "Profile_Quartenary.aspx?USERID=" + $('#txtUserID').val();
+};
 //    var files = $('.custom-file-input');
 //    var formData = new FormData();
 //    for (var i = 0; i < 3; i++) {
@@ -86,21 +90,23 @@ $('#btnSave').click(function () {
 //
 
 function upload(files) {
-    console.log(files);
+    /*    console.log(files);*/
+
     $.ajax({
         type: 'post',
-        url: '../Profile/Handlers/FileUpload.ashx?USERID=' + userId,
+        url: '../Profile/Handlers/FileUpload.ashx?USERID='+$('#txtUserID').val(),
         data: files,
         cache: false,
         processData: false,
         contentType: false,
         success: function (e) {
-            console.log(e);
+         
             //alert('success');
-            fetchUserDetails(userId);
+            fetchUserDetails($('#txtUserID').val());
+     
         },
         error: function (err) {
-            console.log(err);
+            alert(err);
         }
     })
 }

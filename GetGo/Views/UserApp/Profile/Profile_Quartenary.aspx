@@ -10,6 +10,7 @@
         /* Styles for form title */
         .form-title {
             background-color: #F2F2F2;
+            font-size:14px;
             border-radius: 20px;
             font-weight: bold;
         }
@@ -38,6 +39,10 @@
             text-decoration: underline;
             cursor: pointer;
         }
+        .custom-file-label{
+
+            font-size:12px;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
@@ -57,7 +62,9 @@
                 <div class="col-lg-12">
 
                     <div class="card">
+                         
                         <div class="header-label">
+                              <input type="text" required="" autocomplete="off" id="txtUserID" class="form-control input" style="display: none">
                             <label>ID & Signature</label>
                         </div>
                         <div class="card-body">
@@ -113,11 +120,11 @@
                                 <h6>Note:</h6>
                                 <p>•Provide three (3) Signatures, it must match the signature from your attached Valid ID.</p>
                             </div>
-                            <div class="form-group">
+                           <%-- <div class="form-group">
                                 <div class="input">
-                                    <button type="button" class="btn btn-primary" id="btnSave">Save</button>
+                                    <button type="button" class="btn btn-primary" id="btnSave" onclick="SaveClick()">Save</button>
                                 </div>
-                            </div>
+                            </div>--%>
                         </div>
 
 

@@ -40,7 +40,7 @@ public class FileUpload : IHttpHandler
                 }
 
                 FileDetails fd = new FileDetails();
-                fd.UserId = userId;
+                fd.UserId   = userId;
                 fd.FileName = fileName;
                 fd.FileType = fileExtension;
                 fd.FilePath = filePath;

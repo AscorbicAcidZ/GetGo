@@ -80,11 +80,11 @@
                                     <input type="text" required="" autocomplete="off" id="txtMaritalStatus" class="form-control input">
                                 </div>
                             </div>
-                            <div class="form-group">
+                          <%--  <div class="form-group">
                                 <div class="input">
                                     <button type="button" class="btn btn-primary" id="btnSave" onclick="User_Update()">Save</button>
                                 </div>
-                            </div>
+                            </div>--%>
                         </div>
 
                     </div>
@@ -196,7 +196,7 @@
                 }
             });
         }
-        function User_Update() {
+        function SaveClick() {
 
             if (userId == null || userId == "") {
 
@@ -247,7 +247,8 @@
                             formData.append("file", fileInput.files[0]);
                             formData.append("classification", fileInput.getAttribute("data-classification"));
                             upload(formData);
-                            window.location = "Profile_Primary.aspx?USERID=" + userId;
+                            window.location = "Profile_Primary.aspx?USERID=" + input;
+                            alert(input);
                           
                         });
 

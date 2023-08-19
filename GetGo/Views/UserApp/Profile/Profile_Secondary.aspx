@@ -25,7 +25,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <div class="input">
-                                       <input type="text" required="" autocomplete="off" id="txtUserID" class="form-control input">
+                                       <input type="text" required="" autocomplete="off" id="txtUserID" class="form-control input" style="display:none;">
                                     <label for="name">Street Name, Building, House No.</label>
                                     <input type="text" required="" autocomplete="off" id="txtStreetName" class="form-control input">
                                 </div>
@@ -60,11 +60,11 @@
                                     <input type="text" required="" autocomplete="off" id="txtPostalCode" class="form-control input">
                                 </div>
                             </div>
-                               <div class="form-group">
+                              <%-- <div class="form-group">
                                 <div class="input">
                                     <button type="button" class="btn btn-primary" id="btnSave" onclick="User_Update()">Save</button>
                                 </div>
-                            </div>
+                            </div>--%>
                         </div>
                     </div>
                 </div>
@@ -122,7 +122,7 @@
             });
         }
 
-        function User_Update() {
+        function SaveClick() {
             var updatedUser = {
                 USER_ID: $('#txtUserID').val(),
                 STREET_NO: $('#txtStreetName').val(),
@@ -134,9 +134,9 @@
                
            
             };
-            console.log('updateuser update',
-            updatedUser);
-            console.log($('#txtUserID').val())
+            //console.log('updateuser update',
+            //updatedUser);
+            //console.log($('#txtUserID').val())
             $.ajax({
                 url: 'Profile_Secondary.aspx/InsertOrUpdate',
                 type: "POST",
@@ -145,7 +145,9 @@
                 dataType: "json",
                 success: function (response) {
                     var result = JSON.parse(response.d);
-                    console.log(result);
+                    alert($('#txtUserID').val());
+                    window.location = "Profile_Quartenary.aspx?USERID=" + $('#txtUserID').val();
+                  
                 },
                 error: function (error) {
                     console.log(error);
