@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class Views_UserApp_SignUp_ConfirmPassword : System.Web.UI.Page
+public partial class Views_UserApp_Home_Home_Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
