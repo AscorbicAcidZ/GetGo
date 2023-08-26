@@ -1,35 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/UserApp/Profile/Page.master" AutoEventWireup="true" CodeFile="Home_LoanApplication.aspx.cs" Inherits="Views_UserApp_Home_Home_LoanApplication" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/UserApp/Home/Page.master" AutoEventWireup="true" CodeFile="Home_Loan_Primary.aspx.cs" Inherits="Views_UserApp_Home_Home_Loan_Primary" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-    <style>
-        .variant-1 {
-            height: calc(3.25rem + 2px);
-        }
-
-        .select-1 {
-            font-size: 100%;
-            border-radius: 10px;
-            width: 100%;
-            background-color: #f2f2f2;
-            border: none;
-            padding: 0.5em;
-        }
-
-        .color-1 {
-            background-color: #f2f2f2;
-        }
-
-        .b-1 {
-            border-left: solid #C4C4C4
-        }
-
-        .text-b {
-            color: black;
-        }
-        .align-right {
-    text-align: right;
-}
-    </style>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
     <div class="wrapper">

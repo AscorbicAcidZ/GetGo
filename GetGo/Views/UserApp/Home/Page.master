@@ -7,6 +7,7 @@
     <title>GetGo</title>
     <link href="../../../Resources/dist/css/adminlte.min.css" rel="stylesheet" />
     <link href="../../../Resources/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link href="../../../Resources/custom-css/home.css" rel="stylesheet" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>

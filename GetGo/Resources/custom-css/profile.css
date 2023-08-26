@@ -70,3 +70,24 @@
         background-color: #f2f2f2; /* Retain the background color */
         box-shadow: 0 0 0 1px #1b5b6b;
     }
+
+.header-label-2 {
+    /*background-color:red;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+}
+
+    .header-label-2 label {
+        font-weight: 100;
+        background-color: #C4C4C4;
+        border-radius: 15px 15px 15px 15px;
+        position: relative;
+        transform: translateY(-20%);
+        padding: 10px 80px;
+        line-height: 10px;
+        font-size: 14px;
+        width: max-content; /* Add this property */
+        white-space: nowrap; /* Add this property */
+    }
