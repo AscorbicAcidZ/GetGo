@@ -29,8 +29,8 @@
             height: 130px;
         }
 
-        .card-body-large {
-            padding: 10px;
+        .element-large {
+   
             height: 110px;
             width: 50%;
         }
@@ -71,6 +71,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <h5>Branch Name</h5>
+                                LIPA CITY
                             </div>
                         </div>
                     </div>
@@ -83,12 +84,12 @@
                     <div class="card">
                         <div class="card-body card-body-small center-align">
                             <div class="row">
-                                <div class="card-body card-body-large">
+                                <div class="card-body element-large">
                                     <h5>Start Date</h5>
                                     <label class="label-below">-</label><br />
 
                                 </div>
-                                <div class="card-body card-body-large red-card">
+                                <div class="card-body element-large red-card">
                                     <h5>Due Date</h5>
                                     <label class="label-below">-</label><br />
                                 </div>
