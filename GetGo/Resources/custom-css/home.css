@@ -95,7 +95,9 @@
 .variant-1 {
     height: calc(3.25rem + 2px);
 }
-
+.variant-2 {
+    height: calc(7.25rem + 44px);
+}
 .select-1 {
     font-size: 100%;
     border-radius: 10px;
