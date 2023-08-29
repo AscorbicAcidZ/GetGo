@@ -26,20 +26,17 @@
                             <div class="form-group">
                                 <div class="input">
                                     <input type="text" required="" autocomplete="off" id="txtUserID" class="form-control input" style="display: none;">
-                                    <label for="name">Enter Loan Amount</label>
-                                    <input type="text" required="" autocomplete="off" id="txtLoanAmount" class="form-control input">
+                                    <label for="name">Bussiness</label>
+                                    <input type="text" required="" autocomplete="off" id="txtBussiness" class="form-control input">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input">
                                     <label for="name">Nature of Work</label>
-                                    <select autocomplete="off" id="ddlNOW" class="form-control input select-1 ">
+                                    <select autocomplete="off" id="ddlNatureofWork" class="form-control input select-1 ">
                                         <option selected="selected">Please Select</option>
                                         <option>Monthly</option>
                                         <option>Daily</option>
-                                        <option>Meow</option>
-                                        <option>Meow2</option>
-                                        <option>Meow3</option>
                                         <option>Meow4</option>
                                     </select>
                                 </div>
@@ -85,14 +82,14 @@
                             <div class="form-group">
 
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" data-classification="CO_GUARANTOR_SIGNATURE" id="frontface">
-                                    <label class="custom-file-label" for="frontface">Attach Signature here</label>
+                                    <input type="file" class="custom-file-input" data-classification="CO_GUARANTOR_SIGNATURE" id="co_guarantor_signature">
+                                    <label class="custom-file-label" for="signature">Attach Signature here</label>
                                 </div>
                             </div>
                             <div class="form-group">
 
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" data-classification="CO_GUARANTOR_SIGNATURE" id="frontface">
+                                    <input type="file" class="custom-file-input" data-classification="CO_GUARANTOR_VALID_ID" id="co_guarantor_valid_id">
                                     <label class="custom-file-label" for="frontface">Attach Valid ID here</label>
                                 </div>
                             </div>
@@ -119,12 +116,9 @@
                                     <label for="name">Type Of Collateral</label>
                                     <select autocomplete="off" id="ddlTypeCollateral" class="form-control input select-1 ">
                                         <option selected="selected">Please Select</option>
-                                        <option>Monthly</option>
-                                        <option>Daily</option>
-                                        <option>Meow</option>
-                                        <option>Meow2</option>
-                                        <option>Meow3</option>
-                                        <option>Meow4</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                              
                                     </select>
                                 </div>
                             </div>
@@ -148,15 +142,15 @@
                               <div class="form-group">
 
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" data-classification="CO_GUARANTOR_SIGNATURE" id="frontface">
-                                    <label class="custom-file-label" for="frontface">Attach proof of receipt here</label>
+                                    <input type="file" class="custom-file-input" data-classification="PROOF_RECEIPT" id="proof_receipt">
+                                    <label class="custom-file-label" for="proof_receipt">Attach proof of receipt here</label>
                                 </div>
                             </div>
                               <div class="form-group">
 
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" data-classification="CO_GUARANTOR_SIGNATURE" id="frontface">
-                                    <label class="custom-file-label" for="frontface">Attach collateral photo here</label>
+                                    <input type="file" class="custom-file-input" data-classification="COLLATERAL_PHOTO" id="collateral_photo">
+                                    <label class="custom-file-label" for="collateral_photo">Attach collateral photo here</label>
                                 </div>
                                    <div class="form-group compact-notes">
                                     <p>•Borrower included in the photo .</p>

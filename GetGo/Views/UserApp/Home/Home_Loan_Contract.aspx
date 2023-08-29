@@ -21,14 +21,11 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <div class="input">
-                                        <label for="name">Signature</label>
-                                   <img src="../../../Resources/dist/img/default-150x150.png" id="image_upload_preview" class="form-control input variant-2"  />
-                              
+                                    <label for="name">Signature</label>
+                                    <img src="../../../Resources/dist/img/default-150x150.png" id="image_upload_preview" class="form-control input variant-2" />
                                 </div>
-                              
-                            
                             </div>
-                              <div class="form-group">
+                            <div class="form-group">
                                 <div class="input">
                                     <label for="name">Co Guarantor</label>
                                     <input type="text" required="" autocomplete="off" id="txtCoGuarantor" class="form-control input">
