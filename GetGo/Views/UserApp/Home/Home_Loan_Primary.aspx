@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/UserApp/Home/Page.master" AutoEventWireup="true" CodeFile="Home_Loan_Primary.aspx.cs" Inherits="Views_UserApp_Home_Home_Loan_Primary" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
     <div class="wrapper">
@@ -30,7 +30,7 @@
                                 <div class="input">
                                     <input type="text" required="" autocomplete="off" id="txtUserID" class="form-control input" style="display: none;">
                                     <label for="name">Enter Loan Amount</label>
-                                    <input type="text" required="" autocomplete="off" id="txtLoanAmount" class="form-control input variant-1">
+                                    <input type="text" required="" autocomplete="off" id="txtLoanAmount" class="form-control input variant-1 only-numbers">
                                 </div>
                                 <div class="align-right">
                                     <span class="badge badge-info color-1 text-b">Quick Add:</span>
@@ -45,10 +45,6 @@
                                         <option selected="selected">Please Select</option>
                                         <option>Monthly</option>
                                         <option>Daily</option>
-                                        <option>Meow</option>
-                                        <option>Meow2</option>
-                                        <option>Meow3</option>
-                                        <option>Meow4</option>
                                     </select>
                                 </div>
                             </div>
@@ -56,9 +52,7 @@
                                 <div class="input">
                                     <label for="name">Loan Tenure</label>
                                     <select required="" autocomplete="off" id="txtLoanTenure" class="form-control input  variant-1  select-1"></select>
-                                    
                                 </div>
-
                                 <p class="align-right">Interest rate:5%</p>
                             </div>
                             <div class="form-group">
