@@ -29,19 +29,19 @@ function fetchUserDetails(input) {
             // Populate the textboxes with the retrieved user details
             var userDetails = JSON.parse(response.d);
             $('#txtUserID').val(userDetails[0].USER_ID);
-            var frontfaceImg = userDetails[0].FRONTFACE; // Assuming the property name in the response is "FRONTFACE"
+            var frontfaceImg = userDetails[0].FRONTFACE; 
             if (frontfaceImg) {
                 var filename = frontfaceImg.split('/').pop();
                 $('#frontface').siblings('.custom-file-label').text(filename);
             }
 
-            var backfaceImg = userDetails[0].BACKFACE; // Assuming the property name in the response is "BACKFACE"
+            var backfaceImg = userDetails[0].BACKFACE; 
             if (backfaceImg) {
                 var filename = backfaceImg.split('/').pop();
                 $('#backface').siblings('.custom-file-label').text(filename);
             }
 
-            var signatureImg = userDetails[0].SIGNATURE_; // Assuming the property name in the response is "SIGNATURE"
+            var signatureImg = userDetails[0].SIGNATURE_;
             if (signatureImg) {
                 var filename = signatureImg.split('/').pop();
                 $('#signature').siblings('.custom-file-label').text(filename);
