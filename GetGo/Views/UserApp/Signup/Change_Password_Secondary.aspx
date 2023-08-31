@@ -1,13 +1,14 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/UserApp/Signup/Page.master" AutoEventWireup="true" CodeFile="Signup_Secondary.aspx.cs" Inherits="Views_UserApp_Signup_Signup_Secondary" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/UserApp/Signup/Page.master" AutoEventWireup="true" CodeFile="Change_Password_Secondary.aspx.cs" Inherits="Views_UserApp_Signup_Change_Password_Secondary" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-     <style>
+    <style>
         /* CSS for the form-check label text */
         .form-check-label {
             font-size: 14px; /* Adjust the font size as needed */
         }
-        .label-alert{
-            font-size: 10px; 
+
+        .label-alert {
+            font-size: 10px;
         }
     </style>
 </asp:Content>
@@ -15,35 +16,21 @@
     <div class="wrapper">
         <section class="content-header">
             <div class="container-fluid">
-                <div class="col-lg-12" style="text-align: center">
-                    <br />
-                    <h1 style="font-size: 48px"><b style="color: #2b9348">Get</b><b style="color: #da2c38">Go</b>
-                    </h1>
-                </div>
             </div>
-            <!-- /.container-fluid -->
         </section>
         <section class="content">
             <div class="container-fluid">
                 <div class="col-lg-12">
+                    <label> Forgot Password?</label>
                     <div class="card">
-                        <div class="card-body">
-                            <div class="form-group">
-                                <h4>Hi there, Welcome!</h4>
-                                <h4>Sign up to continue</h4>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="card">
-                        <div class="card-body">
+                        <div class="card-body"  style="text-align:left;">
                             <div class="form-group">
                                 <div class="group">
                                     <i class="fa  fa-unlock-alt icon"></i>
-                                    <input type="password" id="password" class="form-control input" placeholder="Password" />
+                                    <input type="password" id="password" class="form-control input" placeholder="New Password" />
                                     <i class="far fa-eye icon-right" id="togglePassword" style="cursor: pointer;"></i>
                                 </div>
-                                 <label id="passwordValidationMessage" class="label-alert text-danger"></label>
+                                <label id="passwordValidationMessage" class="label-alert text-danger"></label>
                             </div>
                             <div class="form-group">
                                 <div class="group">
@@ -52,19 +39,8 @@
                                     <i class="far fa-eye icon-right" id="toggleConfirmPassword" style="cursor: pointer;"></i>
 
                                 </div>
-                                 <label id="confirmPassValidationMessage" class="label-alert text-danger"></label>
+                                <label id="confirmPassValidationMessage" class="label-alert text-danger"></label>
                             </div>
-                            <div class="group form-check">
-                                    <!-- Move the checkbox to the left -->
-                                    <input type="checkbox" id="agreeCheckbox" style="margin-right: 8px;" />
-                                    <h6 class="form-check-label">I agree to <b>Terms & Conditions</b> and <b>Policy</b></h6>
-                                   <br />
-                                </div>
-                             <label id="agreementValidationMessage" class="label-alert text-danger"></label>
-                             <%--   <div class="input">
-                              
-                            </div>--%>
-                              <%--<button type="button" class="btn btn-primary" id="btnSave" onclick="SaveClick()">Save</button>--%>
                         </div>
                     </div>
 
@@ -110,7 +86,7 @@
 
             this.classList.toggle('fa-eye-slash');
 
-          
+
         });
         function initializePasswordValidation() {
             password.addEventListener('input', function () {
@@ -160,12 +136,10 @@
             const confirmPassValue = document.getElementById('confirmPass').value;
             const isValidPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/.test(passwordValue);
             const passwordsMatch = passwordValue === confirmPassValue;
-            const isValidAgreement = document.getElementById('agreeCheckbox').checked;
 
             // Hide all validation messages first
             hideAlertLabel('passwordValidationMessage');
             hideAlertLabel('confirmPassValidationMessage');
-            hideAlertLabel('agreementValidationMessage');
 
             // Validate password
             if (!isValidPassword) {
@@ -182,59 +156,11 @@
             } else {
                 document.getElementById('confirmPass').style.border = '';
             }
-
-            // Validate agreement checkbox
-            if (!isValidAgreement) {
-                showAlertLabel('agreementValidationMessage', 'You must agree to the Terms & Conditions and Policy.');
-            }
-
             // Return true if all fields are valid, otherwise false
-            return isValidPassword && passwordsMatch && isValidAgreement;
+            return isValidPassword && passwordsMatch;
         }
-
-        function SaveClick() {
-            if (validateForm()) {
-                const params = new Proxy(new URLSearchParams(window.location.search), {
-                    get: (searchParams, prop) => searchParams.get(prop),
-                });
-                const userName = params.USERNAME;
-                const phoneNumber = params.PHONENUMBER;
-                const Email = params.EMAIL;
-                const Password = $('#confirmPass').val();
-
-                // Now you have the values in the respective variables
-             
-                $.ajax({
-                    url: 'Signup_Secondary.aspx/UserSignUp',
-                    type: "POST",
-                    data: JSON.stringify({
-                        username: userName,
-                        phonenumber: phoneNumber,
-                        email: Email,
-                        password:Password
-
-
-                    }),
-                    contentType: "application/json;charset=utf-8",
-                    dataType: "json",
-                    success: function (e) {
-                       alert('success');
-                        window.location = "Signup_Primary.aspx?true";
-                  
-                    }, error: function (error) {
-                        // Handle the error response
-                        alert(error,'error');
-                  
-                    }
-                });
-
-            } else {
-                // Validation failed, do not proceed with the save action
-
-                console.log('Validation failed. Data not saved.');
-            }
-        }
-
     </script>
 </asp:Content>
+
+
 
