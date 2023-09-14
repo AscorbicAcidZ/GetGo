@@ -25,33 +25,32 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <div class="align-right">
-                                    <p>Credit Limit:<label>P 000</label></p>
+                                    <p>Credit Limit:<label>P 0000</label></p>
                                 </div>
+                            </div>
+                               <div class="form-group">
+                                     <input type="text" required="" autocomplete="off" id="txtUserID" class="form-control input" style="display: none;">
                                 <div class="input">
-                                    <input type="text" required="" autocomplete="off" id="txtUserID" class="form-control input" style="display: none;">
-                                    <label for="name">Enter Loan Amount</label>
-                                    <input type="text" required="" autocomplete="off" id="txtLoanAmount" class="form-control input variant-1 only-numbers">
-                                </div>
-                                <div class="align-right">
-                                    <span class="badge badge-info color-1 text-b">Quick Add:</span>
-                                    <button type="button" class="badge badge-info color-1 text-b">P 2000</button>
-                                    <button type="button" class="badge badge-info  color-1 text-b ">P 5000</button>
+                                    <label for="name">Loan Amount</label>
+                                    <select autocomplete="off" id="ddlLoanAmount" class="form-control input variant-1  select-1 ">
+                                        <option selected="selected">Please Select</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input">
                                     <label for="name">Installment Plan</label>
                                     <select autocomplete="off" id="ddlInstallmentPlan" class="form-control input variant-1  select-1 ">
-                                        <option selected="selected">Please Select</option>
-                                        <option>Monthly</option>
-                                        <option>Daily</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="input">
                                     <label for="name">Loan Tenure</label>
-                                    <select required="" autocomplete="off" id="txtLoanTenure" class="form-control input  variant-1  select-1"></select>
+                                    <select required="" autocomplete="off" id="txtLoanTenure" class="form-control input  variant-1  select-1">
+                                             <option></option>
+                                    </select>
+                                
                                 </div>
                                 <p class="align-right">Interest rate:5%</p>
                             </div>
