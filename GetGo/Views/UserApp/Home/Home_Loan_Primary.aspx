@@ -25,15 +25,18 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <div class="align-right">
-                                    <p>Credit Limit:<label>P 0000</label></p>
+                                    <p>
+                                        Credit Limit:<label>P </label>
+                                    </p>
                                 </div>
                             </div>
-                               <div class="form-group">
-                                     <input type="text" required="" autocomplete="off" id="txtUserID" class="form-control input" style="display: none;">
+                            <div class="form-group">
+                                <input type="text" required="" autocomplete="off" id="txtUserID" class="form-control input" style="display: none;">
                                 <div class="input">
+
                                     <label for="name">Loan Amount</label>
+
                                     <select autocomplete="off" id="ddlLoanAmount" class="form-control input variant-1  select-1 ">
-                                        <option selected="selected">Please Select</option>
                                     </select>
                                 </div>
                             </div>
@@ -48,16 +51,15 @@
                                 <div class="input">
                                     <label for="name">Loan Tenure</label>
                                     <select required="" autocomplete="off" id="txtLoanTenure" class="form-control input  variant-1  select-1">
-                                             <option></option>
                                     </select>
-                                
                                 </div>
-                                <p class="align-right">Interest rate:5%</p>
+                                <p class="align-right">Process fee:<label id="lblFee">0</label>%</p>
+                                <p class="align-right">Interest rate:<label id="lblRate">0</label>%</p>
                             </div>
                             <div class="form-group">
                                 <div class="input">
                                     <label for="name">Branch Name</label>
-                                    <select type="text" required="" autocomplete="off" id="txtBranch" class="form-control input  select-1"></select>
+                                    <select type="text" required="" autocomplete="off" id="ddlBranch" class="form-control input  select-1"></select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -81,5 +83,82 @@
     </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="footer" runat="Server">
+    <script>
+        //$(document).ready(() => {
+
+        //  // Populate "Loan Amount" dropdown
+        //  populateDropdown({
+        //            url: "Home_Loan_Primary.aspx/GetLoanAmounts",
+        //            dropdownSelector: $('#ddlLoanAmount')
+        //     });
+        //});
+
+        //const populateDropdown = (config) => {
+        //    $.ajax({
+        //        type: "POST",
+        //        url: config.url,
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json",
+        //        success: (data) => {
+        //            const dropdown = config.dropdownSelector;
+        //            data.d.forEach((item) => {
+        //                dropdown.append($(`<option value="${item.ID}">${item.AMOUNT || item.INSTALLMENT_PLAN || item.TENURE}</option>`));
+        //            });
+        //        },
+        //    });
+        //};
+        $(document).ready(() => {
+
+            GetData({ url: "Home_Loan_Primary.aspx/GetLoanAmounts" }).then(e => {
+                let data = JSON.parse(e.d);
+                const dropdown = $("#ddlLoanAmount");
+                data.map(item => {
+                    dropdown.append($(`<option value="${item.ID}" data-interest="${item.INTEREST}" data-fee="${item.PROCESS_FEE}">${item.AMOUNT}</option>`));
+
+                });
+                updateRateAndFee();
+
+            });
+            GetData({ url: "Home_Loan_Primary.aspx/GetBranchList", data: JSON.stringify({id:"1"})
+}).then(e => {
+                let data = JSON.parse(e.d);
+                const dropdown = $("#ddlBranch");
+                data.map(item => {
+                    dropdown.append($(`<option value="${item.ID}">${item.BRANCH}</option>`));
+                });
+            });    
+            // Handle change event of "Loan Amount" dropdown
+            $('#ddlLoanAmount').change(() => {
+                updateRateAndFee();
+            });
+        });
+
+
+        const GetData = (config) => {
+            config.type ??= "POST"
+            config.data ??= "";
+            return $.ajax({
+                type: config.type,
+                url: config.url,
+                data: config.data,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: data => { }
+
+            });
+        };
+        const updateRateAndFee = () => {
+            const selectedOption = $('#ddlLoanAmount option:selected');
+            const interest = selectedOption.data('interest');
+            const fee = selectedOption.data('fee');
+            $('#lblRate').text(interest);
+            $('#lblFee').text(fee);
+        };
+
+
+
+    </script>
 </asp:Content>
+
+
 

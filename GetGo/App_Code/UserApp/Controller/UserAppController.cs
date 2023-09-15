@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using Dapper;
 using System.Runtime.Remoting.Messaging;
+using Newtonsoft.Json;
 
 /// <summary>
 /// Summary description for UserAppController
@@ -35,18 +36,17 @@ public class UserAppController
             {
                 throw ex;
             }
-
-
         }
     }
     public string QueryInsertOrUpdate(string query, object parameters)
     {
+        SqlTransaction trans=null;
         try
         {
             using (SqlConnection conn = new SqlConnection(sqlconn))
             {
                 conn.Open();
-                var trans = conn.BeginTransaction();
+                trans = conn.BeginTransaction();
                 conn.Execute(query, parameters, trans, commandType: CommandType.StoredProcedure);
                 trans.Commit();
                 return "Success";
@@ -54,8 +54,10 @@ public class UserAppController
         }
         catch (SqlException ex)
         {
+            trans.Rollback();
             LogErrorMessageToDatabase(ex.Message);
             return ex.Message;
+         
         }
         catch (Exception ex)
         {
@@ -64,6 +66,27 @@ public class UserAppController
         }
 
     }
+    public List<dynamic> QueryGetOrPopulateText(string commandText, object parameters = null)
+    {
+        try
+        {
+            using (SqlConnection conn = new SqlConnection(sqlconn))
+            {
+                conn.Open();
+                var result = conn.Query(commandText, parameters);
+                return result.ToList();
+            }
+        }
+        catch (SqlException ex)
+        {
+            throw ex;
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
     private void LogErrorMessageToDatabase(string errorMessage)
     {
         try
