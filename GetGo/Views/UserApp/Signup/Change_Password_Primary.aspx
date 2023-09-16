@@ -10,14 +10,14 @@
         .label-alert {
             font-size: 10px;
         }
-        
+
         .label-small {
             font-size: 12px;
-            
         }
-       .c1{
-           color:black;
-       }
+
+        .c1 {
+            color: black;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
@@ -27,10 +27,10 @@
             </div>
             <!-- /.container-fluid -->
         </section>
-        <section class="content">
-            <div class="container-fluid">
+        <section class="content ">
+            <div class="container-fluid ">
                 <div class="col-lg-12">
-                    <label>Change Password</label>
+                    <%--<label>Change Password</label>--%>
                     <div class="card">
                         <div class="card-body" style="text-align: left;">
                             <div class="form-group">
@@ -39,11 +39,11 @@
                                     <i class="fa  fa-key icon"></i>
                                     <input type="text" required="" autocomplete="off" id="txtEmail" class="form-control input">
                                 </div>
-                                <div class="right"style="text-align: right;">
+                                <div class="right" style="text-align: right;">
                                     <label class="label-small c1">Didn’t get the code?</label>
-                                  <label class="label-small">Click here to resend</label>
+                                    <label class="label-small">Click here to resend</label>
                                 </div>
-                                  
+
                             </div>
                         </div>
                     </div>
@@ -54,5 +54,23 @@
     </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="footer" runat="Server">
+    <script>
+        $(document).ready(() => {
+
+        });
+
+        const GetData = (config) => {
+            config.type ??= "POST"
+            config.data ??= "";
+            return $.ajax({
+                type: config.type,
+                url: config.url,
+                data: config.data,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: data => { }
+
+            });
+    </script>
 </asp:Content>
 
