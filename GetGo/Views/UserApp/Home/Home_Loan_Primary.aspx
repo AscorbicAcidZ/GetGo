@@ -50,10 +50,10 @@
                             <div class="form-group">
                                 <div class="input">
                                     <label for="name">Loan Tenure</label>
-                                    <select required="" autocomplete="off" id="txtLoanTenure" class="form-control input  variant-1  select-1">
+                                    <select required="" autocomplete="off" id="ddlTenure" class="form-control input  variant-1  select-1">
                                     </select>
                                 </div>
-                                <p class="align-right">Process fee:<label id="lblFee">0</label>%</p>
+                                <p class="align-right" style="display:none;"><label id="lblFee">0</label><label id="lblloanId">0</label></p>
                                 <p class="align-right">Interest rate:<label id="lblRate">0</label>%</p>
                             </div>
                             <div class="form-group">
@@ -67,11 +67,15 @@
 
                                     <div class="card-body color-1">
                                         <h6>Repayment</h6>
-                                        <p>N/A</p>
+                                        <p>
+                                            <label id="lblRepayment">N/A</label>
+                                        </p>
                                     </div>
                                     <div class="card-body color-1 b-1">
                                         <h6>No of Repayment</h6>
-                                        <p>N/A</p>
+                                        <p>
+                                            <label id="lblNoOfRepayment">N/A</label>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -84,6 +88,10 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="footer" runat="Server">
     <script>
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop),
+        });
+        var userId = params.USERID;
         //$(document).ready(() => {
 
         //  // Populate "Loan Amount" dropdown
@@ -109,31 +117,71 @@
         //};
         $(document).ready(() => {
 
-            GetData({ url: "Home_Loan_Primary.aspx/GetLoanAmounts" }).then(e => {
-                let data = JSON.parse(e.d);
-                const dropdown = $("#ddlLoanAmount");
-                data.map(item => {
-                    dropdown.append($(`<option value="${item.ID}" data-interest="${item.INTEREST}" data-fee="${item.PROCESS_FEE}">${item.AMOUNT}</option>`));
+            GetData(
+                { url: "Home_Loan_Primary.aspx/GetLoanAmounts" }).then(e => {
+                    let data = JSON.parse(e.d);
+                    const dropdown = $("#ddlLoanAmount");
+                    data.map(item => {
+                     
+                        dropdown.append($(`<option value="${item.LOAN_PLAN_ID}"data-loan="${item.LOAN_PLAN_ID}"data-interest="${item.INTEREST}" data-fee="${item.PROCESS_FEE}">${item.AMOUNT}</option>`));
+
+                    });
+                    updateRateAndFee();
 
                 });
-                updateRateAndFee();
-
-            });
-            GetData({ url: "Home_Loan_Primary.aspx/GetBranchList", data: JSON.stringify({id:"1"})
-}).then(e => {
+            GetData({
+                url: "Home_Loan_Primary.aspx/GetBranchList"
+            }).then(e => {
                 let data = JSON.parse(e.d);
                 const dropdown = $("#ddlBranch");
                 data.map(item => {
                     dropdown.append($(`<option value="${item.ID}">${item.BRANCH}</option>`));
                 });
-            });    
+            });
+            GetData({
+                url: "Home_Loan_Primary.aspx/GetPlanAndTenure",
+            }).then(e => {
+                let data = JSON.parse(e.d);
+
+                // Store the received data on the client-side
+                const installmentPlans = data.InstallmentPlans;
+                const tenureOptions = data.TenureOptions;
+
+                const ddlInstallmentPlan = $("#ddlInstallmentPlan");
+                const ddlTenure = $("#ddlTenure");
+
+                ddlInstallmentPlan.append($('<option value="">Please Select</option>'));
+                // Populate the ddlInstallmentPlan dropdown
+                installmentPlans.forEach(item => {
+                    ddlInstallmentPlan.append($(`<option value="${item.INSTALLMENT_ID}">${item.INSTALLMENT_PLAN}</option>`));
+                });
+                // Add an event handler for the onchange event of ddlInstallmentPlan
+                ddlInstallmentPlan.on("change", () => {
+
+                    const selectedInstallmentPlan = parseInt(ddlInstallmentPlan.val());
+                    //console.log("Selected Installment Plan:", selectedInstallmentPlan);
+
+                    // Filter and populate the ddlTenure dropdown based on the selected installment plan
+                    ddlTenure.empty();
+
+                    // Filter the tenureOptions based on the selectedInstallmentPlan
+                    const filteredTenureOptions = tenureOptions.filter(item => item.INSTALLMENT_PLAN === selectedInstallmentPlan);
+                    ddlTenure.append($('<option value="">Please select</option>'));
+                    // Populate the ddlTenure dropdown with filtered options
+                    filteredTenureOptions.forEach(item => {
+                        ddlTenure.append($(`<option value="${item.TENURE_ID}">${item.TENURE}</option>`));
+                    });
+                });
+            });
             // Handle change event of "Loan Amount" dropdown
             $('#ddlLoanAmount').change(() => {
                 updateRateAndFee();
+           /*     SetDefaultValue();*/
+            });
+            $('#ddlTenure').change(() => {
+                updatePaymentAndNo();
             });
         });
-
-
         const GetData = (config) => {
             config.type ??= "POST"
             config.data ??= "";
@@ -150,13 +198,51 @@
         const updateRateAndFee = () => {
             const selectedOption = $('#ddlLoanAmount option:selected');
             const interest = selectedOption.data('interest');
+            const loan = selectedOption.data('loan');
             const fee = selectedOption.data('fee');
             $('#lblRate').text(interest);
+            $('#lblloanId').text(loan);
             $('#lblFee').text(fee);
         };
+        const updatePaymentAndNo = () => {
 
+            const ddlLoanAmount = $('#ddlLoanAmount').find(":selected").text();
+            const Tenure = parseInt($('#ddlTenure').find(":selected").text());
+            const ddlInstallmentPlan = $('#ddlInstallmentPlan').find(":selected").text();
+            // Get the interest rate from lblRate text
+            const LoanAmount = parseInt(ddlLoanAmount);
 
+            const interest = parseFloat($('#lblRate').text()) / 100;
 
+            // Calculate Repayment
+            const TotalInterest = LoanAmount * interest;
+            const LoanContract = LoanAmount + TotalInterest;
+            const Repayment = LoanContract / Tenure;
+
+            $('#lblRepayment').text(Repayment);
+            if (ddlInstallmentPlan == "MONTHLY") {
+                $('#lblNoOfRepayment').text(Tenure + " Month/s");
+
+            }
+            else if (ddlInstallmentPlan == "Weekly") {
+                $('#lblNoOfRepayment').text(Tenure + " Week/s");
+            }
+            else {
+                $('#lblNoOfRepayment').text(Tenure + " Day/s");
+            }
+
+        };
+
+        const SetDefaultValue = () => {
+            
+            $('#lblNoOfRepayment').text("N/A");
+            $('#lblRepayment').text("N/A");
+        };
+
+        function ApplyNow() {
+            const amount= $('#lblloanId').text();
+            window.location = "Home_Loan_Primary.aspx?USERID=" + userId + "&LOAN=" + amount ;
+        }
     </script>
 </asp:Content>
 

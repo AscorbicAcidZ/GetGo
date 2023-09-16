@@ -86,7 +86,54 @@ public class UserAppController
             throw ex;
         }
     }
+    public string QueryInsertOrUpdateText(string query, object parameters = null)
+    {
+        SqlTransaction trans = null;
+        try
+        {
+            using (SqlConnection conn = new SqlConnection(sqlconn))
+            {
+                conn.Open();
+                trans = conn.BeginTransaction();
+                conn.Execute(query, parameters, trans);
 
+                trans.Commit();
+                 //var response = new { message = "success" };
+                return "success";
+            }
+        }
+        catch (SqlException ex)
+        {
+            trans.Rollback();
+            LogErrorMessageToDatabase(ex.Message);
+            return ex.Message;
+
+        }
+        catch (Exception ex)
+        {
+            return ex.Message;
+
+        }
+    }
+    public string QueryGetMultipleText(string query, object parameters=null)
+    {
+        using (SqlConnection conn = new SqlConnection(sqlconn))
+        {
+            conn.Open();
+
+            using (var multi = conn.QueryMultiple(query, parameters))
+            {
+                var data = new LoanData
+                {
+                    InstallmentPlans = multi.Read<InstallmentPlan>().ToList(),
+                    TenureOptions = multi.Read<TenureOption>().ToList()
+                };
+                var json = JsonConvert.SerializeObject(data);
+
+                return json;
+            }
+        }
+    }
     private void LogErrorMessageToDatabase(string errorMessage)
     {
         try
