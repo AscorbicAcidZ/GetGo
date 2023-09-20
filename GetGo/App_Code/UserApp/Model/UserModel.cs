@@ -44,10 +44,14 @@ public class UserModel
     public bool DELETE_FLAG { get; set; }
     public bool ACTIVE_FLAG { get; set; }
 }
+
+
 public class LoanData
 {
     public List<InstallmentPlan> InstallmentPlans { get; set; }
     public List<TenureOption> TenureOptions { get; set; }
+    public List<BranchList> BranchLists { get; set; }
+    public List<LoanList> LoanLists { get; set; }
 }
 
 public class InstallmentPlan
@@ -61,4 +65,16 @@ public class TenureOption
     public int TENURE_ID { get; set; }
     public int INSTALLMENT_PLAN { get; set; }
     public int TENURE { get; set; }
+}
+public class BranchList
+{
+    public int ID { get; set; }
+    public  string BRANCH { get; set; }
+}
+public class LoanList
+{
+    public int LOAN_PLAN_ID { get; set; }
+    public int AMOUNT { get; set; }
+    public string INTEREST { get; set; }
+    public string PROCESS_FEE { get; set; }
 }

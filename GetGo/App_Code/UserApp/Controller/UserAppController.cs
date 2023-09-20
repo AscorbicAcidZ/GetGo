@@ -126,7 +126,9 @@ public class UserAppController
                 var data = new LoanData
                 {
                     InstallmentPlans = multi.Read<InstallmentPlan>().ToList(),
-                    TenureOptions = multi.Read<TenureOption>().ToList()
+                    TenureOptions = multi.Read<TenureOption>().ToList(),
+                    BranchLists = multi.Read<BranchList>().ToList(),
+                    LoanLists = multi.Read<LoanList>().ToList(),
                 };
                 var json = JsonConvert.SerializeObject(data);
 

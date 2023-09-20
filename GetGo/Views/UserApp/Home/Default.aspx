@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
     <nav>
-        <div class="nav nav-pills nav-fill" id="nav-tab" role="tablist" style="background-color:white;">
+        <div class="nav nav-pills nav-fill" id="nav-tab" role="tablist" style="background-color: white;">
             <a class="nav-link active" id="step1-tab" data-toggle="tab" href="#step1">Step 1</a>
             <a class="nav-link" id="step2-tab" data-toggle="tab" href="#step2">Step 2</a>
             <a class="nav-link" id="step3-tab" data-toggle="tab" href="#step3">Step 3</a>
@@ -37,7 +37,7 @@
                                     <div class="form-group">
                                         <div class="align-right">
                                             <p>
-                                                Credit Limit:<label>P </label>
+                                                Credit Limit:<label>P 21321</label>
                                             </p>
                                         </div>
                                     </div>
@@ -285,12 +285,13 @@
                     </div>
                 </section>
             </div>
+
         </div>
+        <button type="button" class="btn btn-primary" id="btnSave" onclick="SaveClick()">Save</button>
     </div>
 
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="footer" runat="Server">
-    <script src="Scripts/loan.js"></script>
-
+    <script type="text/javascript" src="Scripts/loan.js"></script>
 </asp:Content>
 
