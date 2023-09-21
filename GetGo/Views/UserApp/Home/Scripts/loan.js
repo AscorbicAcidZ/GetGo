@@ -1,7 +1,7 @@
 ﻿const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
 });
-bsCustomFileInput.init();
+
 const allowedExtension = ['image/jpeg', 'image/jpg', 'image/png'];
 var files = $('.custom-file-input');
 
@@ -16,6 +16,8 @@ const MonthlyIncome = $('#txtMonthlyIncome');
 const CharacterReference = $('#txtCharacterReference');
 const CoGuarantor = $('#txtCoGuarantor');
 const CoGuarantorNumber = $('#txtCoGuarantorNumber');
+const NameOfCollateral = $('#txtNameOfCollateral');
+const Description = $('#txtDescription');
 
 let tenureOptions = [];
 let installementPlans = [];
@@ -24,6 +26,7 @@ let loanLists = [];
 
 
 $(document).ready(() => {
+    bsCustomFileInput.init();
     GetLoanDetails();
 });
 
@@ -138,3 +141,78 @@ const SetDefaultValue = () => {
     $('#lblRepayment').text("N/A");
 };
 //end of step 1
+
+$('.custom-file-input').change(function () {
+    if (!allowedExtension.includes(this.files[0]['type'])) {
+        alert('Only (jpeg, jpg, png) file extensions can be uploaded!')
+        // Clear only the label associated with this input
+        $(this).val('');
+        $(this).siblings('.custom-file-label').text('Attach photo here');
+    }
+});
+
+const filesArray = [];
+const Save = () => {
+    const loanData = {
+        userId : "12345",
+        ddlLoanAmount: ddlLoanAmount.val(),
+        ddlBranchList: ddlBranchList.val(),
+        Bussiness: Bussiness.val(),
+        NatureOfWork: NatureOfWork.val(),
+        MonthlyIncome: MonthlyIncome.val(),
+        CharacterReference: CharacterReference.val(),
+        CoGuarantor: CoGuarantor.val(),
+        CoGuarantorNumber: CoGuarantorNumber.val(),
+        NameOfCollateral: NameOfCollateral.val(),
+        Description: Description.val(),
+    }
+    console.log(loanData);
+    GetData({
+        url: "Home_Loan_Primary.aspx/GetLoanID",
+        data: JSON.stringify({
+            loanData: loanData
+        })
+    }).then(e => {
+        }
+       
+    );
+    files.each(function (index, fileInput) {
+        var formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+        formData.append("classification", fileInput.getAttribute("data-classification"));
+        filesArray.push(formData);
+    });
+    upload(filesArray);
+
+}
+const upload = (filesArray)=> {
+    //for (const value of files.values()) {
+    //    console.log(value);
+    //}
+    // Create a new FormData object to store all files
+    const allFilesFormData = new FormData();
+
+    // Append each FormData object to the new FormData
+    filesArray.forEach(formData => {
+        for (const [key, value] of formData.entries()) {
+            allFilesFormData.append(key, value);
+        }
+    });
+    for (const value of allFilesFormData.values()) {
+        console.log(value);
+    }
+    $.ajax({
+        type: 'post',
+        url: '../Home/Handlers/FileUpload.ashx?USERID=' + 39393,
+        data: allFilesFormData,
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function (e) {
+            alert(e);
+        },
+        error: function (err) {
+            alert(err);
+        }
+    })
+}

@@ -45,6 +45,23 @@ public class UserModel
     public bool ACTIVE_FLAG { get; set; }
 }
 
+public class UserLoan 
+{
+    public string USER_ID { get; set; }
+    public int LOAN_AMOUNT { get; set; }
+    public int BRANCH { get; set; }
+    public string BUSSINESS { get; set; }
+    public string NATURE_OF_WORK { get; set; }
+    public int INCOME { get; set; }
+    public string CHARACTER_REFERENCE { get; set; }
+    public string CO_GUARANTOR { get; set; }
+    public int CO_PHONE_NO { get; set; }
+    public string NAME_OF_COLLATERAL { get; set; }
+    public string DESCRIPTION { get; set; }
+
+}
+
+
 
 public class LoanData
 {

@@ -1,6 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/UserApp/Home/Page.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="Views_UserApp_Home_Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <style>
+                .custom-file-label{
+
+            font-size:12px;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
     <nav>
@@ -198,17 +204,7 @@
                                         </div>
 
                                     </div>
-                                    <div class="form-group">
-                                        <div class="input">
-                                            <label for="name">Type Of Collateral</label>
-                                            <select autocomplete="off" id="ddlTypeCollateral" class="form-control input select-1 ">
-                                                <option selected="selected">Please Select</option>
-                                                <option>1</option>
-                                                <option>2</option>
-
-                                            </select>
-                                        </div>
-                                    </div>
+                                  
                                     <div class="form-group">
                                         <div class="input">
                                             <label for="name">Name of Collateral</label>

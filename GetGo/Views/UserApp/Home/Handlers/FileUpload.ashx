@@ -15,43 +15,39 @@ public class FileUpload : IHttpHandler
             string classification = context.Request.Form["classification"];
             try
             {
-                string file = "";
-                string fileName = "";
-                string fileExtension = "";
-                string filePath = "";
-
                 for (int i = 0; i < context.Request.Files.Count; i++)
                 {
                     HttpPostedFile postedFile = context.Request.Files[i];
-                    fileName = postedFile.FileName;
-                    filePath = HttpContext.Current.Server.MapPath(Path.Combine("~/UploadedFiles", userId));
+                    string fileName = postedFile.FileName;
+                    string fileExtension = Path.GetExtension(fileName);
+                    string filePath = HttpContext.Current.Server.MapPath(Path.Combine("~/UploadedFiles", userId));
 
-                    if (!Directory.Exists(filePath))
-                    {
-                        Directory.CreateDirectory(filePath);
-                    }
+                    //if (!Directory.Exists(filePath))
+                    //{
+                    //    Directory.CreateDirectory(filePath);
+                    //}
 
-                    if (!string.IsNullOrEmpty(fileName))
-                    {
-                        fileExtension = Path.GetExtension(fileName);
-                        file = fileName;
-                        postedFile.SaveAs(filePath + "/" + file);
-                    }
+                    //if (!string.IsNullOrEmpty(fileName))
+                    //{
+                    //    string file = fileName;
+                    //    postedFile.SaveAs(Path.Combine(filePath, file));
+
+                    //    FileDetails fd = new FileDetails();
+                    //    fd.UserId = userId;
+                    //    fd.FileName = fileName;
+                    //    fd.FileType = fileExtension;
+                    //    fd.FilePath = Path.Combine(filePath, file); // Store the full file path
+                    //    fd.Classification = classification;
+                    //    SaveFiles(fd);
+                    //}
                 }
 
-                FileDetails fd = new FileDetails();
-                fd.UserId   = userId;
-                fd.FileName = fileName;
-                fd.FileType = fileExtension;
-                fd.FilePath = filePath;
-                fd.Classification = classification;
-                SaveFiles(fd);
-
-                context.Response.Write(file);
+                context.Response.Write("Files uploaded successfully");
             }
             catch (Exception ex)
             {
-                throw ex;
+                context.Response.StatusCode = 500; // Set an appropriate HTTP error code
+                context.Response.Write("Error: " + ex.Message);
             }
         }
     }
@@ -60,16 +56,8 @@ public class FileUpload : IHttpHandler
     {
         try
         {
-            //var maint = new UserAppController();
-
-            //var parameters = new
-            //{
-            //    USER_ID = fd.UserId,
-            //    DESCRIPTION = fd.FileName,
-            //    IMAGE_TYPE = fd.Classification
-
-            //};
-            //maint.QueryInsertOrUpdate("APP_ATTACHMENT_POST", parameters);
+            // Your code to save file details to the database goes here
+            // You can insert each file's details into your database as needed
         }
         catch (Exception ex)
         {
@@ -84,5 +72,4 @@ public class FileUpload : IHttpHandler
             return false;
         }
     }
-
 }

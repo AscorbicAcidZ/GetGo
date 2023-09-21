@@ -86,6 +86,7 @@ public class UserAppController
             throw ex;
         }
     }
+
     public string QueryInsertOrUpdateText(string query, object parameters = null)
     {
         SqlTransaction trans = null;
