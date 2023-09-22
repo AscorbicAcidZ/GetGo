@@ -86,7 +86,6 @@ const GetLoanDetails = () => {
         });
 }
 const GetData = (config) => {
-
     config.type = config.type || "POST";
     config.data = config.data || "";
     return $.ajax({
@@ -153,39 +152,41 @@ $('.custom-file-input').change(function () {
 
 const filesArray = [];
 const Save = () => {
-    const loanData = {
-        userId : "12345",
-        ddlLoanAmount: ddlLoanAmount.val(),
-        ddlBranchList: ddlBranchList.val(),
-        Bussiness: Bussiness.val(),
-        NatureOfWork: NatureOfWork.val(),
-        MonthlyIncome: MonthlyIncome.val(),
-        CharacterReference: CharacterReference.val(),
-        CoGuarantor: CoGuarantor.val(),
-        CoGuarantorNumber: CoGuarantorNumber.val(),
-        NameOfCollateral: NameOfCollateral.val(),
-        Description: Description.val(),
+    let loanData = {
+        USER_ID: "12345",
+        //LOAN_AMOUNT: ddlLoanAmount.val(),
+        //BRANCH: ddlBranchList.val(),
+        //BUSSINESS: Bussiness.val() ,
+        //NATURE_OF_WORK: NatureOfWork.val(),
+        //INCOME: MonthlyIncome.val(),
+        //CHARACTER_REFERENCE: CharacterReference.val() ,
+        //CO_GUARANTOR: CoGuarantor.val(),
+        //CO_PHONE_NO: CoGuarantorNumber.val(),
+        //NAME_OF_COLLATERAL: NameOfCollateral.val(),
+        //DESCRIPTION: Description.val(),
     }
-    console.log(loanData);
     GetData({
-        url: "Home_Loan_Primary.aspx/GetLoanID",
+        url: "Default.aspx/GetLoanID",
         data: JSON.stringify({
-            loanData: loanData
+            items: loanData
         })
     }).then(e => {
-        }
-       
+        let result = JSON.parse(e.d);
+
+        files.each(function (index, fileInput) {
+            var formData = new FormData();
+            formData.append("file", fileInput.files[0]);
+            formData.append("classification", fileInput.getAttribute("data-classification"));
+            filesArray.push(formData);
+        });
+        upload(filesArray, result.LOAN_ID);
+    }
+
     );
-    files.each(function (index, fileInput) {
-        var formData = new FormData();
-        formData.append("file", fileInput.files[0]);
-        formData.append("classification", fileInput.getAttribute("data-classification"));
-        filesArray.push(formData);
-    });
-    upload(filesArray);
+
 
 }
-const upload = (filesArray)=> {
+const upload = (filesArray, loanID) => {
     //for (const value of files.values()) {
     //    console.log(value);
     //}
@@ -203,7 +204,7 @@ const upload = (filesArray)=> {
     }
     $.ajax({
         type: 'post',
-        url: '../Home/Handlers/FileUpload.ashx?USERID=' + 39393,
+        url: '../Home/Handlers/FileUpload.ashx?USERID=' + 39393 +'&LOANID='+loanID,
         data: allFilesFormData,
         cache: false,
         processData: false,

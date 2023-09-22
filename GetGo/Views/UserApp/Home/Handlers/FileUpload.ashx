@@ -12,6 +12,7 @@ public class FileUpload : IHttpHandler
         if (context.Request.Files.Count > 0)
         {
             string userId = System.Convert.ToString(context.Request.QueryString["USERID"]);
+            string LoanId = System.Convert.ToString(context.Request.QueryString["LOANID"]);
             string classification = context.Request.Form["classification"];
             try
             {

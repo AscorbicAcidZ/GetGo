@@ -14,22 +14,23 @@ public partial class Views_UserApp_Home_Default : System.Web.UI.Page
 
     }
     [WebMethod]
-    public static string GetLoanID(UserLoan loanData)
+    public static string GetLoanID(UserLoan items)
     {
         string query = "SP_SOMETHING";
-        var parameters = new
-        {
-            USER_ID     = loanData.USER_ID,
-            LOAN_AMOUNT = loanData.LOAN_AMOUNT,
-            BRANCH      = loanData.BRANCH,
-            BUSSINESS   = loanData.BUSSINESS,
-            NATUREOFWORK = loanData.NATURE_OF_WORK,
-            INCOME       = loanData.INCOME,
-            CO_GUARANTOR =loanData.CO_GUARANTOR,
-            CO_PHONE_NO  = loanData.CO_PHONE_NO, 
-            COLLATERALNAME  = loanData.NAME_OF_COLLATERAL,
-            DESCRIPTION     = loanData.DESCRIPTION,
-        };
+        //var parameters = new
+        //{
+        //    USER_ID = items.USER_ID,
+        //    LOAN_AMOUNT = items.LOAN_AMOUNT,
+        //    BRANCH = items.BRANCH,
+        //    BUSSINESS = items.BUSSINESS,
+        //    NATUREOFWORK = items.NATURE_OF_WORK,
+        //    INCOME = items.INCOME,
+        //    CHARACTER_REFERENCE = items.CHARACTER_REFERENCE,
+        //    CO_GUARANTOR = items.CO_GUARANTOR,
+        //    CO_PHONE_NO = items.CO_PHONE_NO,
+        //    COLLATERALNAME = items.NAME_OF_COLLATERAL,
+        //    DESCRIPTION = items.DESCRIPTION,
+        //};
 
         var json = new
         {
