@@ -49,6 +49,8 @@ public class UserLoan
 {
     public string USER_ID { get; set; }
     public int LOAN_AMOUNT { get; set; }
+    public string INSTALLMENT_ID { get; set; }
+    public string TENURE_ID { get; set; }
     public int BRANCH { get; set; }
     public string BUSSINESS { get; set; }
     public string NATURE_OF_WORK { get; set; }

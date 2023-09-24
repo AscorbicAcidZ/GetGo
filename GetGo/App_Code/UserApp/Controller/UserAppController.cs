@@ -113,7 +113,6 @@ public class UserAppController
         catch (Exception ex)
         {
             return ex.Message;
-
         }
     }
     public string QueryGetMultipleText(string query, object parameters=null)
@@ -137,7 +136,7 @@ public class UserAppController
             }
         }
     }
-    private void LogErrorMessageToDatabase(string errorMessage)
+    public void LogErrorMessageToDatabase(string errorMessage)
     {
         try
         {

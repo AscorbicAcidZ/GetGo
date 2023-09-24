@@ -9,47 +9,56 @@ public class FileUpload : IHttpHandler
 
     public void ProcessRequest(HttpContext context)
     {
-        if (context.Request.Files.Count > 0)
+        try
         {
-            string userId = System.Convert.ToString(context.Request.QueryString["USERID"]);
-            string LoanId = System.Convert.ToString(context.Request.QueryString["LOANID"]);
-            string classification = context.Request.Form["classification"];
-            try
+            if (context.Request.Files.Count > 0)
             {
+                string userId = System.Convert.ToString(context.Request.QueryString["USERID"]);
+                string LoanId = System.Convert.ToString(context.Request.QueryString["LOANID"]);
+                string classificationString = context.Request.Form["classification"]; // Get the classification string
+
+                // Split the classification string into an array of individual classifications
+                string[] classifications = classificationString.Split(',');
+
                 for (int i = 0; i < context.Request.Files.Count; i++)
                 {
                     HttpPostedFile postedFile = context.Request.Files[i];
                     string fileName = postedFile.FileName;
                     string fileExtension = Path.GetExtension(fileName);
                     string filePath = HttpContext.Current.Server.MapPath(Path.Combine("~/UploadedFiles", userId));
+                    string classification = classifications[i];
+                    if (!Directory.Exists(filePath))
+                    {
+                        Directory.CreateDirectory(filePath);
+                    }
 
-                    //if (!Directory.Exists(filePath))
-                    //{
-                    //    Directory.CreateDirectory(filePath);
-                    //}
-
-                    //if (!string.IsNullOrEmpty(fileName))
-                    //{
-                    //    string file = fileName;
-                    //    postedFile.SaveAs(Path.Combine(filePath, file));
-
-                    //    FileDetails fd = new FileDetails();
-                    //    fd.UserId = userId;
-                    //    fd.FileName = fileName;
-                    //    fd.FileType = fileExtension;
-                    //    fd.FilePath = Path.Combine(filePath, file); // Store the full file path
-                    //    fd.Classification = classification;
-                    //    SaveFiles(fd);
-                    //}
+                    if (!string.IsNullOrEmpty(fileName))
+                    {
+                        string file = fileName;
+                        postedFile.SaveAs(Path.Combine(filePath, file));
+                        FileDetails fd = new FileDetails();
+                        fd.UserId = LoanId;
+                        fd.FileName = fileName;
+                        fd.FileType = fileExtension;
+                        fd.FilePath = Path.Combine(filePath, file); // Store the full file path
+                        fd.Classification = classification;
+                        SaveFiles(fd);
+                    }
                 }
 
                 context.Response.Write("Files uploaded successfully");
+
             }
-            catch (Exception ex)
-            {
-                context.Response.StatusCode = 500; // Set an appropriate HTTP error code
-                context.Response.Write("Error: " + ex.Message);
-            }
+        }
+        catch (Exception ex)
+
+        {
+            var maint = new UserAppController();
+
+            context.Response.StatusCode = 500; // Set an appropriate HTTP error code
+            context.Response.Write("Error: " + ex.Message);
+            maint.LogErrorMessageToDatabase(ex.Message);
+
         }
     }
 
@@ -57,8 +66,19 @@ public class FileUpload : IHttpHandler
     {
         try
         {
-            // Your code to save file details to the database goes here
-            // You can insert each file's details into your database as needed
+            var maint = new UserAppController();
+
+            var commandText = @"INSERT INTO TBL_T_USER_LOAN_ATTACHMENT
+                                (LOAN_ID,DESCRIPTION,TYPE,CREATED_DATE)
+                          VALUES(@LOANID,@DESCRIPTION,@TYPE,GETDATE())";
+            var parameters = new
+            {
+                LOANID = fd.UserId,
+                DESCRIPTION = fd.FileName,
+                TYPE = fd.Classification
+
+            };
+            maint.QueryInsertOrUpdateText(commandText, parameters);
         }
         catch (Exception ex)
         {
