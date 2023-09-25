@@ -64,7 +64,8 @@
                                             </div>
                                             <div class="right" style="text-align: right;">
                                                 <label class="label-small c1">Didn’t get the code?</label>
-                                                <label class="label-small">Click here to resend</label>
+
+                                                <label class="label-small" id="resendLink">Click here to resend</label>
                                             </div>
                                         </div>
                                     </div>
@@ -123,11 +124,72 @@
         let details = "";
         let vcode = "";
         let email = "";
+        let resendButtonDisabled = false;
         $(document).ready(() => {
             hideAlertLabels();
             initializePasswordValidation();
             initializeConfirmPasswordValidation();
+
+            $('#resendLink').on('click', () => {
+                const email = $('#txtEmail').val();
+                resendVerificationCode(email);
+            });
+
         });
+
+
+        const resendVerificationCode = (email) => {
+            if (resendButtonDisabled) {
+                // Button is disabled, do nothing
+                return;
+            }
+
+
+            // Disable the button to prevent multiple clicks
+            resendButtonDisabled = true;
+            $('#resendLink').addClass('disabled').text('Resending...');
+
+            // Reuse the GetUserID function
+            GetData({
+                url: 'Change_Password.aspx/GetUserID',
+                data: JSON.stringify({ query:"APP_PROFILE_GET_USER_ID",input: email })
+            }).then(response => {
+                // Handle the response here
+                let result = JSON.parse(response.d);
+                if (result.details) {
+                    // Code sent successfully, update details if needed
+                    details = result.details;
+                    console.log("New verification code sent.", result.details);
+
+                    // Start a countdown timer for 2 minutes
+                    startCountdownTimer();
+                } else {
+                    // Handle any errors
+                    console.error("Failed to resend verification code:", result.error);
+
+                    // Enable the resend button immediately in case of an error
+                    resendButtonDisabled = false;
+                    $('#resendLink').removeClass('disabled').text('Click here to resend');
+                }
+            });
+        };
+
+        const startCountdownTimer = () => {
+            let countdown = 3; // 2 minutes in seconds
+            const countdownTimer = setInterval(() => {
+                if (countdown <= 0) {
+                    clearInterval(countdownTimer);
+                    // Timer is over, enable the resend button
+                    resendButtonDisabled = false;
+                    $('#resendLink').removeClass('disabled').text('Click here to resend');
+                } else {
+                    $('#resendLink').text(`Resending in ${countdown} seconds`);
+                    countdown--;
+                }
+            }, 1000); // Update every 1 second
+        };
+
+
         const GetData = (config) => {
             config.type = config.type || "POST";
             config.data = config.data || "";
@@ -155,11 +217,9 @@
                 }
             });
         };
-
         const Save = () => {
             FormValidation();
         }
-
 
         const FormValidation = () => {
             const activeStep = $(".nav-link.active");
@@ -185,7 +245,7 @@
                         data: JSON.stringify({ query: "APP_PROFILE_GET_USER_ID", email: email, password: passwordValue })
                     }).then(e => {
                         let result = JSON.parse(e.d);
-                        if(result === "success"){
+                        if (result === "success") {
                             window.location = "Change_Password.aspx?Response=" + result;
                         }
                     });
@@ -377,7 +437,7 @@
             });
         }
 
- 
+
 
     </script>
 
