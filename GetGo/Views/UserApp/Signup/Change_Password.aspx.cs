@@ -8,6 +8,7 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Newtonsoft.Json;
+using System.Dynamic;
 
 public partial class Views_UserApp_Signup_Change_Password : System.Web.UI.Page
 {
@@ -19,60 +20,62 @@ public partial class Views_UserApp_Signup_Change_Password : System.Web.UI.Page
     public static string GetUserID(string query, string input)
     {
         var user = new UserAppController();
-        var parameters =
-            new { INPUT = input };
-        return JsonConvert.SerializeObject(user.QueryGetOrPopulate(query, parameters));
+        var parameters = new { INPUT = input };
+        dynamic response = new ExpandoObject(); // Use dynamic type
 
+        var data = user.QueryGetOrPopulate(query, parameters);
+
+        if (data.Rows.Count > 0)
+        {
+            Random random = new Random();
+            int verificationCode = random.Next(100000, 999999);
+            string Vcode = verificationCode.ToString();
+
+            // Email configuration
+            //string senderEmail = "reijideveloper@gmail.com";
+            //string senderPassword = "kiwwngslnfrrgfsc";
+            //string recipientEmail = input;
+            //string subject = "[GetGO] Please verify your device";
+            //string body = "GetGO Verification: Your one-time PIN is: " + Vcode + ". Please do not share it.";
+
+            //// Create a new SmtpClient instance
+            //SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+            //smtpClient.EnableSsl = true;
+            //smtpClient.Credentials = new NetworkCredential(senderEmail, senderPassword);
+
+            try
+            {
+                //// Create a new MailMessage instance
+                //MailMessage mailMessage = new MailMessage(senderEmail, recipientEmail, subject, body);
+
+                //// Send the email
+                //smtpClient.Send(mailMessage);
+             var result = Vcode +"|"+ input;
+                response.details = result; // Assign Vcode to the response
+            }
+            catch (Exception ex)
+            {
+
+                response.error = ex.Message;
+            }
+        }
+        else
+        {
+            response.error = "Your email is not registered.";
+        }
+
+        return JsonConvert.SerializeObject(response);
     }
     [WebMethod]
-    public static object SendMail(string email)
+    public static string UpdatePassword(string query, string email, string password)
     {
-        Random random = new Random();
-        int verificationCode = random.Next(100000, 999999);
-        string Vcode = verificationCode.ToString();
-        try
-        {
-            // Email configuration
-            string senderEmail = "reijideveloper@gmail.com";
-            string senderPassword = "kiwwngslnfrrgfsc";
-            string recipientEmail = email;
-            string subject = "[GetGO] Please verify your device";
-            string body = "GetGO Verification" + "Your one-time PIN is:" + Vcode + "Please do not share it.";
-
-            // Create a new SmtpClient instance
-            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-            smtpClient.EnableSsl = true;
-            smtpClient.Credentials = new NetworkCredential(senderEmail, senderPassword);
-
-            // Create a new MailMessage instance
-            MailMessage mailMessage = new MailMessage(senderEmail, recipientEmail, subject, body);
-
-            // Send the email
-            smtpClient.Send(mailMessage);
-
-            var user = new UserAppController();
-            var commandText = @"
-                    MERGE INTO TBL_T_VERIFICATION AS target
-                    USING (SELECT @EMAIL AS EMAIL, @VCODE AS VCODE) AS source
-                    ON target.EMAIL = source.EMAIL
-                    WHEN MATCHED THEN
-                        UPDATE SET target.USER_CODE = source.VCODE
-                    WHEN NOT MATCHED THEN
-                        INSERT (EMAIL, USER_CODE)
-                        VALUES (source.EMAIL, source.VCODE);
-               ";
-            var parameters = new { EMAIL = email, VCODE = Vcode };
-
-            return user.QueryInsertOrUpdateText(commandText, parameters);
-            //var response = new { message = "success" };
-            //return response;
-
-        }
-        catch (Exception ex)
-        {
-            var response = new { message = ex.Message };
-            return JsonConvert.SerializeObject(response);
-        }
+        UserAppController user = new UserAppController();
+        var commandtext = @"UPDATE  TBL_M_USER_MASTER 
+                                SET PASSWORD =@PASSWORD 
+                                WHERE EMAIL_ADDRESS =@EMAIL";
+        var parameters = new {EMAIL= email, PASSWORD= password };
+        return JsonConvert.SerializeObject(user.QueryInsertOrUpdateText(commandtext, parameters));
+  
     }
 
 
