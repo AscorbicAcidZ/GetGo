@@ -47,7 +47,7 @@
         font-size: 10px;
         position: absolute;
         left: 0;
-        z-index: 8090;
+        z-index: 1000;
         border-radius: 20px;
         color: black;
         transform: translateY(-50%);
