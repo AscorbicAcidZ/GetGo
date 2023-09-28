@@ -7,6 +7,16 @@
     color: black;
     border-radius: 20px;
 }
+.badge-1 {
+    border: none;
+    background-color: #F2F2F2;
+    border-radius: 10px;
+    height: 40px;
+
+    color: #1B5B6B;
+    font-size:11px;
+}
+
 
 .wrapper {
     /* Add your wrapper styles here */
@@ -50,14 +60,47 @@
 }
 
 
-    /* Style to remove the border on hover for the custom input */
-    .custom-input:hover {
-        border: none;
-    }
+/* Style to remove the border on hover for the custom input */
+.custom-input:hover {
+    border: none;
+}
+
+.loan-date-box {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.loan-date {
+    width: 50%;
+    height: 100px;
+    border-radius: 10px;
+    text-align: center;
+    padding: 10px;
+}
+
+.date-label {
+    line-height: 1;
+}
+
+.date-value {
+    font-size: 30px;
+    line-height: 0;
+
+}
+
+.date-month {
+    line-height: 0;
+}
+
+.next-due {
+    background-color: red;
+    color: white;
+}
 
 
 .custom-form-group {
-    background-color: gray;
+    background-color: #E9E9E9;
     border-radius: 10px;
     line-height: 15px;
     padding: 10px;
@@ -67,8 +110,8 @@
 .custom-current-loan {
     text-align: left;
     font-size: 12px;
-  
 }
+
 .custom-loan-title {
     text-align: center;
     font-size: 12px;
@@ -77,13 +120,13 @@
 /* Styles for the loan amount */
 .loan-amount {
     font-size: 16px;
-    color: white;
+    color: black;
 }
 
 
 .loan-start-date,
 .loan-due-date {
-    color: lightgray
+    color: darkgray
 }
 
 /* Styles for the current loan button */
@@ -102,11 +145,13 @@
     /* Styles for the icon inside the button */
     .current-loan-button button i {
         font-size: 25px; /* Adjust the icon size as needed */
-        color: lightgray; /* Set the icon color to your preference */
+        color: darkgray ; /* Set the icon color to your preference */
     }
+
 .loan-summary {
     border-collapse: collapse;
     width: 100%;
+    color:gray;
 }
 
 th, td {
@@ -118,3 +163,17 @@ th, td {
     td.data {
         text-align: right; /* Align data cells to the right */
     }
+.custom-current-details {
+    text-align: left;
+    font-size: 14px;
+}
+.current-loan-status {
+    display: flex;
+    align-items: center;
+    color:lightgray;
+
+}
+.loan-details-list {
+   
+    padding: 10px;
+}

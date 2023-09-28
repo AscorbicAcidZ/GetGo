@@ -136,6 +136,25 @@ public class UserAppController
             }
         }
     }
+    public string QueryGetLoanInformation(string query, object parameters = null)
+    {
+        using (SqlConnection conn = new SqlConnection(sqlconn))
+        {
+            conn.Open();
+
+            using (var multi = conn.QueryMultiple(query, parameters))
+            {
+                var data = new LoanInformation
+                {
+                    LoanRecords = multi.Read<LoanRecord>().ToList(),
+                    LoanDetailsRecords = multi.Read<LoanDetailsRecord>().ToList(),
+                };
+                var json = JsonConvert.SerializeObject(data);
+
+                return json;
+            }
+        }
+    }
     public void LogErrorMessageToDatabase(string errorMessage)
     {
         try

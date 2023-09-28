@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using static HomeModel;
 
 /// <summary>
 /// Summary description for UserModel
@@ -71,7 +72,14 @@ public class LoanData
     public List<TenureOption> TenureOptions { get; set; }
     public List<BranchList> BranchLists { get; set; }
     public List<LoanList> LoanLists { get; set; }
+   
 }
+public class LoanInformation
+{
+    public List<LoanRecord> LoanRecords { get; set; }
+    public List<LoanDetailsRecord> LoanDetailsRecords { get; set; }
+}
+
 
 public class InstallmentPlan
 {
@@ -96,4 +104,30 @@ public class LoanList
     public int AMOUNT { get; set; }
     public string INTEREST { get; set; }
     public string PROCESS_FEE { get; set; }
+}
+public class LoanRecord
+{
+    public int LOAN_ID { get; set; }
+    public DateTime RELEASED_DATE { get; set; }
+    public DateTime MATURITY_DATE { get; set; }
+    public decimal AMOUNT { get; set; }
+    public string INSTALLMENT_PLAN{ get; set; }
+    public int TENURE { get; set; }
+    public decimal PROCESSING_FEE { get; set; }
+    public decimal INTEREST_RATE { get; set; }
+    public string STATUS { get; set; }
+    public string BRANCH { get; set; }
+}
+
+public class LoanDetailsRecord
+{
+    public int LOAN_DETAILS_ID { get; set; }
+    public int LOAN_ID { get; set; }
+    public DateTime START_DATE { get; set; }
+    public DateTime DUE_DATE { get; set; }
+    public decimal AMOUNT { get; set; }
+    public string METHOD { get; set; }
+    public decimal AMOUNT_PAID { get; set; }
+    public decimal BALANCE { get; set; }
+    public bool IS_COMPLETE { get; set; }
 }
