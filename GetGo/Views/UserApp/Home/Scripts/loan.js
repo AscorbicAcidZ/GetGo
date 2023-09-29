@@ -10,7 +10,6 @@ const ddlLoanAmount = $("#ddlLoanAmount");
 const ddlTenure = $("#ddlTenure");
 const ddlInstallmentPlan = $("#ddlInstallmentPlan");
 const ddlBranchList = $("#ddlBranch");
-
 const Bussiness = $('#txtBussiness');
 const NatureOfWork = $('#txtNatureOfWork');
 const MonthlyIncome = $('#txtMonthlyIncome');
@@ -19,6 +18,9 @@ const CoGuarantor = $('#txtCoGuarantor');
 const CoGuarantorNumber = $('#txtCoGuarantorNumber');
 const NameOfCollateral = $('#txtNameOfCollateral');
 const Description = $('#txtDescription');
+const Remaining = $('#lblRemain');
+
+
 
 var loaderContainer = $('#loader-container');
 let tenureOptions = [];
@@ -30,13 +32,15 @@ let loanLists = [];
 $(document).ready(() => {
     bsCustomFileInput.init();
     GetLoanDetails();
+   
     disableStep2FormControls();
     ProfileDetails();
 });
 
+/*const remainingCreditLimit = 9000;*/
 
 const GetLoanDetails = () => {
-
+   
     GetData(
         { url: "ApplyLoan.aspx/GetLoanDetails" }).then(e => {
             let data = JSON.parse(e.d);
@@ -45,7 +49,7 @@ const GetLoanDetails = () => {
             installmentPlans = data.InstallmentPlans;
             tenureOptions = data.TenureOptions;
             branchLists = data.BranchLists;
-
+            console.log(data);
             $('.select-1').each(function () {
                 $(this).prepend('<option value="" selected="true" disabled="disabled">Please Select</option>');
             });
@@ -76,18 +80,91 @@ const GetLoanDetails = () => {
                     ddlTenure.append($(`<option value="${item.TENURE_ID}">${item.TENURE}</option>`));
                 });
                 SetDefaultValue();
+
+              
             });
             ddlLoanAmount.change(() => {
                 updateRateAndFee();
-                /*     SetDefaultValue();*/
+       
+           
             });
             ddlTenure.change(() => {
                 updatePaymentAndNo();
             });
 
             updateRateAndFee();
-
+            GetCreditLimit();
         });
+    ddlLoanAmount.change(() => {
+        updateRateAndFee();
+        SetDefaultValue();
+        ddlTenure.empty();
+    });
+    ddlTenure.change(() => {
+        updatePaymentAndNo();
+    });
+}
+
+const GetCreditLimit = () => {
+    GetData({
+        url: "ApplyLoan.aspx/GetCreditLimit", data: JSON.stringify({ userid: params.USERID })
+    }).then(e => {
+        let data = JSON.parse(e.d);
+        const result = data.CreditLimits;
+        const CreditLimit = result[0].CREDIT_LIMIT;
+        const TotalLoan = result[0].TOTAL_LOAN;
+
+
+        const total = (parseInt(CreditLimit) - parseInt(TotalLoan))
+        Remaining.text(total);
+        CreditLimitValidation();
+        $('#lblCreditLimit').text(CreditLimit);
+
+
+    });
+}
+const CreditLimitValidation = () => {
+    var remainingCreditLimit = parseInt(Remaining.text());
+    console.log(remainingCreditLimit);
+    if (parseInt(remainingCreditLimit) == "0") {
+        // Disable all options in ddlLoanAmount
+        ddlLoanAmount.prop('disabled', true);
+    } else if (remainingCreditLimit === 3000) {
+        // Enable 3000 option, disable others
+        ddlLoanAmount.prop('disabled', false);
+        ddlLoanAmount.find('option').prop('disabled', true); // Disable all options
+        ddlLoanAmount.find('option[value="1"]').prop('disabled', false); // Enable 3000 option
+    } else if (remainingCreditLimit === 6000) {
+        // Enable 3000 and 6000 options, disable others
+        ddlLoanAmount.prop('disabled', false);
+        ddlLoanAmount.find('option').prop('disabled', true); // Disable all options
+        ddlLoanAmount.find('option[value="1"]').prop('disabled', false); // Enable 3000 option
+        ddlLoanAmount.find('option[value="2"]').prop('disabled', false); // Enable 6000 option
+
+
+    } else if (remainingCreditLimit === 9000) {
+        // Enable 3000, 6000, and 9000 options, disable others
+        ddlLoanAmount.prop('disabled', false);
+        ddlLoanAmount.find('option').prop('disabled', true); // Disable all options
+        ddlLoanAmount.find('option[value="1"]').prop('disabled', false); // Enable 3000 option
+        ddlLoanAmount.find('option[value="2"]').prop('disabled', false); // Enable 6000 option
+        ddlLoanAmount.find('option[value="3"]').prop('disabled', false); // Enable 9000 option
+    } else if (remainingCreditLimit === 12000) {
+        // Enable 3000, 6000, and 9000 options, disable others
+        ddlLoanAmount.prop('disabled', false);
+        ddlLoanAmount.find('option').prop('disabled', true); // Disable all options
+        ddlLoanAmount.find('option[value="1"]').prop('disabled', false); // Enable 3000 option
+        ddlLoanAmount.find('option[value="2"]').prop('disabled', false); // Enable 6000 option
+        ddlLoanAmount.find('option[value="3"]').prop('disabled', false); // Enable 9000 option
+        ddlLoanAmount.find('option[value="4"]').prop('disabled', false); // Enable 9000 option 
+    }
+    else {
+        console.log('credit validation')
+
+    }
+
+
+
 }
 const GetData = (config) => {
     config.type = config.type || "POST";
@@ -114,7 +191,7 @@ const GetData = (config) => {
             $('#ERROR').text('Error: ' + error);
             loaderContainer.hide();
         }
-        
+
 
     });
 
@@ -128,7 +205,7 @@ const updateRateAndFee = () => {
     $('#lblloanId').text(loan);
     $('#lblFee').text(fee);
 
-    
+
 };
 const updatePaymentAndNo = () => {
 
@@ -164,7 +241,7 @@ const SetDefaultValue = () => {
 //end of step 1
 
 //step 2
-const ProfileDetails =() => {
+const ProfileDetails = () => {
     var items = {
         INPUT: params.USERID
     }
@@ -202,7 +279,7 @@ const ProfileDetails =() => {
             }
             console.log(userDetails[0].PROFILE_IMAGE);
             //Populate the textboxes with the retrieved user details
-       ;
+            ;
             $('#txtFirstName').val(userDetails[0].FIRST_NAME);
             $('#txtLastName').val(userDetails[0].LAST_NAME);
             $('#txtMiddleName').val(userDetails[0].MIDDLE_NAME);
@@ -244,8 +321,13 @@ const ProfileDetails =() => {
 const filesArray = [];
 
 const Save = () => {
+    if (parseInt(Remaining) === 0) {
 
-    FormValidation();
+    }
+    else {
+        FormValidation();
+    }
+
 }
 const FormValidation = () => {
     const activeStep = $(".nav-link.active");
@@ -272,7 +354,7 @@ const FormValidation = () => {
 
         SaveFiles();
     }
-  
+
     const nextStep = getNextStep(activeContentId);
 
     // Remove "active" class from the current content and tab
@@ -447,7 +529,7 @@ const SaveFiles = () => {
         formData.append("classification", fileInput.getAttribute("data-classification")); // Append the correct classification
         filesArray.push(formData);
     });
-   /* alert('Checking Attached photo');*/
+    /* alert('Checking Attached photo');*/
     LoadingInfo.text('Checking attached file');
     GetData({
         url: "ApplyLoan.aspx/GetLoanID",
@@ -456,10 +538,10 @@ const SaveFiles = () => {
         })
     }).then(e => {
         let result = JSON.parse(e.d);
- /*       alert('uploadarray goes');*/
+        /*       alert('uploadarray goes');*/
 
         LoadingInfo.text('Verifying attached file');
-      
+
         upload(filesArray, result[0].LOAN_ID);
     }
     );
@@ -501,7 +583,7 @@ const upload = (filesArray, loanID) => {
         processData: false,
         contentType: false,
         success: function (e) {
-     /*       alert('success');*/
+            /*       alert('success');*/
             const USERID = params.USERID;
             const LOAN = parseInt(ddlLoanAmount.find(":selected").text());
             const INTEREST = $('#lblRate').text()
@@ -510,14 +592,14 @@ const upload = (filesArray, loanID) => {
             const LOANTENURE = $('#lblNoOfRepayment').text()
             const BRANCH = ddlBranchList.find(":selected").text();
             const LOANID = loanID;
-          
+
             loaderContainer.hide();
-           
-            $('#ERROR').text(e,"error")
+
+            $('#ERROR').text(e, "error")
             const url = `Home_Invoice.aspx?USERID=${USERID}&LOAN=${LOAN}&INTEREST=${INTEREST}&PROCESSFEE=${PROCESSFEE}&DAILY=${DAILY}&LOANTENURE=${LOANTENURE}&BRANCH=${BRANCH}&LOANID=${LOANID}&RESPONSE=success`;
 
             window.location = url;
-       
+
         },
         error: function (xhr, status, error) {
             if (xhr.status === 413) {
@@ -528,7 +610,7 @@ const upload = (filesArray, loanID) => {
             $('#ERROR').text('Error: ' + error);
             loaderContainer.hide();
         }
-        
+
     })
 
 

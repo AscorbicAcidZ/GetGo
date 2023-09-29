@@ -155,6 +155,24 @@ public class UserAppController
             }
         }
     }
+    public string QueryGetCreditLimitInformation(string query, object parameters = null)
+    {
+        using (SqlConnection conn = new SqlConnection(sqlconn))
+        {
+            conn.Open();
+
+            using (var multi = conn.QueryMultiple(query, parameters))
+            {
+                var data = new CreditLimitInformation
+                {
+                    CreditLimits = multi.Read<CreditLimit>().ToList(),
+                };
+                var json = JsonConvert.SerializeObject(data);
+
+                return json;
+            }
+        }
+    }
     public void LogErrorMessageToDatabase(string errorMessage)
     {
         try

@@ -63,7 +63,8 @@
                                         <div class="form-group">
                                             <div class="align-right">
                                                 <p>
-                                                    Credit Limit:<label>P 21321</label>
+                                                    Credit Limit:<label id="lblCreditLimit">P -</label>
+                                                 <label id="lblRemain" style="display:none"></label>
                                                 </p>
                                             </div>
                                         </div>

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Web;
-using static HomeModel;
+
 
 /// <summary>
 /// Summary description for UserModel
@@ -49,16 +50,16 @@ public class UserModel
 public class UserLoan 
 {
     public string USER_ID { get; set; }
-    public int LOAN_AMOUNT { get; set; }
+    public string LOAN_AMOUNT { get; set; }
     public string INSTALLMENT_ID { get; set; }
     public string TENURE_ID { get; set; }
-    public int BRANCH { get; set; }
+    public string BRANCH { get; set; }
     public string BUSSINESS { get; set; }
     public string NATURE_OF_WORK { get; set; }
-    public int INCOME { get; set; }
+    public string INCOME { get; set; }
     public string CHARACTER_REFERENCE { get; set; }
     public string CO_GUARANTOR { get; set; }
-    public int CO_PHONE_NO { get; set; }
+    public string CO_PHONE_NO { get; set; }
     public string NAME_OF_COLLATERAL { get; set; }
     public string DESCRIPTION { get; set; }
 
@@ -79,6 +80,9 @@ public class LoanInformation
     public List<LoanRecord> LoanRecords { get; set; }
     public List<LoanDetailsRecord> LoanDetailsRecords { get; set; }
 }
+public class CreditLimitInformation {
+    public List<CreditLimit>CreditLimits { get; set; }
+}
 
 
 public class InstallmentPlan
@@ -86,7 +90,6 @@ public class InstallmentPlan
     public int INSTALLMENT_ID { get; set; }
     public string INSTALLMENT_PLAN { get; set; }
 }
-
 public class TenureOption
 {
     public int TENURE_ID { get; set; }
@@ -118,7 +121,6 @@ public class LoanRecord
     public string STATUS { get; set; }
     public string BRANCH { get; set; }
 }
-
 public class LoanDetailsRecord
 {
     public int LOAN_DETAILS_ID { get; set; }
@@ -130,4 +132,11 @@ public class LoanDetailsRecord
     public decimal AMOUNT_PAID { get; set; }
     public decimal BALANCE { get; set; }
     public bool IS_COMPLETE { get; set; }
+}
+
+public class CreditLimit
+{
+    public  int CREDIT_LIMIT{ get; set; }
+    public int TOTAL_LOAN { get; set; }
+
 }

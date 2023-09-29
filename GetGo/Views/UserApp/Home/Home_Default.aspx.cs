@@ -30,7 +30,7 @@ public partial class Views_UserApp_Home_Home_Default : System.Web.UI.Page
           FROM [db_Getgo].[dbo].[TBL_T_USER_LOAN] AS A WITH(NOLOCK)
          INNER JOIN  TBL_M_LOAN_PLAN  AS B WITH(NOLOCK) ON A.INSTALLMENT_ID=  B.INSTALLMENT_ID
          INNER JOIN TBL_M_LOAN_TENURE_OPTIONS AS C WITH(NOLOCK) ON A.TENURE =c.TENURE_ID 
-         INNER JOIN TBL_M_BRANCH AS D  ON  A.BRANCH = D.ID WHERE A.USER_ID =@USER_ID AND A.STATUS !='IN PROCESS' ORDER BY LOAN_ID ASC;
+         INNER JOIN TBL_M_BRANCH AS D  ON  A.BRANCH = D.ID WHERE A.USER_ID =@USER_ID AND A.STATUS ='APPROVED' ORDER BY LOAN_ID ASC;
          
          SELECT A.LOAN_DETAILS_ID,
                 A.LOAN_ID,
@@ -42,7 +42,7 @@ public partial class Views_UserApp_Home_Home_Default : System.Web.UI.Page
                 A.BALANCE,
                 A.IS_COMPLETE
                 FROM TBL_T_BORROWER_LOAN_PLAN_DETAILS AS A 
-                INNER JOIN  TBL_T_USER_LOAN AS B WITH(NOLOCK) ON A.LOAN_ID = B.LOAN_ID WHERE A.USER_ID =@USER_ID AND B.STATUS !='IN PROCESS' ORDER BY A.LOAN_DETAILS_ID ASC ;"
+                INNER JOIN  TBL_T_USER_LOAN AS B WITH(NOLOCK) ON A.LOAN_ID = B.LOAN_ID WHERE A.USER_ID =@USER_ID AND B.STATUS ='APPROVED' ORDER BY A.LOAN_DETAILS_ID ASC ;"
             ;
         var parameters = new { USER_ID = user_id };
         var user = new UserAppController();

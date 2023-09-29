@@ -50,4 +50,41 @@ public partial class Views_UserApp_Home_ApplyLoan : System.Web.UI.Page
         var jsonData = user.QueryGetMultipleText(commandText);
         return jsonData;
     }
+    [WebMethod]
+    public static string GetCreditLimit(string userid)
+    {
+
+        var user = new UserAppController();
+        var commandText = @"WITH CALCULATED_AMOUNT AS (
+                                           SELECT 
+                                              CAST(ROUND(AMOUNT * (CONVERT(DECIMAL, INTEREST)/100), 0) AS INT) AS INTEREST,
+                                              CAST(ROUND(AMOUNT + (AMOUNT * (CONVERT(DECIMAL, INTEREST)/100)), 0) AS INT) AS CALCULATED_AMOUNT
+                                            FROM 
+                                                [db_Getgo].[dbo].[TBL_M_LOAN_AMOUNT]
+                                        ), TOTAL_LOAN AS(
+                                        
+                                        SELECT ISNULL(SUM(AMOUNT- INTEREST),0) AS TOTAL_LOAN,USER_ID
+                                        FROM  CALCULATED_AMOUNT  
+                                        INNER JOIN TBL_T_USER_LOAN ON CALCULATED_AMOUNT = AMOUNT
+                                        WHERE USER_ID =@USERID AND STATUS !='FULLY PAID'
+                                           GROUP BY USER_ID
+                                        
+                                        
+                                        )
+                                        ,CREDIT_LIMIT AS (
+                                        			SELECT COALESCE(AMOUNT, 0) AS CREDIT_LIMIT, USER_ID
+                                        			FROM TBL_T_USER_CREDIT_LIMIT
+                                        			WHERE USER_ID = @USERID)
+                                        
+                                         SELECT COALESCE(TL.TOTAL_LOAN, 0) AS TOTAL_LOAN, COALESCE(CL.CREDIT_LIMIT, 0) AS CREDIT_LIMIT
+                                                                        FROM TOTAL_LOAN AS TL
+                                                                        LEFT JOIN CREDIT_LIMIT AS CL ON TL.USER_ID = CL.USER_ID
+                                                                        UNION ALL
+                                                                        SELECT 0 AS TOTAL_LOAN, 0 AS CREDIT_LIMIT
+                                                                        WHERE NOT EXISTS (SELECT 1 FROM TOTAL_LOAN);";
+        var parameters = new { USERID = userid};
+
+        var data = user.QueryGetCreditLimitInformation(commandText,parameters);
+        return data;
+    }
 }
