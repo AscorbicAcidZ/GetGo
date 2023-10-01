@@ -31,26 +31,26 @@ public partial class Views_UserApp_Signup_Change_Password : System.Web.UI.Page
             int verificationCode = random.Next(100000, 999999);
             string Vcode = verificationCode.ToString();
 
-            // Email configuration
-            //string senderEmail = "reijideveloper@gmail.com";
-            //string senderPassword = "kiwwngslnfrrgfsc";
-            //string recipientEmail = input;
-            //string subject = "[GetGO] Please verify your device";
-            //string body = "GetGO Verification: Your one-time PIN is: " + Vcode + ". Please do not share it.";
+            //Email configuration
+            string senderEmail = "reijideveloper@gmail.com";
+            string senderPassword = "kiwwngslnfrrgfsc";
+            string recipientEmail = input;
+            string subject = "[GetGO] Please verify your device";
+            string body = "GetGO Verification: Your one-time PIN is: " + Vcode + ". Please do not share it.";
 
-            //// Create a new SmtpClient instance
-            //SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
-            //smtpClient.EnableSsl = true;
-            //smtpClient.Credentials = new NetworkCredential(senderEmail, senderPassword);
+            // Create a new SmtpClient instance
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+            smtpClient.EnableSsl = true;
+            smtpClient.Credentials = new NetworkCredential(senderEmail, senderPassword);
 
             try
             {
-                //// Create a new MailMessage instance
-                //MailMessage mailMessage = new MailMessage(senderEmail, recipientEmail, subject, body);
+                // Create a new MailMessage instance
+                MailMessage mailMessage = new MailMessage(senderEmail, recipientEmail, subject, body);
 
-                //// Send the email
-                //smtpClient.Send(mailMessage);
-             var result = Vcode +"|"+ input;
+                // Send the email
+                smtpClient.Send(mailMessage);
+                var result = Vcode +"|"+ input;
                 response.details = result; // Assign Vcode to the response
             }
             catch (Exception ex)

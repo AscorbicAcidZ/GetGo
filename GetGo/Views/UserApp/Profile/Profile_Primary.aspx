@@ -248,7 +248,7 @@
                             formData.append("classification", fileInput.getAttribute("data-classification"));
                             upload(formData);
                             window.location = "Profile_Primary.aspx?USERID=" + input;
-                            alert(input);
+                           
                           
                         });
 

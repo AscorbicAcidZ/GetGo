@@ -175,7 +175,7 @@
         };
 
         const startCountdownTimer = () => {
-            let countdown = 3; // 2 minutes in seconds
+            let countdown = 120; // 2 minutes in seconds
             const countdownTimer = setInterval(() => {
                 if (countdown <= 0) {
                     clearInterval(countdownTimer);
@@ -246,7 +246,10 @@
                     }).then(e => {
                         let result = JSON.parse(e.d);
                         if (result === "success") {
-                            window.location = "Change_Password.aspx?Response=" + result;
+
+                            //alert('success');
+                            window.location = "Change_Password.aspx?Response=success";
+                        
                         }
                     });
                 } else {
@@ -285,6 +288,7 @@
                     details = result.details;
                     let isValid = true;
                     console.log(details);
+                    alert(details);
 
                 }
 

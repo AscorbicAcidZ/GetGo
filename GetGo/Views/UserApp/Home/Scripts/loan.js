@@ -157,10 +157,13 @@ const CreditLimitValidation = () => {
         ddlLoanAmount.find('option[value="2"]').prop('disabled', false); // Enable 6000 option
         ddlLoanAmount.find('option[value="3"]').prop('disabled', false); // Enable 9000 option
         ddlLoanAmount.find('option[value="4"]').prop('disabled', false); // Enable 9000 option 
+    } else if (remainingCreditLimit === 15000) {
+
+    
     }
     else {
-        console.log('credit validation')
-
+      
+        ddlLoanAmount.prop('disabled', true);
     }
 
 
@@ -322,7 +325,7 @@ const filesArray = [];
 
 const Save = () => {
     if (parseInt(Remaining) === 0) {
-
+        alert('Loan Exceeded to the Limit')
     }
     else {
         FormValidation();

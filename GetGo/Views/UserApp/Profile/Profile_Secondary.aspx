@@ -145,7 +145,7 @@
                 dataType: "json",
                 success: function (response) {
                     var result = JSON.parse(response.d);
-                    alert($('#txtUserID').val());
+                    //alert($('#txtUserID').val());
                     window.location = "Profile_Quartenary.aspx?USERID=" + $('#txtUserID').val();
                   
                 },
