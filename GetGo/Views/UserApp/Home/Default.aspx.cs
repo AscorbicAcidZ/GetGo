@@ -9,7 +9,7 @@ using System.Web.UI.WebControls;
 
 public partial class Views_UserApp_Home_Default : System.Web.UI.Page
 {
-    public string UserID;
+    public string UserID,Action;
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!IsPostBack)
@@ -17,6 +17,7 @@ public partial class Views_UserApp_Home_Default : System.Web.UI.Page
             UserID = Request.QueryString["USERID"] ?? "";
             if (!string.IsNullOrEmpty(UserID))
             {
+
                 var maint = new UserAppController();
               
 

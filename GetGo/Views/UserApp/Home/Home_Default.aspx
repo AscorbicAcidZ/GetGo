@@ -1,7 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/UserApp/Home/Page.master" AutoEventWireup="true" CodeFile="Home_Default.aspx.cs" Inherits="Views_UserApp_Home_Home_Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <link href="../../../Resources/custom-css/home-default.css" rel="stylesheet" />
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
     <div class="wrapper">
@@ -22,7 +24,7 @@
 
                     <div class="col-md-4">
                         <div class="card">
-                            <div class="card-body text-left" style="padding-bottom: 2px !important; padding-top: 2px !important;">
+                            <div class="card-body text-left" style="padding-bottom: 5px !important; padding-top: 15px !important;">
 
                                 <h5 id="lblBranch">Branch Name</h5>
 
@@ -52,10 +54,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-sample" style="background-color: white; border-radius: 10px; padding-left:1px;">
+                        <div class="card-sample" style="background-color: white; border-radius: 10px; padding-left: 1px;">
 
                             <div class="form-group row">
-                                <div class="loan-date-box" style="width:98%">
+                                <div class="loan-date-box" style="width: 98%">
                                     <div class="loan-date">
                                         <label class="date-label">Start Date</label><br />
                                         <label class="date-value">-</label><br />
@@ -73,10 +75,16 @@
 
                         <div class="card">
                             <div class="borrowed-card" style="border-radius: 10px;">
-                                <div class="align-center">
-                                    <span class="badge badge-info color-1 text-b">Amount Borrowed:</span>₱<label id="lblAmountBorrowed">-</label>
+                                <div class="text-left">
+                                    <div class="amount-padding" style="padding: 10px;">
+                                        <span class="badge badge-info color-1 text-b">Amount Borrowed:</span>₱<label id="lblAmountBorrowed">-</label>
+                                    </div>
                                 </div>
-
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="form-group">
+                                addtional text here
                             </div>
                         </div>
                     </div>
@@ -154,17 +162,17 @@
                                             </div>
                                             <div class="form-group">
                                                 <table class="loan-summary">
-                                                     <tr>
-                                                        <th style="width:50%">Start Date:</th>
+                                                    <tr>
+                                                        <th style="width: 50%">Start Date:</th>
                                                         <td class="data" id="startDate">Data7</td>
                                                         <!-- Data for Start Date -->
                                                     </tr>
-                                                       <tr>
+                                                    <tr>
                                                         <th>Loan Tenure:</th>
                                                         <td class="data" id="loanTenure">Data6</td>
                                                         <!-- Data for Loan Tenure -->
                                                     </tr>
-                                                     <tr>
+                                                    <tr>
                                                         <th>Process Fee:</th>
                                                         <td class="data" id="processFee">Data3</td>
                                                         <!-- Data for Process Fee -->
@@ -180,7 +188,7 @@
                                                         <!-- Data for Late Fee -->
                                                     </tr>
 
-                                                 
+
                                                     <tr>
                                                         <th>Transaction Branch Name:</th>
                                                         <td class="data" id="branchName">Data8</td>
@@ -214,9 +222,118 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+    <div class="modal fade" id="modal-repayment" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="background-color: #bcf4e4">
+                <div class="modal-header">
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <section class="content">
+                        <div class="container-fluid">
+                            <div class="row justify-content-center">
+                                <div class="col-md-12">
+
+
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <br />
+                                            <div class="form-group">
+                                                <div class="header-label-2">
+
+                                                    <label class=" color-1">Select Method</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row justify-content-around">
+                                                <img src="../../../Resources/dist/img/additional/branch.png" width="80" height="50" class="clickable-image" onclick="ModeOfRepayment('branch')" />
+                                                <img src="../../../Resources/dist/img/additional/gcash.png" width="80" height="50" class="clickable-image" onclick="ModeOfRepayment('gcash')" />
+                                                <img src="../../../Resources/dist/img/additional/bank.png" width="80" height="50" class="clickable-image" onclick="ModeOfRepayment('bank')" />
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="card" id="repayment-details">
+                                        <br />
+                                        <div class="card-body">
+                                            <div class="branch-repayment" id="branch-repayment">
+                                                <div class="form-group">
+                                                    <div class="header-label-2">
+                                                        <label class=" color-1">Attach Receipt Here</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <img src="../../../Resources/dist/img/additional/branch.png" width="90" height="70" />
+                                                    <p style="font-size: 14px;">Once paid at your chosen branch, kindly attach your transaction receipt here.</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="bank-repayment" id="bank-repayment">
+                                                <div class="form-group">
+                                                    <div class="header-label-2">
+                                                        <label class=" color-1">Send Your Payment</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <img src="../../../Resources/dist/img/additional/bank.png" width="90" height="70" />
+                                                    <div class="input">
+                                                        <input type="text" required="" autocomplete="off" class="form-control input" value="1684 620 00999" readonly="readonly" style="text-align: center">
+                                                    </div>
+                                                    <div class="input" style="text-align: center">
+                                                        <input type="text" required="" autocomplete="off" class="form-control input" value="JOSHUA CABADIN" readonly="readonly" style="text-align: center">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="gcash-repayment" id="gcash-repayment">
+                                                <div class="form-group">
+                                                    <div class="header-label-2">
+                                                        <label class=" color-1">Send Your Payment</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <img src="../../../Resources/dist/img/additional/gcash.png" width="90" height="70" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <img src="../../../Resources/dist/img/additional/gcash-01.png" width="152" height="213" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" data-classification="sjksgfdlk" id="receipt">
+                                                    <label class="custom-file-label" style="font-size: 12px" for="receipt">Attach receipt here</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <button class="btn btn-success" type="button" style="width: 100%; border-radius: 10px;" onclick="ConfirmPayment()">Confirm</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="footer" runat="Server">
+
     <script>
+
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop),
         });
@@ -237,10 +354,8 @@
                 // Call the CurrentLoans function when the button is clicked
                 CurrentLoans();
             });
-            $(".see-details").click(() => {
-                // Call the CurrentDetails function when a button with class "see-details" is clicked
-                alert('click');
-            });
+
+
 
         });
 
@@ -440,6 +555,24 @@
             console.log(html);
         }
 
+
+        const ModeOfRepayment = (category) => {
+            $('#repayment-details').show();
+            if (category === "branch") {
+                $(".branch-repayment").show();
+                $(".bank-repayment, .gcash-repayment").hide();
+                $('.custom-file-input').attr("data-classification", "BRANCH");
+            } else if (category === "gcash") {
+                $(".gcash-repayment").show();
+                $(".branch-repayment, .bank-repayment").hide();
+                $('.custom-file-input').attr("data-classification", "GCASH");
+            } else if (category === "bank") {
+                $(".bank-repayment").show();
+                $(".branch-repayment, .gcash-repayment").hide();
+                $('.custom-file-input').attr("data-classification", "BANK");
+            }
+            console.log(category);
+        }
         const GetData = (config) => {
             config.type = config.type || "POST";
             config.data = config.data || "";
@@ -470,6 +603,49 @@
             });
 
         };
+
+
+        const RepaymentModal = () => {
+            $('#modal-repayment').modal('show');
+            $('#repayment-details').hide();
+        }
+        const ConfirmPayment = () => {
+            const selectedLoanID = $('#ddlLoanAmount option:selected').val();
+            const selectedLoanDetail = loanDetailsRecords.find(item => item.LOAN_ID === parseInt(selectedLoanID) && !item.IS_COMPLETE);
+            const LoanID = selectedLoanDetail.LOAN_DETAILS_ID;
+
+
+
+            var files = $('.custom-file-input');
+            files.each(function (index, fileInput) {
+                var formData = new FormData();
+                formData.append("file", fileInput.files[0]);
+                formData.append("classification", fileInput.getAttribute("data-classification"));
+                upload(formData, LoanID);
+
+
+            });
+        }
+        const upload = (files, loanID) => {
+
+            $.ajax({
+                type: 'post',
+                url: '../Home/Handlers/FileUpload.ashx?USERID=' + params.USERID + '&LOANID=' + loanID,
+                data: files,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function (e) {
+                    $('#modal-repayment').modal('hide');
+                    alert('success');
+
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        }
+
 
     </script>
 </asp:Content>

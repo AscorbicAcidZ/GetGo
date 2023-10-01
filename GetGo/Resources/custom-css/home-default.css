@@ -94,7 +94,7 @@
 }
 
 .next-due {
-    background-color: red;
+    background-color: darkred;
     color: white;
 }
 
@@ -176,4 +176,7 @@ th, td {
 .loan-details-list {
    
     padding: 10px;
+}
+.custom-file-label{
+    font-size:8px;
 }
