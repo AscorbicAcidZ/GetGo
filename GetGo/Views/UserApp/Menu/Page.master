@@ -1,0 +1,18 @@
+﻿<%@ Master Language="C#" MasterPageFile="~/Views/UserApp/Home/Page.master" AutoEventWireup="true" CodeFile="Page.master.cs" Inherits="Views_UserApp_Menu_Page" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <title>GetGo</title>
+    <link href="../../../Resources/dist/css/adminlte.min.css" rel="stylesheet" />
+    <link href="../../../Resources/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link href="../../../Resources/font/nunito-font.css" rel="stylesheet" />
+    <link href="../../../Resources/custom-css/profile.css" rel="stylesheet" />
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="footer" runat="Server">
+    <script src="../../../Resources/plugins/jquery/jquery.min.js"></script>
+    <script src="../../../Resources/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../Resources/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+    <script src="Scripts/Page.js"></script>
+</asp:Content>
+
