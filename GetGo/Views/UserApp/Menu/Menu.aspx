@@ -24,6 +24,71 @@
             color: #DA2C38;
             font-weight: 900;
         }
+
+        .centered-image {
+            align-items: center;
+            margin-top: -35px;
+        }
+
+        .blue-text {
+            color: #1B5B6B;
+        }
+
+        .gray-box {
+            background-color: #E9E9E9;
+            border-radius: 10px;
+            padding-left: 10px;
+            margin: 10px;
+        }
+
+        .custom-notification {
+            background-color: #E9E9E9;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+            user-select: none;
+            cursor: pointer;
+        }
+
+            .custom-notification:hover {
+                transform: scale(1.1);
+                cursor: pointer;
+            }
+
+        .notif-image img {
+            display: block;
+            margin: 0 auto;
+        }
+
+        .notification-title {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 5px; /* Add margin between title and date */
+        }
+
+        .notification-date {
+            font-size: 10px;
+        }
+
+        .notification-description {
+            font-size: 10px;
+            line-height: 1.2;
+            /* Adjust line-height for better readability */
+        }
+
+        .notif-logo {
+            width: 70px;
+            height: 70px;
+            background-size: cover;
+        }
+
+        .truncated-text {
+            white-space: nowrap; /* Prevent text from wrapping onto the next line */
+            overflow: hidden; /* Hide any content that overflows the box */
+            text-overflow: ellipsis; /* Display an ellipsis (...) to represent the clipped text */
+            width: 300px; /* Set the width of the container (adjust as needed) */
+        }
     </style>
     <link href="../../../Resources/custom-css/home-default.css" rel="stylesheet" />
 </asp:Content>
@@ -62,75 +127,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="custom-modal">
-                              <div class="card">
-                            <div style="align-items: center; margin-top: -35px">
-                                <img src="../../../Resources/dist/img/cash.png" width="70" height="70" class="clickable-image" onclick="ModeOfRepayment('branch')" />
-                            </div>
-                                  <div class="custom-modal-body">
-
-                                  </div>
-                            
-                        </div>
-                            <div class="custom-modal-footer" >
-                                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close" style="width:100%;background-color:#1B5B6B; border-radius:10px"> Go back</button>
-                            </div>
-                        </div>
-                      
                     </div>
 
                 </div>
             </div>
         </section>
     </div>
-    <div class="modal fade" id="modal-history" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content" style="background-color: #bcf4e4">
-                <div class="modal-header">
 
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="wrapper">
-                        <section class="content-header">
-                        </section>
-                        <section class="content">
-                            <div class="container-fluid">
-                                <div class="col-lg-12">
-
-                                    <div class="card">
-                                        <div class="header-label">
-                                            <label>Current Loans</label>
-                                        </div>
-                                        <div class="card-body loan-container">
-                                            <div class="current-loans">
-                                                <div class="form-group row custom-form-group justify-content-between">
-                                                    <div class="current-loan custom-current-loan">
-                                                        <label class="loan-amount">${loanRecord.AMOUNT}</label><br />
-                                                        <label class="loan-start-date">Start on ${startDate.day} ${startDate.month} ${startDate.year} </label>
-                                                        <br />
-                                                        <label class="loan-due-date">₱ ${loanDetail.AMOUNT} ${loanRecord.INSTALLMENT_PLAN}</label>
-                                                    </div>
-                                                    <div class="current-loan-button">
-                                                        <button type="button" data-toggle="modal" data-target="#modal-loan-details" onclick='CurrentDetails(${JSON.stringify(params)});' class="see-details"><i class="fas fa-arrow-circle-right"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
     <div class="modal fade" id="modal-profile" style="display: none;" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content" style="background-color: #bcf4e4">
@@ -262,28 +265,77 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <div class="modal fade" id="modal-notifications" style="display: none;" aria-hidden="true">
+    <div class="modal fade" id="modal-history" style="display: none;" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content" style="background-color: #bcf4e4">
                 <div class="modal-header">
-                </div>
-                <div class="modal-body" style="padding-left: 0px !important; padding-right: 0px !important;">
+
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
+                </div>
+                <div class="modal-body">
                     <div class="wrapper">
                         <section class="content-header">
                         </section>
                         <section class="content">
-                            <div class="container-fluid" style="padding: 0px !important">
+                            <div class="container-fluid">
                                 <div class="col-lg-12">
 
-                                    <div class="card" style="padding: 0px !important">
+                                    <div class="card">
                                         <div class="header-label">
-                                            <label>Loan</label>
+                                            <label>Loan History</label>
                                         </div>
                                         <div class="card-body loan-container">
-                                            asdasdasd
+                                            <div class="notifications custom-notification" id="historyTrigger">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <div class="notif-image">
+                                                            <img src="../../../Resources/dist/img/cash.png" width="30" height="30" class="clickable-image" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="row justify-content-between">
+                                                            <div class="col-auto">
+                                                                <label class="notification-title">Money Received</label>
+                                                                <label class="notification-date">06/11/2023</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-auto">
+                                                                <p class="notification-description truncated-text">
+                                                                    Make the time-consuming processqweq
+                                                                    sadlknsad
+                                                                    asdaskldjsadk
+                                                                    weqweqwe
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="notifications custom-notification">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <div class="notif-image">
+                                                            <img src="../../../Resources/dist/img/cash.png" width="30" height="30" class="clickable-image" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="row justify-content-between">
+                                                            <div class="col-auto">
+                                                                <label class="notification-title">Money Received</label>
+                                                                <label class="notification-date">06/11/2023</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-auto">
+                                                                <p class="notification-description truncated-text">Make the time-consuming processqweq weqweqwe</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -297,17 +349,121 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <div class="modal fade" id="modal-alert" style="display: none;" aria-hidden="true">
+    <div class="modal fade" id="modal-notifications" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="background-color: #bcf4e4">
+                <div class="modal-header">
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="wrapper">
+                        <section class="content-header">
+                        </section>
+                        <section class="content">
+                            <div class="container-fluid">
+                                <div class="col-lg-12">
+
+                                    <div class="card">
+                                        <div class="header-label">
+                                            <label>Notifications</label>
+                                        </div>
+                                        <div class="card-body loan-container">
+                                            <div class="notifications custom-notification" id="notificationTrigger">
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <div class="notif-image">
+                                                            <img src="../../../Resources/dist/img/meme.png" width="30" height="30" class="clickable-image" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="row justify-content-between">
+                                                            <div class="col-auto">
+                                                                <label class="notification-title">Money Received</label>
+                                                                <label class="notification-date">06/11/2023</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-auto">
+                                                                <p class="notification-description">Make the time-consuming processqweq weqweqwe</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="alert-history" style="display: none; background-color: rgba(0, 0, 0, 0.5);" aria-hidden="true" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel">
         <div class="modal-dialog">
             <br />
             <br />
+            <br />
+            <br />
 
-            <div class="modal-content" style="background-color: #bcf4e4">
-                <div class="custom-modal-header" style="width: 100px; color: red;">
-                </div>
-                <div class="custom-modal-body">
-                </div>
+            <div class="custom-modal">
+                <div class="card">
+                    <div class="custom-modal-content history">
+                        <div class="centered-image">
 
+                            <img src="../../../Resources/dist/img/cash.png" width="70" height="70" class="clickable-image" />
+                        </div>
+                        <div class="custom-head dt-center">
+                            <h5>History Details</h5>
+                            <h6 class="blue-text">Money Received</h6>
+                        </div>
+                        <div class="custom-body">
+                            <p class="gray-box">Congratulations! ₱ 5,000.00 is now added to your GetGo account.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="custom-modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close" style="width: 100%; background-color: #1B5B6B; border-radius: 10px; border: none;">Go back</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+      <div class="modal fade" id="alert-notifications" style="display: none; background-color: rgba(0, 0, 0, 0.5);" aria-hidden="true" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel">
+        <div class="modal-dialog">
+            <br />
+            <br />
+            <br />
+            <br />
+
+            <div class="custom-modal">
+                <div class="card">
+                    <div class="custom-modal-content notifications">
+                        <div class="centered-image">
+
+                            <img src="../../../Resources/dist/img/meme.png" width="70" height="70" class="clickable-image" />
+                        </div>
+                        <div class="custom-head dt-center">
+                            <h5>History Details</h5>
+                            <h6 class="blue-text">Money Received</h6>
+                        </div>
+                        <div class="custom-body">
+                            <p class="gray-box">Congratulations! ₱ 5,000.00 is now added to your GetGo account.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="custom-modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close" style="width: 100%; background-color: #1B5B6B; border-radius: 10px; border: none;">Go back</button>
+                </div>
             </div>
             <!-- /.modal-content -->
         </div>
@@ -328,14 +484,99 @@
         }
     </script>--%>
     <script>
-
+        const params = new Proxy(new URLSearchParams(window.location.search), {
+            get: (searchParams, prop) => searchParams.get(prop),
+        });
         $(() => {
-            //  $('#modal-alert').modal('show');
+            $('#modal-profile input[type="text"]').prop('readonly', true);
+            /*    $('#modal-history').modal('show');*/
+            $("#historyTrigger").click(function () {
+                $("#alert-history").modal("show");
+            });
+            $("#notificationTrigger").click(function () {
+                $("#alert-notifications").modal("show");
+            });
 
         });
         const OptionProfile = () => {
-            $('#modal-profile').modal('show');
+
+            var items = {
+                INPUT: params.USERID
+            }
+            // Make an AJAX request to fetch the user details
+            $.ajax({
+                url: '../Profile/Profile_Primary.aspx/GetUserDetails',
+                type: "POST",
+                data: JSON.stringify({ item: items }),
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var userDetails = response.d;
+                    // Populate the textboxes with the retrieved user details
+                    var userDetails = JSON.parse(response.d);
+                    // Format the date of birth
+
+                    if (!userDetails[0].DATE_OF_BIRTH) {
+                        // If empty, set it to the current date
+                        var currentDate = new Date().toISOString().split('T')[0];
+                        $('#txtDOB').val(currentDate);
+                    } else {
+                        // If not empty, format the date of birth
+                        var dateOfBirth = new Date(userDetails[0].DATE_OF_BIRTH).toISOString().split('T')[0];
+                        $('#txtDOB').val(dateOfBirth);
+                    }
+                    $('#txtDOB').val(new Date(userDetails[0].DATE_OF_BIRTH).toISOString().split('T')[0]);
+
+                    if (!userDetails[0].PROFILE_IMAGE) {
+                        // If empty, set it to the current date
+                        $('#preview_profile').attr('src', '../../../Resources/dist/img/default-150x150.png');
+
+                    } else {
+
+                        $('#preview_profile').attr('src', imagesBaseUrl + userDetails[0].PROFILE_IMAGE);
+                    }
+                    console.log(userDetails[0].PROFILE_IMAGE);
+                    //Populate the textboxes with the retrieved user details
+                    ;
+                    $('#txtFirstName').val(userDetails[0].FIRST_NAME);
+                    $('#txtLastName').val(userDetails[0].LAST_NAME);
+                    $('#txtMiddleName').val(userDetails[0].MIDDLE_NAME);
+
+                    $('#txtEmail').val(userDetails[0].EMAIL_ADDRESS);
+                    $('#txtMobileNumber').val(userDetails[0].CONTACTNO);
+                    $('#txtSex').val(userDetails[0].SEX);
+                    $('#txtMaritalStatus').val(userDetails[0].MARITAL_STATUS);
+                    $('#txtStreetName').val(userDetails[0].STREET_NO);
+                    $('#txtBarangay').val(userDetails[0].BARANGAY);
+                    $('#txtCity').val(userDetails[0].CITY);
+                    $('#txtProvince').val(userDetails[0].PROVINCE);
+                    $('#txtRegion').val(userDetails[0].REGION);
+                    $('#txtPostalCode').val(userDetails[0].ZIPCODE);
+
+                    if (!userDetails[0].PROFILE_IMAGE) {
+                        // If empty, set it to the current date
+                        $('#preview_signature').attr('src', '../../../Resources/dist/img/default-150x150.png');
+
+                    } else {
+
+                        $('#preview_signature').attr('src', imagesBaseUrl + userDetails[0].SIGNATURE_);
+                    }
+                    $('#modal-profile').modal('show');
+
+                },
+                error: function (xhr, status, error) {
+                    if (xhr.status === 413) {
+                        alert('Request Entity Too Large: The file you are trying to upload is too large.');
+                    } else {
+                        alert('An error occurred during the request. Status: ' + xhr.status + ' - ' + xhr.statusText);
+                    }
+                    $('#ERROR').text('Error: ' + error);
+
+                }
+            });
         }
+
+
         const OptionLoanHistory = () => {
             $('#modal-history').modal('show');
         }
