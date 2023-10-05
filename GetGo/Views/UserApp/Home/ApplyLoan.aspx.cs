@@ -78,7 +78,7 @@ public partial class Views_UserApp_Home_ApplyLoan : System.Web.UI.Page
                                         
                                          SELECT COALESCE(TL.TOTAL_LOAN, 0) AS TOTAL_LOAN, COALESCE(CL.CREDIT_LIMIT, 0) AS CREDIT_LIMIT
                                                                         FROM TOTAL_LOAN AS TL
-                                                                        LEFT JOIN CREDIT_LIMIT AS CL ON TL.USER_ID = CL.USER_ID
+                                                                        RIGHT JOIN CREDIT_LIMIT AS CL ON TL.USER_ID = CL.USER_ID
                                                                         UNION ALL
                                                                         SELECT 0 AS TOTAL_LOAN, 0 AS CREDIT_LIMIT
                                                                         WHERE NOT EXISTS (SELECT 1 FROM TOTAL_LOAN);";

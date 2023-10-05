@@ -2,18 +2,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <style>
-        .clickable-image {
-            /* Your existing styles for clickable images */
-            /* ... */
-            transition: transform 0.3s ease; /* Apply smooth transition effect */
-            user-select: none; /* Disable text selection */
+        .body {
+            user-select: none;
         }
 
-            .clickable-image:hover {
-                transform: scale(1.1); /* Scale up the image by 10% on hover */
-
-                cursor: pointer; /* Change cursor to indicate interactivity */
-            }
 
         .green-1 {
             color: #2B9348;
@@ -46,15 +38,11 @@
             padding: 10px;
             border-radius: 10px;
             margin-bottom: 10px;
-            transition: transform 0.3s ease;
             user-select: none;
             cursor: pointer;
         }
 
-            .custom-notification:hover {
-                transform: scale(1.1);
-                cursor: pointer;
-            }
+
 
         .notif-image img {
             display: block;
@@ -84,10 +72,10 @@
         }
 
         .truncated-text {
-            white-space: nowrap; /* Prevent text from wrapping onto the next line */
-            overflow: hidden; /* Hide any content that overflows the box */
-            text-overflow: ellipsis; /* Display an ellipsis (...) to represent the clipped text */
-            width: 300px; /* Set the width of the container (adjust as needed) */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 300px;
         }
     </style>
     <link href="../../../Resources/custom-css/home-default.css" rel="stylesheet" />
@@ -438,7 +426,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-      <div class="modal fade" id="alert-notifications" style="display: none; background-color: rgba(0, 0, 0, 0.5);" aria-hidden="true" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel">
+    <div class="modal fade" id="alert-notifications" style="display: none; background-color: rgba(0, 0, 0, 0.5);" aria-hidden="true" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel">
         <div class="modal-dialog">
             <br />
             <br />
@@ -487,17 +475,22 @@
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop),
         });
-        $(() => {
+
+        const HistoryModal = $("#historyTrigger");
+        const alertHistory = $("#alert-history");
+
+        $(() =>{
             $('#modal-profile input[type="text"]').prop('readonly', true);
             /*    $('#modal-history').modal('show');*/
-            $("#historyTrigger").click(function () {
-                $("#alert-history").modal("show");
-            });
-            $("#notificationTrigger").click(function () {
-                $("#alert-notifications").modal("show");
+            HistoryModal.click( ()=> {
+                alertHistory.modal("show");
             });
 
         });
+        $("#notificationTrigger").click(()=> {
+            $("#alert-notifications").modal("show");
+        });
+
         const OptionProfile = () => {
 
             var items = {
