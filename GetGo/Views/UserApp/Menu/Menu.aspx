@@ -275,55 +275,6 @@
                                             <label>Loan History</label>
                                         </div>
                                         <div class="card-body loan-container">
-                                            <div class="notifications custom-notification" id="historyTrigger">
-                                                <div class="row align-items-center">
-                                                    <div class="col-auto">
-                                                        <div class="notif-image">
-                                                            <img src="../../../Resources/dist/img/cash.png" width="30" height="30" class="clickable-image" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="row justify-content-between">
-                                                            <div class="col-auto">
-                                                                <label class="notification-title">Money Received</label>
-                                                                <label class="notification-date">06/11/2023</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-auto">
-                                                                <p class="notification-description truncated-text">
-                                                                    Make the time-consuming processqweq
-                                                                    sadlknsad
-                                                                    asdaskldjsadk
-                                                                    weqweqwe
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="notifications custom-notification">
-                                                <div class="row align-items-center">
-                                                    <div class="col-auto">
-                                                        <div class="notif-image">
-                                                            <img src="../../../Resources/dist/img/cash.png" width="30" height="30" class="clickable-image" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="row justify-content-between">
-                                                            <div class="col-auto">
-                                                                <label class="notification-title">Money Received</label>
-                                                                <label class="notification-date">06/11/2023</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-auto">
-                                                                <p class="notification-description truncated-text">Make the time-consuming processqweq weqweqwe</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -358,7 +309,7 @@
                                         <div class="header-label">
                                             <label>Notifications</label>
                                         </div>
-                                        <div class="card-body loan-container">
+                                        <div class="card-body ">
                                             <div class="notifications custom-notification" id="notificationTrigger">
                                                 <div class="row align-items-center">
                                                     <div class="col-auto">
@@ -475,19 +426,19 @@
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop),
         });
-
+        const imagesBaseUrl = "../../../UploadedFiles/";
         const HistoryModal = $("#historyTrigger");
         const alertHistory = $("#alert-history");
 
-        $(() =>{
+        $(() => {
             $('#modal-profile input[type="text"]').prop('readonly', true);
             /*    $('#modal-history').modal('show');*/
-            HistoryModal.click( ()=> {
+            HistoryModal.click(() => {
                 alertHistory.modal("show");
             });
 
         });
-        $("#notificationTrigger").click(()=> {
+        $("#notificationTrigger").click(() => {
             $("#alert-notifications").modal("show");
         });
 
@@ -568,13 +519,80 @@
                 }
             });
         }
+        const FormatDate = (dateString) => {
 
-
+            const date = new Date(dateString);
+            const day = date.getDate();
+            const month = date.toLocaleString('default', { month: 'short' });
+            const year = date.getFullYear();
+            return {
+                day: day,
+                month: month,
+                year: year,
+            };
+        }
         const OptionLoanHistory = () => {
+
+            GetData({
+                url: "Menu.aspx/GetUserLoanInformation",
+                data: JSON.stringify({
+                    user_id: params.USERID
+                })
+            }).then(e => {
+                let data = JSON.parse(e.d);
+                loanRecords = data.LoanRecords;
+                loanDetailsRecords = data.LoanDetailsRecords;
+                let html = '';
+
+                // Iterate through loanRecords and loanDetailsRecords
+                for (let i = 0; i < loanRecords.length; i++) {
+                    const loanRecord = loanRecords[i];
+                    const loanDetail = loanDetailsRecords.find(detail => detail.LOAN_ID === loanRecord.LOAN_ID);
+                    const startDate = FormatDate(loanDetail.START_DATE);
+                    var params = {
+                        amount: loanRecord.AMOUNT,
+                        tenure: loanRecord.TENURE,
+                        processfee: loanRecord.PROCESSING_FEE,
+                        interestrate: loanRecord.INTEREST_RATE,
+                        startdate: startDate.day + " " + startDate.month + " " + startDate.year,
+                        branch: loanRecord.BRANCH,
+                        loanid: loanRecord.LOAN_ID
+
+                    };
+                    if (loanDetail) {
+                        const statusClasses = {
+                            "ONGOING": "badge-warning",
+                            "APPROVED": "badge-success",
+                            "DISAPPROVED": "badge-danger",
+                            "FULLY-PAID": "badge-info"
+                        };
+                        const defaultClass = "badge-secondary";
+                        const badgeClass = statusClasses[loanRecord.STATUS] || defaultClass
+                        html += `
+                <div class="current-loans">
+                    <div class="form-group row custom-form-group justify-content-between">
+                        <div class="current-loan custom-current-loan">
+                            <label class="loan-amount">  ${loanRecord.AMOUNT}</label>
+                            <span class="badge ${badgeClass}"> ${loanRecord.STATUS}</span><br />
+                            <label class="loan-start-date">Start on ${startDate.day} ${startDate.month} ${startDate.year} </label><br />
+                            <label class="loan-due-date">₱ ${loanDetail.AMOUNT} ${loanRecord.INSTALLMENT_PLAN}</label>
+                        </div>
+                        <div class="current-loan-button">
+                           <button type="button" data-toggle="modal" data-target="#modal-loan-details" onclick='CurrentDetails(${JSON.stringify(params)});' class="see-details"><i class="fas fa-arrow-circle-right"></i></button>
+                        </div>
+                    </div>
+                </div> `;
+                    }
+                }
+
+                // Append the generated HTML to the container
+                $(".loan-container").html(html);
+            })
             $('#modal-history').modal('show');
         }
         const OptionNotifications = () => {
             $('#modal-notifications').modal('show');
+
         }
         const GetData = (config) => {
             config.type = config.type || "POST";
@@ -606,6 +624,7 @@
             });
 
         };
+
 
     </script>
 </asp:Content>
