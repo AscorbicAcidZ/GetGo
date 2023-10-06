@@ -155,7 +155,7 @@
                     }
                         if (userDetails[0].USERNAME === '0' && userDetails[0].PHONENUMBER === '0' && userDetails[0].EMAIL === '0') {
                             window.location = "Signup_Primary.aspx?USERNAME=" + Username + "&PHONENUMBER=" + PhoneNumber + "&EMAIL=" + Email;
-                            alert('success');
+                            alert('Click ok to continue');
                         }
 
                     //console.log(userDetails);

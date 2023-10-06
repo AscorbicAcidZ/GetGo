@@ -218,7 +218,7 @@
                     contentType: "application/json;charset=utf-8",
                     dataType: "json",
                     success: function (e) {
-                       alert('success');
+                       alert('Click Ok to continue');
                         window.location = "Signup_Primary.aspx?true";
                   
                     }, error: function (error) {
