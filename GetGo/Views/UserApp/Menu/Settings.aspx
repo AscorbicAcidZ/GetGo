@@ -1,9 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/UserApp/Home/Page.master" AutoEventWireup="true" CodeFile="AboutUs.aspx.cs" Inherits="Views_UserApp_Menu_AboutUs" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/UserApp/Home/Page.master" AutoEventWireup="true" CodeFile="Settings.aspx.cs" Inherits="Views_UserApp_Menu_Settings" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
-    <div class="wrapper">
+<asp:Content ID="Content2" ContentPlaceHolderID="body" Runat="Server">
+
+     <div class="wrapper">
         <section class="content">
 
             <div class="container-fluid">
@@ -37,9 +38,7 @@
         </section>
         
     </div>
-
-
 </asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="footer" runat="Server">
+<asp:Content ID="Content3" ContentPlaceHolderID="footer" Runat="Server">
 </asp:Content>
 

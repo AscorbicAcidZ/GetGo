@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -14,28 +15,52 @@ public partial class Views_UserApp_Home_ApplyLoan : System.Web.UI.Page
 
     }
     [WebMethod]
+    //public static string GetLoanID(UserLoan items)
+    //{
+    //    string query = "APP_LOAN_APPLY";
+    //    var parameters = new
+    //    {
+    //        USER_ID = items.USER_ID,
+    //        LOAN_AMOUNT = items.LOAN_AMOUNT,
+    //        INSTALLMENT_ID = items.INSTALLMENT_ID,
+    //        TENURE = items.TENURE_ID,
+    //        BRANCH = items.BRANCH,
+    //        BUSSINESS = items.BUSSINESS,
+    //        NATUREOFWORK = items.NATURE_OF_WORK,
+    //        INCOME = items.INCOME,
+    //        CHARACTER_REFERENCE = items.CHARACTER_REFERENCE,
+    //        CO_GUARANTOR = items.CO_GUARANTOR,
+    //        CO_PHONE_NO = items.CO_PHONE_NO,
+    //        COLLATERALNAME = items.NAME_OF_COLLATERAL,
+    //        DESCRIPTION = items.DESCRIPTION
+    //    };
+
+    //    var maint = new UserAppController();
+    //    return JsonConvert.SerializeObject(maint.QueryGetOrPopulate(query, parameters));
+    //}
     public static string GetLoanID(UserLoan items)
     {
         string query = "APP_LOAN_APPLY";
-        var parameters = new
+        var parameters = new SqlParameter[]
         {
-            USER_ID = items.USER_ID,
-            LOAN_AMOUNT = items.LOAN_AMOUNT,
-            INSTALLMENT_ID = items.INSTALLMENT_ID,
-            TENURE = items.TENURE_ID,
-            BRANCH = items.BRANCH,
-            BUSSINESS = items.BUSSINESS,
-            NATUREOFWORK = items.NATURE_OF_WORK,
-            INCOME = items.INCOME,
-            CHARACTER_REFERENCE = items.CHARACTER_REFERENCE,
-            CO_GUARANTOR = items.CO_GUARANTOR,
-            CO_PHONE_NO = items.CO_PHONE_NO,
-            COLLATERALNAME = items.NAME_OF_COLLATERAL,
-            DESCRIPTION = items.DESCRIPTION,
+        new SqlParameter("@USER_ID", items.USER_ID),
+        new SqlParameter("@LOAN_AMOUNT", items.LOAN_AMOUNT),
+        new SqlParameter("@INSTALLMENT_ID", items.INSTALLMENT_ID),
+        new SqlParameter("@TENURE", items.TENURE_ID),
+        new SqlParameter("@BRANCH", items.BRANCH),
+        new SqlParameter("@BUSSINESS", items.BUSSINESS),
+        new SqlParameter("@NATUREOFWORK", items.NATURE_OF_WORK),
+        new SqlParameter("@INCOME", items.INCOME),
+        new SqlParameter("@CHARACTER_REFERENCE", items.CHARACTER_REFERENCE),
+        new SqlParameter("@CO_GUARANTOR", items.CO_GUARANTOR),
+        new SqlParameter("@CO_PHONE_NO", items.CO_PHONE_NO),
+        new SqlParameter("@COLLATERALNAME", items.NAME_OF_COLLATERAL),
+        new SqlParameter("@DESCRIPTION", items.DESCRIPTION)
         };
 
         var maint = new UserAppController();
-        return JsonConvert.SerializeObject(maint.QueryGetOrPopulate(query, parameters));
+        var dataTable = maint.QueryGetOrPopulate2(query, parameters);
+        return JsonConvert.SerializeObject(dataTable);
     }
     [WebMethod]
     public static string GetLoanDetails()

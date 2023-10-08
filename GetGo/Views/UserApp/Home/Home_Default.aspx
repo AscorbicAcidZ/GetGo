@@ -475,6 +475,7 @@
             for (let i = 0; i < loanRecords.length; i++) {
                 const loanRecord = loanRecords[i];
                 const loanDetail = loanDetailsRecords.find(detail => detail.LOAN_ID === loanRecord.LOAN_ID);
+                if (loanDetail) {
                 const startDate = FormatDate(loanDetail.START_DATE);
                 var params = {
                     amount: loanRecord.AMOUNT,
@@ -486,7 +487,7 @@
                     loanid: loanRecord.LOAN_ID
 
                 };
-                if (loanDetail) {
+               
                     html += `
                 <div class="current-loans">
                     <div class="form-group row custom-form-group justify-content-between">
@@ -571,7 +572,7 @@
                 $(".branch-repayment, .gcash-repayment").hide();
                 $('.custom-file-input').attr("data-classification", "BANK");
             }
-            console.log(category);
+/*            alert(category);*/
         }
         const GetData = (config) => {
             config.type = config.type || "POST";
@@ -613,7 +614,7 @@
             const selectedLoanID = $('#ddlLoanAmount option:selected').val();
             const selectedLoanDetail = loanDetailsRecords.find(item => item.LOAN_ID === parseInt(selectedLoanID) && !item.IS_COMPLETE);
             const LoanID = selectedLoanDetail.LOAN_DETAILS_ID;
-
+            console.log(loanDetailsRecords);
 
 
             var files = $('.custom-file-input');
@@ -640,9 +641,15 @@
                     alert('success');
 
                 },
-                error: function (err) {
-                    console.log(err);
+                error: function (xhr, status, error) {
+                    if (xhr.status === 413) {
+                        alert('Request Entity Too Large: The file you are trying to upload is too large.');
+                    } else {
+                        alert('An error occurred during the request. Status: ' + xhr.status + ' - ' + xhr.statusText + '-' + error);
+                    }       
+       
                 }
+
             })
         }
 

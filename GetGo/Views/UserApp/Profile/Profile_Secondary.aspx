@@ -8,8 +8,8 @@
             <div class="container-fluid">
                 <div class="col-lg-12" style="text-align: center">
                     <br />
-                    <h1 style="font-size: 48px"><b style="color: #2b9348">Get</b><b style="color: #da2c38">Go</b>
-                    </h1>
+              <%--      <h1 style="font-size: 48px"><b style="color: #2b9348">Get</b><b style="color: #da2c38">Go</b>
+                    </h1>--%>
                 </div>
             </div>
             <!-- /.container-fluid -->

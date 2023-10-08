@@ -8,6 +8,7 @@ using System.Web;
 using Dapper;
 using System.Runtime.Remoting.Messaging;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 /// <summary>
 /// Summary description for UserAppController
@@ -17,25 +18,77 @@ public class UserAppController
     string sqlconn = ConfigurationManager.AppSettings["GetGoConnectionString"];
     public DataTable QueryGetOrPopulate(string query, object parameters = null)
     {
+        SqlTransaction transaction = null;
         {
             try
             {
                 var dataTable = new DataTable();
                 using (SqlConnection conn = new SqlConnection(sqlconn))
                 {
-                    var result = conn.ExecuteReader(query, parameters, commandType: CommandType.StoredProcedure);
+
+                    conn.Open();
+                    transaction = conn.BeginTransaction();
+                    var result = conn.ExecuteReader(query, parameters,transaction, commandType: CommandType.StoredProcedure);
                     dataTable.Load(result);
+                    transaction.Commit();
                 }
                 return dataTable;
             }
             catch (SqlException ex)
             {
+                transaction.Rollback();
+                LogErrorMessageToDatabase(ex.Message + query);
+                throw ex;
+
+
+            }
+            catch (Exception ex)
+            {
+             
+
+                transaction.Rollback();
+                LogErrorMessageToDatabase(ex.Message + query);
+                throw ex;
+            }
+        }
+    }
+    public DataTable QueryGetOrPopulate2(string query, SqlParameter[] parameters)
+    {
+        using (SqlConnection conn = new SqlConnection(sqlconn))
+        {
+            DataTable dataTable = new DataTable();
+            SqlTransaction transaction = null;
+
+            try
+            {
+                conn.Open();
+                transaction = conn.BeginTransaction();
+                using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddRange(parameters);
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(dataTable);
+                    }
+                }
+                transaction.Commit();
+            }
+            catch (SqlException ex)
+            {
+                if (transaction != null) transaction.Rollback();
+                LogErrorMessageToDatabase(ex.Message + query);
                 throw ex;
             }
             catch (Exception ex)
             {
+                if (transaction != null) transaction.Rollback();
+                LogErrorMessageToDatabase(ex.Message + query);
                 throw ex;
             }
+
+            return dataTable;
         }
     }
     public string QueryInsertOrUpdate(string query, object parameters)
@@ -65,6 +118,41 @@ public class UserAppController
           
         }
 
+    }
+    public string QueryInsertOrUpdateAdoNet(string query, SqlParameter[] parameters)
+    {
+        using (SqlConnection conn = new SqlConnection(sqlconn))
+        {
+            SqlTransaction trans = null;
+            try
+            {
+                conn.Open();
+                trans = conn.BeginTransaction();
+
+                using (SqlCommand cmd = new SqlCommand(query, conn, trans))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddRange(parameters);
+
+                    cmd.ExecuteNonQuery();
+                }
+
+                trans.Commit();
+                return "Success";
+            }
+            catch (SqlException ex)
+            {
+                if (trans != null) trans.Rollback();
+                LogErrorMessageToDatabase(ex.Message);
+                return ex.Message;
+            }
+            catch (Exception ex)
+            {
+                if (trans != null) trans.Rollback();
+                LogErrorMessageToDatabase(ex.Message);
+                return ex.Message;
+            }
+        }
     }
     public List<dynamic> QueryGetOrPopulateText(string commandText, object parameters = null)
     {
@@ -166,6 +254,24 @@ public class UserAppController
                 var data = new CreditLimitInformation
                 {
                     CreditLimits = multi.Read<CreditLimit>().ToList(),
+                };
+                var json = JsonConvert.SerializeObject(data);
+
+                return json;
+            }
+        }
+    }
+    public string QueryGetNotification(string query, object parameters = null)
+    {
+        using (SqlConnection conn = new SqlConnection(sqlconn))
+        {
+            conn.Open();
+
+            using (var multi = conn.QueryMultiple(query, parameters))
+            {
+                var data = new NotificationInformation
+                {
+                    Notifications = multi.Read<Notification>().ToList(),
                 };
                 var json = JsonConvert.SerializeObject(data);
 

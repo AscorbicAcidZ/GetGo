@@ -38,7 +38,7 @@
                             <div class="form-group">
                                 <div class="group">
                                     <i class="fa fa-mobile-alt icon"></i>
-                                    <input type="number" id="txtPhoneNumber" class="form-control input" placeholder="Phone Number" />
+                                    <input type="number" id="txtPhoneNumber" class="form-control input numeric-input ph-number" placeholder="Phone Number" />
                                 </div>
                                 <label id="lblPhoneNumber"  class="label-alert text-danger"></label>
                             </div>

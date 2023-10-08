@@ -286,7 +286,7 @@
                                         <div class="form-group">
                                             <div class="input">
                                                 <label for="name">Monthly Gross Income</label>
-                                                <input type="text" required="" autocomplete="off" id="txtMonthlyIncome" class="form-control input">
+                                                <input type="text" required="" autocomplete="off" id="txtMonthlyIncome" class="form-control input numeric-input">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -304,7 +304,7 @@
                                         <div class="form-group">
                                             <div class="input">
                                                 <label for="name">Phone Number of Co Guarantor</label>
-                                                <input type="text" required="" autocomplete="off" id="txtCoGuarantorNumber" class="form-control input">
+                                                <input type="text" required="" autocomplete="off" id="txtCoGuarantorNumber" class="form-control input ph-number numeric-input">
                                             </div>
                                         </div>
                                         <br />

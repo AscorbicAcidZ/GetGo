@@ -8,9 +8,10 @@ using System.Web.UI.WebControls;
 
 public partial class Views_UserApp_Menu_Menu : System.Web.UI.Page
 {
+    private static UserAppController user;
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        user = new UserAppController();
     }
     [WebMethod]
     public static string GetUserLoanInformation(string user_id)
@@ -45,8 +46,16 @@ public partial class Views_UserApp_Menu_Menu : System.Web.UI.Page
                 INNER JOIN  TBL_T_USER_LOAN AS B WITH(NOLOCK) ON A.LOAN_ID = B.LOAN_ID WHERE A.USER_ID =@USER_ID  ORDER BY A.LOAN_DETAILS_ID ASC ;"
             ;
         var parameters = new { USER_ID = user_id };
-        var user = new UserAppController();
         var jsonData = user.QueryGetLoanInformation(commmandText, parameters);
         return jsonData;
+    }
+    [WebMethod]
+    public static string GetNotifications(string  user_id)
+    {
+        var commandText = @"SELECT * FROM TBL_T_LOAN_NOTIFICATIONS WHERE USER_ID =@USER_ID";
+        var parameters = new { USER_ID = user_id };
+        var json = user.QueryGetNotification(commandText, parameters);
+        return json;
+
     }
 }

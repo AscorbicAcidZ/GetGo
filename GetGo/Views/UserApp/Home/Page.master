@@ -4,12 +4,14 @@
 
 <html>
 <head runat="server">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>GetGo</title>
-      <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <link href="../../../Resources/dist/css/adminlte.min.css" rel="stylesheet" />
     <link href="../../../Resources/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" />
     <link href="../../../Resources/custom-css/home.css" rel="stylesheet" />
-     <style>
+    <style>
         body {
             font-family: 'Nunito', sans-serif;
         }
@@ -29,6 +31,7 @@
         <script src="../../../Resources/dist/js/pages/getgo.js"></script>
         <script src="../../../Resources/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
         <script src="../Profile/Scripts/Page.js"></script>
+        <script src="../../../Resources/validation-control.js"></script>
         <asp:ContentPlaceHolder ID="footer" runat="server">
         </asp:ContentPlaceHolder>
     </form>

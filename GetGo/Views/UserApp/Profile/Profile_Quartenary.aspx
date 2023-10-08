@@ -44,15 +44,27 @@
             font-size:12px;
         }
     </style>
+       <link href="../../../Resources/custom-css/loader.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
+     <div class="loader-container" id="loader-container" style="display:none">
+        <span id="LoadingInfo" style="color: white">Loading </span>
+        <br />
+        <div class="loader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
     <div class="wrapper">
         <section class="content-header">
             <div class="container-fluid">
                 <div class="col-lg-12">
                     <br />
-                    <h1 style="font-size: 48px"><b style="color: #2b9348">Get</b><b style="color: #da2c38">Go</b>
-                    </h1>
+                    <%--<h1 style="font-size: 48px"><b style="color: #2b9348">Get</b><b style="color: #da2c38">Go</b>--%>
+                    <%--</h1>--%>
                 </div>
             </div>
             <!-- /.container-fluid -->

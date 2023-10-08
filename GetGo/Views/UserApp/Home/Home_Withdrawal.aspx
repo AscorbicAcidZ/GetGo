@@ -32,7 +32,7 @@
                                             </div>
                                             <div class="form-group row justify-content-center" style="font-weight: bold">
                                                 <h1>₱ </h1>
-                                                <h1 id="lblCreditLimit">9000.00</h1>
+                                                <h1 id="lblCreditLimit"></h1>
                                             </div>
 
                                         </div>
@@ -378,29 +378,7 @@
             });
 
         };
-
-
-        //addional validation 
-        $('.numeric-input').on('input', event => {
-            let inputValue = $(event.target).val().replace(/\D/g, '');
-            $(event.target).val(inputValue);
-        });
-        $('#txtWithdraw').on('input', event => {
-            const input = $(event.target);
-            let inputValue = input.val();
-
-            // Remove non-numeric characters and convert to number
-            inputValue = parseInt(inputValue.replace(/\D/g, ''));
-
-            // Compare the input value with totalLoan
-            if (inputValue > CreditLimit) {
-                // If input value is greater than totalLoan, set input value to totalLoan
-                inputValue = CreditLimit;
-            }
-
-            // Update the input value
-            input.val(inputValue);
-        });
+        
     </script>
 </asp:Content>
 

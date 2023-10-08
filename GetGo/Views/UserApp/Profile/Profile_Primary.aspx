@@ -8,8 +8,8 @@
             <div class="container-fluid">
                 <div class="col-lg-12" style="text-align: center">
                     <br />
-                    <h1 style="font-size: 48px"><b style="color: #2b9348">Get</b><b style="color: #da2c38">Go</b>
-                    </h1>
+                   <%-- <h1 style="font-size: 48px"><b style="color: #2b9348">Get</b><b style="color: #da2c38">Go</b>
+                    </h1>--%>
                 </div>
             </div>
             <!-- /.container-fluid -->
@@ -182,13 +182,15 @@
             });
         }
 
+        var user_inputID="";
         function GetUserID() {
+            var input = userName ? userName : userId;
 
 
             $.ajax({
                 url: 'Profile_Primary.aspx/GetUserID',
                 type: "POST",
-                data: JSON.stringify({ query: "APP_PROFILE_GET_USER_ID", username: userName }),
+                data: JSON.stringify({ query: "APP_PROFILE_GET_USER_ID", username: input }),
                 contentType: "application/json;charset=utf-8",
                 dataType: "json",
                 success: function (response) {
@@ -196,9 +198,9 @@
                     var result = JSON.parse(response.d)
                     if (result !== null) {
 
-                        var input = result[0].USER_ID;
-
-                        fetchUserDetails(input);
+                         user_inputID = result[0].USER_ID;
+                        console.log(result)
+                        fetchUserDetails(user_inputID);
                     } else {
                         // Show an error message
                         console.log("Failed to update user details.");
@@ -251,7 +253,7 @@
                     // Handle the success response
                     var result = JSON.parse(response.d);
                     if (result === "Success") {
-                        var input = $('#txtUserID').val();
+                      
                         // Show a success message
 
 
@@ -261,7 +263,7 @@
                             formData.append("file", fileInput.files[0]);
                             formData.append("classification", fileInput.getAttribute("data-classification"));
                             upload(formData);
-                            window.location = "Profile_Primary.aspx?USERID=" + input;
+                         
                            
                           
                         });
@@ -280,6 +282,7 @@
         }
         function readURL(input) {
             if (input.files && input.files[0]) {
+
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
@@ -306,14 +309,15 @@
          
             $.ajax({
                 type: 'post',
-                url: '../Profile/Handlers/FileUpload.ashx?USERID=' + USER_ID,
+                url: '../Profile/Handlers/FileUpload2.ashx?USERID=' + USER_ID,
                 data: files,
                 cache: false,
                 processData: false,
                 contentType: false,
                 success: function (e) {
+                 
                     fetchUserDetails(USER_ID);
-
+                    window.location = "Profile_Primary.aspx?USERID=" + user_inputID;
                     /*alert('success');*/
                 },
                 error: function (err) {

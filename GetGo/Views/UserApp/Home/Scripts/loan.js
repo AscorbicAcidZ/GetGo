@@ -161,6 +161,9 @@ const CreditLimitValidation = () => {
 
     
     }
+    else if (CreditLimit = 100000) {
+
+    }
     else {
       
         ddlLoanAmount.prop('disabled', true);

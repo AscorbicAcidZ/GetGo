@@ -140,3 +140,15 @@ public class CreditLimit
     public int TOTAL_LOAN { get; set; }
 
 }
+public class NotificationInformation
+{
+    public List<Notification> Notifications { get; set; }
+} 
+public class Notification
+{
+    public int ID { get; set; }
+    public string USER_ID { get; set; }
+    public string TITLE { get; set; }
+    public string DESCRIPTION { get; set; }
+    public DateTime CREATED_DATE { get; set; }
+}

@@ -7,13 +7,14 @@
     <title>GetGo</title>
     <link href="../../../Resources/dist/css/adminlte.min.css" rel="stylesheet" />
     <link href="../../../Resources/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" />
-    <link href="../../../Resources/font/nunito-font.css;700&display=swap" rel="stylesheet" />
-    <style>
+   <%-- <link href="../../../Resources/font/nunito-font.css;700&display=swap" rel="stylesheet" />--%>
+  
+    <link href="../../../Resources/custom-css/profile.css" rel="stylesheet" />
+ <%--     <style>
         body {
             font-family: 'Nunito', sans-serif;
         }
-    </style>
-    <link href="../../../Resources/custom-css/profile.css" rel="stylesheet" />
+    </style>--%>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
