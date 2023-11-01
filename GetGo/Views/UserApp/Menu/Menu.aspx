@@ -2,83 +2,82 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <style>
-    .body {
-        user-select: none;
-    }
+        .body {
+            user-select: none;
+        }
 
 
-    .green-1 {
-        color: #2B9348;
-        font-weight: 900;
-    }
+        .green-1 {
+            color: #2B9348;
+            font-weight: 900;
+        }
 
-    .red-1 {
-        color: #DA2C38;
-        font-weight: 900;
-    }
+        .red-1 {
+            color: #DA2C38;
+            font-weight: 900;
+        }
 
-    .centered-image {
-        align-items: center;
-        margin-top: -35px;
-    }
+        .centered-image {
+            align-items: center;
+            margin-top: -35px;
+        }
 
-    .blue-text {
-        color: #1B5B6B;
-    }
+        .blue-text {
+            color: #1B5B6B;
+        }
 
-    .gray-box {
-        background-color: #E9E9E9;
-        border-radius: 10px;
-        padding-left: 10px;
-        margin: 10px;
-    }
+        .gray-box {
+            background-color: #E9E9E9;
+            border-radius: 10px;
+            padding-left: 10px;
+            margin: 10px;
+        }
 
-    .custom-notification {
-        background-color: #E9E9E9;
-        padding: 10px;
-        border-radius: 10px;
-        margin-bottom: 10px;
-        user-select: none;
-        cursor: pointer;
-    }
+        .custom-notification {
+            background-color: #E9E9E9;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            user-select: none;
+            cursor: pointer;
+        }
 
 
 
-    .notif-image img {
-        display: block;
-        margin: 0 auto;
-    }
+        .notif-image img {
+            display: block;
+            margin: 0 auto;
+        }
 
-    .notification-title {
-        font-size: 12px;
-        font-weight: bold;
-        margin-bottom: 5px; /* Add margin between title and date */
-    }
+        .notification-title {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 5px; /* Add margin between title and date */
+        }
 
-    .notification-date {
-        font-size: 10px;
-    }
+        .notification-date {
+            font-size: 10px;
+        }
 
-    .notification-description {
-        font-size: 10px;
-        line-height: 1.2;
-        /* Adjust line-height for better readability */
-    }
+        .notification-description {
+            font-size: 10px;
+            line-height: 1.2;
+            /* Adjust line-height for better readability */
+        }
 
-    .notif-logo {
-        width: 70px;
-        height: 70px;
-        background-size: cover;
-    }
+        .notif-logo {
+            width: 70px;
+            height: 70px;
+            background-size: cover;
+        }
 
-    .truncated-text {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        width: 200px;
-    }
-
-  </style>
+        .truncated-text {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 200px;
+        }
+    </style>
     <link href="../../../Resources/custom-css/home-default.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
@@ -90,7 +89,7 @@
                     <div class="col-md-6">
 
                         <div class="card">
-                            <div class="card-body" style="        padding-bottom: 0 !important">
+                            <div class="card-body" style="padding-bottom: 0 !important">
                                 <div class="form-group">
                                     <h4 id="lblFullName"></h4>
                                 </div>
@@ -109,9 +108,7 @@
                                     <div class="left-image">
                                         <img src="../../../Resources/dist/img/5.png" width="100" height="100" class="clickable-image" onclick="ModeOfRepayment('branch')" />
                                     </div>
-                                    <div class="right-content" style="        width: 180px;
-        text-align: end;
-        font-size: 12px">
+                                    <div class="right-content" style="width: 180px; text-align: end; font-size: 12px">
                                         <h4><b class="green-1">Get</b><b class="red-1">Go</b></h4>
                                         Make the time-consuming process of getting a loan easier and more enjoyable.
                                     </div>
@@ -125,9 +122,9 @@
         </section>
     </div>
 
-    <div class="modal fade" id="modal-profile" style="        display: none;" aria-hidden="true">
+    <div class="modal fade" id="modal-profile" style="display: none;" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content" style="        background-color: #bcf4e4">
+            <div class="modal-content" style="background-color: #bcf4e4">
                 <div class="modal-header">
 
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -146,7 +143,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="form-group">
-                                                <label for="inputFile" style="        cursor: pointer;">
+                                                <label for="inputFile" style="cursor: pointer;">
                                                     <img src="../../../Resources/dist/img/default-150x150.png" id="preview_profile" class="img-circle" width="70" height="70" />
                                                 </label>
                                                 <%--<input type="file" id="inputFile" style="display: none;" class="custom-file-input" data-classification="PROFILE" onchange="readURL(this);" />--%>
@@ -256,9 +253,9 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <div class="modal fade" id="modal-history" style="        display: none;" aria-hidden="true">
+    <div class="modal fade" id="modal-history" style="display: none;" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content" style="        background-color: #bcf4e4">
+            <div class="modal-content" style="background-color: #bcf4e4">
                 <div class="modal-header">
 
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -291,9 +288,9 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <div class="modal fade" id="modal-notifications" style="        display: none;" aria-hidden="true">
+    <div class="modal fade" id="modal-notifications" style="display: none;" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content" style="        background-color: #bcf4e4">
+            <div class="modal-content" style="background-color: #bcf4e4">
                 <div class="modal-header">
 
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -353,17 +350,16 @@
     </div>
 
 
-    <div class="modal fade" id="modal-loan-details" style="        display: none;" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="modal-loan-details" style="display: none;" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content" style="        background-color: #bcf4e4">
+            <div class="modal-content" style="background-color: #bcf4e4">
                 <div class="modal-header">
 
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body" style="        padding-left: 2px !important;
-        padding-right: 2px !important">
+                <div class="modal-body" style="padding-left: 2px !important; padding-right: 2px !important">
                     <div class="wrapper">
                         <section class="content-header">
                         </section>
@@ -371,27 +367,26 @@
                             <div class="container-fluid">
                                 <div class="col-lg-12">
 
-                                    <div class="card" style="        padding-left: 0 !important">
+                                    <div class="card" style="padding-left: 0 !important">
                                         <div class="header-label">
                                             <label>Loans Details</label>
                                         </div>
                                         <div class="card-body box">
                                             <div class="form-group custom-loan-title">
-                                                <label style="        font-size: 30px" id="LoanAmount">3000</label>
+                                                <label style="font-size: 30px" id="LoanAmount">3000</label>
                                                 <br />
 
                                                 <label>Total Loan Amount</label>
 
                                             </div>
-                                            <div class="form-group" style="        border-radius: 10px;
-        background-color: #E9E9E9;">
+                                            <div class="form-group" style="border-radius: 10px; background-color: #E9E9E9;">
                                                 <h6>Transaction Summary</h6>
 
                                             </div>
                                             <div class="form-group">
                                                 <table class="loan-summary">
                                                     <tr>
-                                                        <th style="        width: 50%">Start Date:</th>
+                                                        <th style="width: 50%">Start Date:</th>
                                                         <td class="data" id="startDate">Data7</td>
                                                         <!-- Data for Start Date -->
                                                     </tr>
@@ -430,8 +425,7 @@
                                                 </table>
 
                                             </div>
-                                            <div class="form-group" style="        border-radius: 10px;
-        background-color: #E9E9E9;">
+                                            <div class="form-group" style="border-radius: 10px; background-color: #E9E9E9;">
                                                 <h6>Monthly Repayment Details</h6>
 
                                             </div>
@@ -451,8 +445,8 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <div class="modal fade" id="alert-notifications" style="        display: none;
-        background-color: rgba(0, 0, 0, 0.5);" aria-hidden="true" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel">
+    <div class="modal fade" id="alert-notifications" style="display: none; background-color: rgba(0, 0, 0, 0.5);"
+        aria-hidden="true" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel">
         <div class="modal-dialog">
             <br />
             <br />
@@ -476,10 +470,8 @@
                     </div>
                 </div>
                 <div class="custom-modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close" style="        width: 100%;
-        background-color: #1B5B6B;
-        border-radius: 10px;
-        border: none;">Go back</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close" style="width: 100%; background-color: #1B5B6B; border-radius: 10px; border: none;">
+                        Go back</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -523,7 +515,7 @@
             // Get the data associated with the clicked notification
             const notificationId = parseInt($(this).data("id"));
 
-           
+
             // Find the corresponding notification data
             const notification = notifications.find(item => item.ID === notificationId); // Adjust the property name as per your data structure
 
@@ -603,7 +595,7 @@
 
                         $('#preview_signature').attr('src', imagesBaseUrl + userDetails[0].SIGNATURE_);
                     }
-               
+
 
                 },
                 error: function (xhr, status, error) {
@@ -620,7 +612,7 @@
         const OptionProfile = () => {
 
             $('#modal-profile').modal('show');
-      
+
         }
 
 
@@ -641,19 +633,19 @@
                 for (let i = 0; i < loanRecords.length; i++) {
                     const loanRecord = loanRecords[i];
                     const loanDetail = loanDetailsRecords.find(detail => detail.LOAN_ID === loanRecord.LOAN_ID);
-                   if (loanDetail) {
-                    const startDate = FormatDate(loanDetail.START_DATE);
-                    var params = {
-                        amount: loanRecord.AMOUNT,
-                        tenure: loanRecord.TENURE,
-                        processfee: loanRecord.PROCESSING_FEE,
-                        interestrate: loanRecord.INTEREST_RATE,
-                        startdate: startDate.day + " " + startDate.month + " " + startDate.year,
-                        branch: loanRecord.BRANCH,
-                        loanid: loanRecord.LOAN_ID
+                    if (loanDetail) {
+                        const startDate = FormatDate(loanDetail.START_DATE);
+                        var params = {
+                            amount: loanRecord.AMOUNT,
+                            tenure: loanRecord.TENURE,
+                            processfee: loanRecord.PROCESSING_FEE,
+                            interestrate: loanRecord.INTEREST_RATE,
+                            startdate: startDate.day + " " + startDate.month + " " + startDate.year,
+                            branch: loanRecord.BRANCH,
+                            loanid: loanRecord.LOAN_ID
 
-                    };
-                  
+                        };
+
                         const statusClasses = {
                             "ONGOING": "badge-warning",
                             "APPROVED": "badge-success",
@@ -790,12 +782,12 @@
                 </div>
             </div>
         `;
-            
+
             }
 
             // Append the generated HTML to the container
             $(".loan-details-list").html(html);
-         //   console.log(html);
+            //   console.log(html);
         }
 
         const FormatDate = (dateString) => {
