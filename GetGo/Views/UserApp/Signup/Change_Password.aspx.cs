@@ -32,8 +32,8 @@ public partial class Views_UserApp_Signup_Change_Password : System.Web.UI.Page
             string Vcode = verificationCode.ToString();
 
             //Email configuration
-            string senderEmail = "reijideveloper@gmail.com";
-            string senderPassword = "kiwwngslnfrrgfsc";
+            string senderEmail = "lend2getgoapp@gmail.com"; 
+            string senderPassword = "hsgkfvkvkehhgosa";
             string recipientEmail = input;
             string subject = "[GetGO] Please verify your device";
             string body = "GetGO Verification: Your one-time PIN is: " + Vcode + ". Please do not share it.";
