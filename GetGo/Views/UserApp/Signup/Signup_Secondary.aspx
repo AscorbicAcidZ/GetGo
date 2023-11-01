@@ -1,13 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/UserApp/Signup/Page.master" AutoEventWireup="true" CodeFile="Signup_Secondary.aspx.cs" Inherits="Views_UserApp_Signup_Signup_Secondary" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
-     <style>
+    <style>
         /* CSS for the form-check label text */
         .form-check-label {
             font-size: 14px; /* Adjust the font size as needed */
         }
-        .label-alert{
-            font-size: 10px; 
+        .label-alert {
+            font-size: 10px;
         }
     </style>
 </asp:Content>
@@ -43,7 +42,7 @@
                                     <input type="password" id="password" class="form-control input" placeholder="Password" />
                                     <i class="far fa-eye icon-right" id="togglePassword" style="cursor: pointer;"></i>
                                 </div>
-                                 <label id="passwordValidationMessage" class="label-alert text-danger"></label>
+                                <label id="passwordValidationMessage" class="label-alert text-danger"></label>
                             </div>
                             <div class="form-group">
                                 <div class="group">
@@ -52,26 +51,57 @@
                                     <i class="far fa-eye icon-right" id="toggleConfirmPassword" style="cursor: pointer;"></i>
 
                                 </div>
-                                 <label id="confirmPassValidationMessage" class="label-alert text-danger"></label>
+                                <label id="confirmPassValidationMessage" class="label-alert text-danger"></label>
                             </div>
                             <div class="group form-check">
-                                    <!-- Move the checkbox to the left -->
-                                    <input type="checkbox" id="agreeCheckbox" style="margin-right: 8px;" />
-                                    <h6 class="form-check-label">I agree to <b>Terms & Conditions</b> and <b>Policy</b></h6>
-                                   <br />
-                                </div>
-                             <label id="agreementValidationMessage" class="label-alert text-danger"></label>
-                             <%--   <div class="input">
+                                <!-- Move the checkbox to the left -->
+                                <input type="checkbox" id="agreeCheckbox" style="margin-right: 8px;" />
+                               
+                                    <a id="termsAndConditionsLink"> <h6 class="form-check-label" style="cursor:pointer">I agree to <b>Terms & Conditions</b> and <b>Policy</b></h6></a>
+                        
+                                <br />
+                            </div>
+                            <label id="agreementValidationMessage" class="label-alert text-danger"></label>
+                            <%--   <div class="input">
                               
                             </div>--%>
-                              <%--<button type="button" class="btn btn-primary" id="btnSave" onclick="SaveClick()">Save</button>--%>
+                            <%--<button type="button" class="btn btn-primary" id="btnSave" onclick="SaveClick()">Save</button>--%>
                         </div>
                     </div>
 
                 </div>
             </div>
         </section>
+         <div class="modal fade" id="termsModal"  style="z-index:99999;" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Terms & Conditions</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                      <div class="form-group">
+                                    <img src="../../../Resources/dist/img/aboutus.jpg" width="200" height="200" class="img-circle" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);" />
+                                </div>
+                   <p style="text-align:center;">
+                       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+                       ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                       laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                       velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                       sunt in culpa qui officia deserunt mollit anim id est laborum.
+                   </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
+    </div>
+
+   
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="footer" runat="Server">
     <script type="text/javascript">
@@ -79,6 +109,7 @@
             hideAlertLabels();
             initializePasswordValidation();
             initializeConfirmPasswordValidation();
+            PromptTermsAndConditions();
         });
         function hideAlertLabels() {
             $('.label-alert').hide();
@@ -110,7 +141,7 @@
 
             this.classList.toggle('fa-eye-slash');
 
-          
+
         });
         function initializePasswordValidation() {
             password.addEventListener('input', function () {
@@ -203,7 +234,7 @@
                 const Password = $('#confirmPass').val();
 
                 // Now you have the values in the respective variables
-             
+
                 $.ajax({
                     url: 'Signup_Secondary.aspx/UserSignUp',
                     type: "POST",
@@ -211,20 +242,20 @@
                         username: userName,
                         phonenumber: phoneNumber,
                         email: Email,
-                        password:Password
+                        password: Password
 
 
                     }),
                     contentType: "application/json;charset=utf-8",
                     dataType: "json",
                     success: function (e) {
-                       alert('Click Ok to continue');
+                        alert('Click Ok to continue');
                         window.location = "Signup_Primary.aspx?true";
-                  
+
                     }, error: function (error) {
                         // Handle the error response
-                        alert(error,'error');
-                  
+                        alert(error, 'error');
+
                     }
                 });
 
@@ -233,6 +264,13 @@
 
                 console.log('Validation failed. Data not saved.');
             }
+        }
+
+
+        const PromptTermsAndConditions = () => {
+            $('#termsAndConditionsLink').on('click', function () {
+                $('#termsModal').modal('show'); // 'termsModal' should be the id of your modal element
+            });
         }
 
     </script>
