@@ -4,7 +4,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <link href="../../../Resources/custom-css/home-default.css" rel="stylesheet" />
     <style>
-         .green-1 {
+        .green-1 {
             color: #2B9348;
             font-weight: 900;
         }
@@ -12,6 +12,21 @@
         .red-1 {
             color: #DA2C38;
             font-weight: 900;
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .input {
+            flex: 1;
+            margin-right: 1em;
+        }
+
+        .input-label {
+            flex: 1;
+            font-size: 10px;
         }
     </style>
 </asp:Content>
@@ -46,11 +61,19 @@
                                 <div class="form-group">
                                 </div>
                                 <div class="form-group">
-                                    <div class="input">
-                                        <label for="name">Loan List</label>
-                                        <select autocomplete="off" id="ddlLoanAmount" class="form-control input variant-1  select-1 "></select>
-                                    </div>
+                                    <div class="input-container">
+                                        <div class="input">
+                                            <label for="name">Loan </label>
+                                            <select autocomplete="off" id="ddlLoanAmount" class="form-control input variant-1  select-1 "></select>
 
+                                        </div>
+                                        <div class="input">
+                                                 <label for="name">Start Date </label>
+                                             <input type="text" id="lblLoanStart" class="form-control input variant-1  select-1 " disabled="disabled"/>
+                                        
+                                        </div>
+                                       
+                                    </div>
                                 </div>
                                 <div class="form-group row justify-content-between">
                                     <div>
@@ -94,7 +117,7 @@
                         </div>
                         <div class="card">
                             <div class="form-group">
-                                  <div class="content row justify-content-around">
+                                <div class="content row justify-content-around">
                                     <div class="left-image">
                                         <img src="../../../Resources/dist/img/5.png" width="100" height="100" class="clickable-image" onclick="ModeOfRepayment('branch')" />
                                     </div>
@@ -387,7 +410,7 @@
                 let data = JSON.parse(e.d);
                 loanRecords = data.LoanRecords;
                 loanDetailsRecords = data.LoanDetailsRecords;
-                //console.log(loanRecords);
+                console.log(loanRecords);
                 //console.log(loanDetailsRecords);
 
                 loanRecords.map(item => {
@@ -422,7 +445,7 @@
                 $('#lblPayment').text("₱ " + selectedLoanDetail.AMOUNT);
                 $('#StartDate').text(selectedLoanDetail.START_DATE);
                 $('#NextDueDate').text(selectedLoanDetail.DUE_DATE);
-
+            
                 $('#lblBranch').text(selectedLoanRecord.BRANCH + " Branch");
                 $('#lblPaymentHeader').text(selectedLoanRecord.INSTALLMENT_PLAN + " PAYMENT");
 
@@ -448,10 +471,12 @@
         }
         const InitializeLoanDate = (config) => {
 
+         
             const startDate = FormatDate(config.start);
 
             // Format the Next Due Date
             const nextDueDate = FormatDate(config.due);
+            $('#lblLoanStart').val(startDate.day + " " + startDate.month + "  " + startDate.year);
             $(".loan-date-box").empty();
             // Create the HTML string
             const html = `
@@ -494,18 +519,18 @@
                 const loanRecord = loanRecords[i];
                 const loanDetail = loanDetailsRecords.find(detail => detail.LOAN_ID === loanRecord.LOAN_ID);
                 if (loanDetail) {
-                const startDate = FormatDate(loanDetail.START_DATE);
-                var params = {
-                    amount: loanRecord.AMOUNT,
-                    tenure: loanRecord.TENURE,
-                    processfee: loanRecord.PROCESSING_FEE,
-                    interestrate: loanRecord.INTEREST_RATE,
-                    startdate: startDate.day + " " + startDate.month + " " + startDate.year,
-                    branch: loanRecord.BRANCH,
-                    loanid: loanRecord.LOAN_ID
+                    const startDate = FormatDate(loanDetail.START_DATE);
+                    var params = {
+                        amount: loanRecord.AMOUNT,
+                        tenure: loanRecord.TENURE,
+                        processfee: loanRecord.PROCESSING_FEE,
+                        interestrate: loanRecord.INTEREST_RATE,
+                        startdate: startDate.day + " " + startDate.month + " " + startDate.year,
+                        branch: loanRecord.BRANCH,
+                        loanid: loanRecord.LOAN_ID
 
-                };
-               
+                    };
+
                     html += `
                 <div class="current-loans">
                     <div class="form-group row custom-form-group justify-content-between">
@@ -590,7 +615,7 @@
                 $(".branch-repayment, .gcash-repayment").hide();
                 $('.custom-file-input').attr("data-classification", "BANK");
             }
-/*            alert(category);*/
+            /*            alert(category);*/
         }
         const GetData = (config) => {
             config.type = config.type || "POST";
@@ -664,8 +689,8 @@
                         alert('Request Entity Too Large: The file you are trying to upload is too large.');
                     } else {
                         alert('An error occurred during the request. Status: ' + xhr.status + ' - ' + xhr.statusText + '-' + error);
-                    }       
-       
+                    }
+
                 }
 
             })
