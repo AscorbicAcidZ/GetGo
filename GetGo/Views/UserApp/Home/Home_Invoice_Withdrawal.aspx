@@ -74,11 +74,11 @@
                                                     <!-- Data for Process Fee -->
                                                 </tr>
                                                
-                                                <tr>
+                                               <%-- <tr>
                                                     <th>Withdrawal Branch Name:</th>
                                                     <td class="data" id="branchName">Lipa Main Branch</td>
                                                     <!-- Data for Branch Name -->
-                                                </tr>
+                                                </tr>--%>
                                                  <tr>
                                                     <th class="dashed">Withdrawal:</th>
                                                     <td class="data dashed" id="withdrawal">321321</td>
