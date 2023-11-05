@@ -196,7 +196,27 @@
 
         </div>
     </nav>
-
+    <div class="modal fade" id="CashModal"  style="z-index:99999;" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">You selected cash</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                  
+                   <p style="text-align:center;">
+                   Go to the branch to that you have applied for your loan and claim the money in cash..
+                   </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="footer" runat="Server">
     <script>
@@ -229,8 +249,8 @@
             method = category;
             $('#repayment-details').show();
             if (category === "branch") {
-                $(".branch-repayment").show();
-                $(".bank-repayment, .gcash-repayment").hide();
+                $('#CashModal').modal('show');
+                return;
 
             } else if (category === "gcash") {
                 $(".gcash-repayment, .gcash-image").show();
