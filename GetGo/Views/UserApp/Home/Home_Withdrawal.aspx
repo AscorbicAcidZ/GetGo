@@ -220,22 +220,29 @@
     </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="footer" runat="Server">
-    <script>
-        const accountNumberInput = document.getElementById('txtAccountNumber');
-        const errorDiv = document.getElementById('accountNumberError');
+   <script>
+       const accountNumberInput = document.getElementById('txtAccountNumber');
+       const errorDiv = document.getElementById('accountNumberError');
 
-        accountNumberInput.addEventListener('input', function () {
-            const accountNumber = accountNumberInput.value.trim();
+       accountNumberInput.addEventListener('input', function () {
+           let accountNumber = accountNumberInput.value.trim();
 
-            if (/^\d{12,17}$/.test(accountNumber)) {
-                // Valid input (12 to 17 numeric characters)
-                errorDiv.textContent = '';
-            } else {
-                // Invalid input
-                errorDiv.textContent = 'Account number must be between 12 and 17 numeric characters.';
-            }
-        });
-    </script>
+           // Enforce maximum length of 17 characters
+           if (accountNumber.length > 17) {
+               accountNumber = accountNumber.slice(0, 17);
+               accountNumberInput.value = accountNumber;
+           }
+
+           if (/^\d{12,17}$/.test(accountNumber)) {
+               // Valid input (between 12 and 17 numeric characters)
+               errorDiv.textContent = '';
+           } else {
+               // Invalid input
+               errorDiv.textContent = 'Account number must be between 12 and 17 numeric characters.';
+           }
+       });
+   </script>
+
     <script>
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop),
