@@ -3,7 +3,17 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <link href="../../../Resources/custom-css/home-default.css" rel="stylesheet" />
+    <style>
+         .green-1 {
+            color: #2B9348;
+            font-weight: 900;
+        }
 
+        .red-1 {
+            color: #DA2C38;
+            font-weight: 900;
+        }
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="body" runat="Server">
     <div class="wrapper">
@@ -84,7 +94,15 @@
                         </div>
                         <div class="card">
                             <div class="form-group">
-                                addtional text here
+                                  <div class="content row justify-content-around">
+                                    <div class="left-image">
+                                        <img src="../../../Resources/dist/img/5.png" width="100" height="100" class="clickable-image" onclick="ModeOfRepayment('branch')" />
+                                    </div>
+                                    <div class="right-content" style="width: 180px; text-align: end; font-size: 12px">
+                                        <h4><b class="green-1">Get</b><b class="red-1">Go</b></h4>
+                                        Make the time-consuming process of getting a loan easier and more enjoyable.
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
