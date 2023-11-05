@@ -23,11 +23,23 @@
                             <label>Profile</label>
                         </div>
                         <div class="card-body">
-                            <div class="form-group">
+                          
+                              <div class="form-group">
                                 <div class="input">
-                                       <input type="text" required="" autocomplete="off" id="txtUserID" class="form-control input" style="display:none;">
-                                    <label for="name">Street Name, Building, House No.</label>
-                                    <input type="text" required="" autocomplete="off" id="txtStreetName" class="form-control input">
+                                    <label for="name">Region</label>
+                                    <input type="text" required="" autocomplete="off" id="txtRegion" class="form-control input">
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                <div class="input">
+                                    <label for="name">Province</label>
+                                    <input type="text" required="" autocomplete="off" id="txtProvince" class="form-control input">
+                                </div>
+                            </div>
+                                 <div class="form-group">
+                                <div class="input">
+                                    <label for="name">City</label>
+                                    <input type="text" required="" autocomplete="off" id="txtCity" class="form-control input">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -36,24 +48,15 @@
                                     <input type="text" required="" autocomplete="off" id="txtBarangay" class="form-control input">
                                 </div>
                             </div>
-                            <div class="form-group">
+                         <div class="form-group">
                                 <div class="input">
-                                    <label for="name">City</label>
-                                    <input type="text" required="" autocomplete="off" id="txtCity" class="form-control input">
+                                       <input type="text" required="" autocomplete="off" id="txtUserID" class="form-control input" style="display:none;">
+                                    <label for="name">Street Name, Building, House No.</label>
+                                    <input type="text" required="" autocomplete="off" id="txtStreetName" class="form-control input">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="input">
-                                    <label for="name">Province</label>
-                                    <input type="text" required="" autocomplete="off" id="txtProvince" class="form-control input">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input">
-                                    <label for="name">Region</label>
-                                    <input type="text" required="" autocomplete="off" id="txtRegion" class="form-control input">
-                                </div>
-                            </div>
+                           
+                          
                             <div class="form-group">
                                 <div class="input">
                                     <label for="name">Postal Code</label>
