@@ -3,6 +3,7 @@
 using System;
 using System.IO;
 using System.Web;
+using System.Data.SqlClient;
 
 public class FileUpload : IHttpHandler
 {
@@ -67,14 +68,15 @@ public class FileUpload : IHttpHandler
         {
             var maint = new UserAppController();
 
-            var parameters = new
-            {
-                USER_ID = fd.UserId,
-                DESCRIPTION = fd.FileName,
-                IMAGE_TYPE = fd.Classification
+            var parameters = new SqlParameter[]
+           {
+                    new SqlParameter("@USER_ID", fd.UserId),
+                    new SqlParameter("@DESCRIPTION", fd.FileName),
+                    new SqlParameter("@IMAGE_TYPE",fd.Classification),
 
-            };
-            maint.QueryInsertOrUpdate("APP_ATTACHMENT_POST", parameters);
+           };
+            maint.QueryInsertOrUpdateAdoNet("APP_ATTACHMENT_POST", parameters);
+
         }
         catch (Exception ex)
         {
