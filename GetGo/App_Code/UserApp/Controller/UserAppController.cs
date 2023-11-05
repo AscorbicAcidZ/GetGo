@@ -91,6 +91,45 @@ public class UserAppController
             return dataTable;
         }
     }
+    public DataTable QueryGetOrPopulateAdoNetText(string query, SqlParameter[] parameters)
+    {
+        using (SqlConnection conn = new SqlConnection(sqlconn))
+        {
+            DataTable dataTable = new DataTable();
+            SqlTransaction transaction = null;
+
+            try
+            {
+                conn.Open();
+                transaction = conn.BeginTransaction();
+                using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddRange(parameters);
+
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(dataTable);
+                    }
+                }
+                transaction.Commit();
+            }
+            catch (SqlException ex)
+            {
+                if (transaction != null) transaction.Rollback();
+                LogErrorMessageToDatabase(ex.Message + query);
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                if (transaction != null) transaction.Rollback();
+                LogErrorMessageToDatabase(ex.Message + query);
+                throw ex;
+            }
+
+            return dataTable;
+        }
+    }
     public string QueryInsertOrUpdate(string query, object parameters)
     {
         SqlTransaction trans=null;
@@ -154,6 +193,41 @@ public class UserAppController
             }
         }
     }
+    public string QueryInsertOrUpdateAdoNetText(string query, SqlParameter[] parameters)
+    {
+        using (SqlConnection conn = new SqlConnection(sqlconn))
+        {
+            SqlTransaction trans = null;
+            try
+            {
+                conn.Open();
+                trans = conn.BeginTransaction();
+
+                using (SqlCommand cmd = new SqlCommand(query, conn, trans))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddRange(parameters);
+
+                    cmd.ExecuteNonQuery();
+                }
+
+                trans.Commit();
+                return "Success";
+            }
+            catch (SqlException ex)
+            {
+                if (trans != null) trans.Rollback();
+                LogErrorMessageToDatabase(ex.Message);
+                return ex.Message;
+            }
+            catch (Exception ex)
+            {
+                if (trans != null) trans.Rollback();
+                LogErrorMessageToDatabase(ex.Message);
+                return ex.Message;
+            }
+        }
+    }
     public List<dynamic> QueryGetOrPopulateText(string commandText, object parameters = null)
     {
         try
@@ -174,7 +248,6 @@ public class UserAppController
             throw ex;
         }
     }
-
     public string QueryInsertOrUpdateText(string query, object parameters = null)
     {
         SqlTransaction trans = null;

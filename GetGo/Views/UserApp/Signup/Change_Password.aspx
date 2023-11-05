@@ -152,7 +152,7 @@
             // Reuse the GetUserID function
             GetData({
                 url: 'Change_Password.aspx/GetUserID',
-                data: JSON.stringify({ query:"APP_PROFILE_GET_USER_ID",input: email })
+                data: JSON.stringify({ query: "APP_PROFILE_GET_USER_ID", input: email })
             }).then(response => {
                 // Handle the response here
                 let result = JSON.parse(response.d);
@@ -249,7 +249,7 @@
 
                             //alert('success');
                             window.location = "Change_Password.aspx?Response=success";
-                        
+
                         }
                     });
                 } else {

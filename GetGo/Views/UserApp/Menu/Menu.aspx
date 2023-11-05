@@ -481,7 +481,7 @@
 
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="footer" runat="Server">
-    <%--  <script>
+      <script>
         document.addEventListener('contextmenu', function (event) {
             event.preventDefault();
         });
@@ -491,7 +491,7 @@
                 e.preventDefault();
             }
         }
-    </script>--%>
+    </script>
     <script>
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop),
