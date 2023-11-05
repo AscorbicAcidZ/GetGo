@@ -91,6 +91,7 @@
                                         <div class="input">
                                             <label>Enter Bank Account Number</label>
                                             <input type="text" required="" autocomplete="off" class="form-control input numeric-input" id="txtAccountNumber" style="text-align: center">
+                                         <div id="accountNumberError" style="color: red; font-size:8px;"></div>
                                         </div>
                                         <div class="input" style="text-align: center">
                                             <label>Enter Bank Account Name</label>
@@ -219,6 +220,22 @@
     </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="footer" runat="Server">
+    <script>
+        const accountNumberInput = document.getElementById('txtAccountNumber');
+        const errorDiv = document.getElementById('accountNumberError');
+
+        accountNumberInput.addEventListener('input', function () {
+            const accountNumber = accountNumberInput.value.trim();
+
+            if (/^\d{12,17}$/.test(accountNumber)) {
+                // Valid input (12 to 17 numeric characters)
+                errorDiv.textContent = '';
+            } else {
+                // Invalid input
+                errorDiv.textContent = 'Account number must be between 12 and 17 numeric characters.';
+            }
+        });
+    </script>
     <script>
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop),
