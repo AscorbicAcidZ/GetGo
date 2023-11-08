@@ -37,4 +37,36 @@ public partial class Views_UserApp_Profile_Profile_Secondary : System.Web.UI.Pag
         };
         return JsonConvert.SerializeObject(user.QueryInsertOrUpdate(query, parameters));
     }
+    [WebMethod]
+   public static string GetRegion()
+    {
+        var user = new UserAppController();
+        var commandText = @"SELECT * FROM TBL_M_REGION";
+        return JsonConvert.SerializeObject(user.QueryGetOrPopulateText(commandText));
+
+    }
+    [WebMethod]
+    public static string GetProvince(string input)
+    {
+        var user = new UserAppController();
+        var parameters = new
+        {
+            REGION_CODE = input,
+        };
+        var commandText = @"SELECT * FROM TBL_M_PROVINCE WHERE REGION_CODE =@REGION_CODE";
+        return JsonConvert.SerializeObject(user.QueryGetOrPopulateText(commandText, parameters));
+
+    }
+    [WebMethod]
+    public static string GetCity(string input)
+    {
+        var user = new UserAppController();
+        var parameters = new
+        {
+            PROVINCE_CODE = input,
+        };
+        var commandText = @"SELECT * FROM TBL_M_CITY WHERE PROVINCE_CODE =@PROVINCE_CODE";
+        return JsonConvert.SerializeObject(user.QueryGetOrPopulateText(commandText, parameters));
+
+    }
 }

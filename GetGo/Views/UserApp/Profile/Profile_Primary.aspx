@@ -54,6 +54,7 @@
                                 <div class="input">
                                     <label for="name">Date of Birth</label>
                                     <input type="date" required="" autocomplete="off" id="txtDOB" class="form-control input">
+                                      <div id="ageValidationMessage" style="color: red;"></div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -109,7 +110,26 @@
 
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="footer" runat="Server">
+       <script>
+           const dobInput = document.getElementById('txtDOB');
+           const ageValidationMessage = document.getElementById('ageValidationMessage');
 
+           dobInput.addEventListener('change', function () {
+               const selectedDate = new Date(dobInput.value);
+               const currentDate = new Date();
+               const age = currentDate.getFullYear() - selectedDate.getFullYear();
+
+               // Check if age is between 18 and 60
+               if (age >= 18 && age <= 60) {
+                   // Valid age
+                   ageValidationMessage.textContent = '';
+               } else {
+                   // Invalid age
+                   ageValidationMessage.textContent = 'Age must be between 18 and 60 years old.';
+                   dobInput.value = ''; // Clear the input value
+               }
+           });
+       </script>   
     <script type="text/javascript">
         const params = new Proxy(new URLSearchParams(window.location.search), {
             get: (searchParams, prop) => searchParams.get(prop),
