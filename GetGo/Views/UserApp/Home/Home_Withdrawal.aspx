@@ -124,7 +124,7 @@
                                     <div class="form-group">
                                         <div class="input" style="text-align: center">
                                             <label>Enter GCASH Number</label>
-                                            <input type="text" required="" autocomplete="off" class="form-control input numeric-input" id="txtGcashNumber" style="text-align: center">
+                                            <input type="text" required="" autocomplete="off" class="form-control input numeric-input ph-number" id="txtGcashNumber" style="text-align: center">
                                         </div>
 
                                     </div>

@@ -289,12 +289,12 @@
                                                 <input type="text" required="" autocomplete="off" id="txtMonthlyIncome" class="form-control input numeric-input">
                                             </div>
                                         </div>
-                                        <div class="form-group">
+                                      <%--  <div class="form-group">
                                             <div class="input">
                                                 <label for="name">Character Reference</label>
                                                 <input type="text" required="" autocomplete="off" id="txtCharacterReference" class="form-control input">
                                             </div>
-                                        </div>
+                                        </div>--%>
                                         <div class="form-group">
                                             <div class="input">
                                                 <label for="name">Co Guarantor</label>

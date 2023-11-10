@@ -13,7 +13,7 @@ const ddlBranchList = $("#ddlBranch");
 const Bussiness = $('#txtBussiness');
 const NatureOfWork = $('#txtNatureOfWork');
 const MonthlyIncome = $('#txtMonthlyIncome');
-const CharacterReference = $('#txtCharacterReference');
+/*const CharacterReference = $('#txtCharacterReference');*/
 const CoGuarantor = $('#txtCoGuarantor');
 const CoGuarantorNumber = $('#txtCoGuarantorNumber');
 const NameOfCollateral = $('#txtNameOfCollateral');
@@ -427,11 +427,11 @@ const validateStep3 = () => {
         isValid = false;
     }
 
-    if (CharacterReference.val() === '') {
-        CharacterReference.addClass('is-invalid');
-        CharacterReference.after('<div class="error-message">Please enter Character Reference.</div>');
-        isValid = false;
-    }
+    //if (CharacterReference.val() === '') {
+    //    CharacterReference.addClass('is-invalid');
+    //    CharacterReference.after('<div class="error-message">Please enter Character Reference.</div>');
+    //    isValid = false;
+    //}
 
     if (CoGuarantor.val() === '') {
         CoGuarantor.addClass('is-invalid');
@@ -523,7 +523,7 @@ const SaveFiles = () => {
         BUSSINESS: Bussiness.val(),
         NATURE_OF_WORK: NatureOfWork.val(),
         INCOME: MonthlyIncome.val(),
-        CHARACTER_REFERENCE: CharacterReference.val(),
+        CHARACTER_REFERENCE: "",
         CO_GUARANTOR: CoGuarantor.val(),
         CO_PHONE_NO: CoGuarantorNumber.val(),
         NAME_OF_COLLATERAL: NameOfCollateral.val(),
