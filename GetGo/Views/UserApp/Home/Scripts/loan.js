@@ -49,7 +49,7 @@ const GetLoanDetails = () => {
             installmentPlans = data.InstallmentPlans;
             tenureOptions = data.TenureOptions;
             branchLists = data.BranchLists;
-            console.log(data);
+            //console.log(data);
             $('.select-1').each(function () {
                 $(this).prepend('<option value="" selected="true" disabled="disabled">Please Select</option>');
             });
@@ -125,7 +125,7 @@ const GetCreditLimit = () => {
 }
 const CreditLimitValidation = () => {
     var remainingCreditLimit = parseInt(Remaining.text());
-    console.log(remainingCreditLimit);
+    //console.log(remainingCreditLimit);
     if (parseInt(remainingCreditLimit) == "0") {
         // Disable all options in ddlLoanAmount
         ddlLoanAmount.prop('disabled', true);
@@ -518,7 +518,7 @@ const SaveFiles = () => {
         USER_ID: params.USERID,
         LOAN_AMOUNT: ddlLoanAmount.val(),
         INSTALLMENT_ID: ddlInstallmentPlan.val(),
-        TENURE_ID: ddlTenure.val(),
+        TENURE_ID: $('#ddlTenure option:selected').text(),
         BRANCH: ddlBranchList.val(),
         BUSSINESS: Bussiness.val(),
         NATURE_OF_WORK: NatureOfWork.val(),

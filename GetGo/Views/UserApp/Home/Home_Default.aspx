@@ -116,7 +116,7 @@
                             </div>
                         </div>
                         <div class="card">
-                            <div class="form-group">
+                            <div class="form-group" style="margin-top: 1rem;">
                                 <div class="content row justify-content-around">
                                     <div class="left-image">
                                         <img src="../../../Resources/dist/img/5.png" width="100" height="100" class="clickable-image" onclick="ModeOfRepayment('branch')" />
